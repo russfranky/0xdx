@@ -1,0 +1,70 @@
+import React from 'react';
+import { motion } from 'motion/react';
+import { Triangle, UserX, HandHelping } from 'lucide-react';
+
+export function ProblemSection() {
+  const cards = [
+    {
+      icon: Triangle,
+      stat: "Plutocracy",
+      statDesc: "Token-weighted voting",
+      title: "Whales decide",
+      problem: "Token-weighted DAOs concentrate decision-making in whoever bought the most. The median holder's vote rounds to noise.",
+    },
+    {
+      icon: UserX,
+      stat: "Privacy",
+      statDesc: "vs. one-person-one-vote",
+      title: "The identity paradox",
+      problem: "Most one-person-one-vote schemes demand centralized KYC. You either reveal your identity or accept plutocracy.",
+    },
+    {
+      icon: HandHelping,
+      stat: "Apathy",
+      statDesc: "Low turnout, captured outcomes",
+      title: "Nobody shows up",
+      problem: "Governance forums turn into theatre while a small set of delegates and whales actually decides. See: Maker Endgame, Aragon dissolution.",
+    }
+  ];
+
+  return (
+    <section className="py-28 bg-neutral-50 border-b border-neutral-200">
+      <div className="max-w-7xl mx-auto px-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 mb-20">
+          <div>
+            <h2 className="text-4xl md:text-5xl font-bold text-black mb-6 tracking-tighter uppercase leading-[0.9]">Why DAOs <br/> Are Broken</h2>
+            <p className="text-xl text-neutral-600 leading-relaxed font-light">
+              Every governance model forces you to choose: plutocracy OR privacy, efficiency OR fairness, automation OR community.
+            </p>
+          </div>
+          <div className="flex items-end">
+            <p className="text-2xl font-bold text-black border-l-4 border-black pl-6 uppercase tracking-tight leading-tight">
+              <span className="normal-case">0xdx</span> eliminates <br/> those choices.
+            </p>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-neutral-200 border-t-2 border-b-2 border-black">
+          {cards.map((card, idx) => (
+            <motion.div
+              key={idx}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: idx * 0.1 }}
+              className="py-12 md:px-12 first:pl-0 last:pr-0"
+            >
+              <div className="mb-8">
+                <div className="text-6xl font-bold text-black mb-2 tracking-tighter">{card.stat}</div>
+                <div className="text-xs font-bold uppercase tracking-widest text-neutral-500">{card.statDesc}</div>
+              </div>
+
+              <h3 className="text-xl font-bold text-black mb-3 uppercase tracking-tight">{card.title}</h3>
+              <p className="text-neutral-600 leading-relaxed text-sm font-light">{card.problem}</p>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
