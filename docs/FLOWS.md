@@ -343,7 +343,9 @@ Every value below is set at genesis and changeable only via a constitutional pro
 
 ---
 
-## 9. Edge cases and failure modes
+## 9. Threat model and edge-case audit
+
+> This section is the framework's **canonical threat model**. It is named "edge cases and failure modes" historically, but reviewers should read §9 in this role: an exhaustive enumeration of attack surfaces, adversarial inputs, and degenerate scenarios — alongside the framework's response to each, and a status flag indicating how confidently that response is pinned.
 
 This is the section the litepaper waves at. Every flow above has degenerate inputs and adversarial scenarios. Each row below lists the case, the framework's response, and a status flag:
 
@@ -477,7 +479,20 @@ This is the section the litepaper waves at. Every flow above has degenerate inpu
 | Long chain reorg invalidates votes | Forward-only state transitions: re-execute is a no-op. Voting Contract should emit vote-finalized event after a confirmation depth (e.g. 12 blocks). | 🧪 Simulated [15] — replay no-op verified. |
 | Committee member's geographic legal status changes | Out of scope. Pseudonymity preserves participation. | ✅ Specified. |
 
-### 9.11 Failure-mode summary
+### 9.11 Smart-contract integrity & social-attack edge cases
+
+These four classes were added in the v1.0 audit pass. Each maps to a real-world incident or published attack class. Where the response is "contract-level invariant", v1 reference contracts must encode it.
+
+| Case | Response | Status |
+|---|---|---|
+| **Proposal description / code mismatch** (Beanstalk-class). Proposal's human-readable description claims one thing; executable calldata does another. | Reference contract requires a description hash committed at submission and re-verified at execution; mismatch reverts. UIs must display decoded calldata alongside description. Front-ends that hide calldata are non-compliant. | ❌ Gap → v1 contract requirement. |
+| **Privileged function backdoor**. Governance contract has admin-set parameters (`setVotingPeriod`, `setProposalThreshold`, `setQuorum`) callable by an EOA, allowing developer to silently change rules. | Contract-level invariant: every parameter-mutating function is gated by `onlyGovernance`. There is no admin EOA. The threat model treats any deployment with an admin override as non-compliant. | ❌ Gap → v1 contract invariant. |
+| **CREATE2 / contract redeployment attack**. Governance contract deployed via CREATE2 is self-destructed and redeployed at the same address with different bytecode. | Reference contract is deployed via CREATE (not CREATE2), or — if CREATE2 is required for cross-chain address consistency — the constructor self-destructs the SELFDESTRUCT opcode path. Bytecode hash of the deployed governance contract is published in the genesis declaration and verifiable against on-chain bytecode. | ❌ Gap → v1 contract requirement. |
+| **Committee bribery**. A wealthy outsider offers committee members payment to vote a specific way. Vote-buying is hard to detect and impossible to prove on-chain. | Layered mitigations: (a) `authorRecusalRequired=true` removes the most direct conflict; (b) public voting record creates social cost; (c) shrunken-vote-window + Guardian veto creates time for community response; (d) committee recall procedure exists. The framework does **not** claim to solve bribery; it claims to make routine bribery socially expensive and time-bounded. | 🟡 Inferred — name explicitly in v1 spec. |
+| **Coercion of voters / committee members**. A participant is physically coerced into voting a specific way. ZK proofs do not prevent this. | v1 explicitly does **not** offer receipt-freeness. Acknowledged in `IDENTITY.md` §7 as a known limit and an open research area (Civitas, MACI). | ✅ Specified — acknowledged limit. |
+| **Front-end / UI hijack**. Hosted front-end serves a malicious version that misrepresents proposals or harvests credentials. | Reference deployment serves an IPFS-pinned front-end with a published content hash referenced from the canonical contract. Wallet-side warning if hash mismatch. Browser extension or local-host build is the trust-minimized path. | ❌ Gap → deployment-level requirement. |
+
+### 9.12 Failure-mode summary
 
 The framework's behavior under stress, in priority order:
 
