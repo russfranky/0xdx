@@ -82,7 +82,7 @@ export function Roadmap({ onBack }: RoadmapProps) {
     {
       id: '8',
       title: 'Ecosystem Grants',
-      description: 'First grant cycle funded entirely by accrued DEX fees — no inflationary emissions.',
+      description: 'First grant cycle funded entirely by accrued DEX fees, no inflationary emissions.',
       status: 'planned',
       category: 'Ecosystem',
       quarter: 'Phase 3'

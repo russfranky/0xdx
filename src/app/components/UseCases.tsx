@@ -10,7 +10,7 @@ export function UseCases({ phase }: { phase: Phase }) {
     {
       title: "Research DAOs",
       type: "Example",
-      desc: "Coordinated funding and direction for open research — grants, milestone reviews, and treasury-managed compute, governed by an elected committee.",
+      desc: "Coordinated funding and direction for open research: grants, milestone reviews, and treasury-managed compute, governed by an elected committee.",
       logo: "RD"
     },
     {
@@ -22,7 +22,7 @@ export function UseCases({ phase }: { phase: Phase }) {
     {
       title: "Grants / Education DAOs",
       type: "Example",
-      desc: "Treasury-backed grant programs with on-chain proposals, signaling, and automated payouts — fees from the integrated DEX keep the program perpetual.",
+      desc: "Treasury-backed grant programs with on-chain proposals, signaling, and automated payouts. Fees from the integrated DEX keep the program perpetual.",
       logo: "GR"
     }
   ];

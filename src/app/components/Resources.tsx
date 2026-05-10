@@ -9,7 +9,7 @@ export function Resources({ onLitepaperClick, onRoadmapClick }: ResourcesProps) 
   const resources = [
     {
       title: 'Litepaper',
-      desc: 'The full v1.0 specification — governance model, lifecycle, treasury, security.',
+      desc: 'The full v1.0 specification: governance model, lifecycle, treasury, security.',
       onClick: onLitepaperClick,
     },
     {
@@ -20,7 +20,7 @@ export function Resources({ onLitepaperClick, onRoadmapClick }: ResourcesProps) 
     {
       title: 'GitHub',
       desc: 'Source code, reference contracts, and issue tracker.',
-      href: 'https://github.com',
+      href: 'https://github.com/russfranky/0xdx',
     },
   ];
 

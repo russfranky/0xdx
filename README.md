@@ -23,11 +23,11 @@ The framework specification is published as four canonical documents:
 
 Supporting documents:
 
-- [`docs/FLOWS.md`](./docs/FLOWS.md) — actor map, genesis flow, proposal
+- [`docs/FLOWS.md`](./docs/FLOWS.md): actor map, genesis flow, proposal
   lifecycle, state machine, treasury & DEX flows, override paths,
   elections, modular-config matrix, and the **canonical threat model**
   (§9: 40+ edge cases tagged Specified / Inferred / Gap / Simulated).
-- [`simulations/SIMULATIONS.md`](./simulations/SIMULATIONS.md) — runnable
+- [`simulations/SIMULATIONS.md`](./simulations/SIMULATIONS.md): runnable
   deterministic simulations validating v1 defaults (28 scenarios,
   `npm run sim`).
 
@@ -62,7 +62,7 @@ Motion), react-markdown, lucide-react.
 
 ## License
 
-MIT — see [LICENSE](./LICENSE).
+MIT. See [LICENSE](./LICENSE).
 
 See [ATTRIBUTIONS.md](./ATTRIBUTIONS.md) for third-party credits.
 

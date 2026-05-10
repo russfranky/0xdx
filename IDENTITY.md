@@ -11,24 +11,24 @@
 ## 1. Why this exists
 
 0xdx is a one-person-one-vote committee framework. It cannot deliver on
-that promise without a real answer to **Sybil resistance** — the open
+that promise without a real answer to **Sybil resistance**: the open
 problem of preventing a single human from presenting as many.
 
 Previous DAO frameworks have approached this in three ways, all of
 which we reject as primary mechanisms:
 
-1. **Token weighting** — solves Sybil mathematically (you cannot duplicate
+1. **Token weighting.** Solves Sybil mathematically (you cannot duplicate
    tokens) but at the cost of the very plutocracy 0xdx exists to prevent.
-2. **KYC by central provider** — moves trust from the chain to a
+2. **KYC by central provider.** Moves trust from the chain to a
    compliance vendor, breaks pseudonymity, leaks PII, and introduces a
    single regulatory chokepoint.
-3. **Punting to "community vetting"** — passes the problem to deployers
+3. **Punting to "community vetting".** Passes the problem to deployers
    without giving them tools, which in practice means either nothing
    gets verified or unaccountable insiders decide who counts.
 
 The 0xdx posture is different. Identity is **necessary** for
 one-person-one-vote, and the framework specifies a **pluggable
-interface** — strict enough to keep deployments honest, loose enough
+interface**: strict enough to keep deployments honest, loose enough
 that no single vendor can hold the ecosystem hostage.
 
 ---
@@ -39,12 +39,12 @@ A **0xdx Identity Provider** is any system that, on demand, issues a
 participant a credential and accepts a zero-knowledge proof that a
 given on-chain action (proposal submission, petition signature,
 referendum vote, election ballot) is being performed by a unique
-verified human associated with that credential — without revealing
+verified human associated with that credential, without revealing
 *which* human.
 
 The on-chain artifact is the proof. The credential never touches the
-chain. The raw identity material — biometric template, document scan,
-social graph — never leaves the participant's device.
+chain. The raw identity material (biometric template, document scan,
+social graph) never leaves the participant's device.
 
 ---
 
@@ -94,7 +94,7 @@ The verification key and circuit source must be public.
 The provider must support credential revocation under documented Sybil
 incidents (e.g. a single template being shown to belong to multiple
 people). Revocation **must not** retroactively invalidate honest past
-votes — past nullifiers remain valid; only future proofs from the
+votes. Past nullifiers remain valid; only future proofs from the
 revoked credential fail verification.
 
 ### 3.5 Open verifiability
@@ -179,7 +179,7 @@ not a paywall.
 ### 4.3 Why the digest, not the template
 
 Storing even encrypted biometric templates in a central database is a
-liability magnet — it invites breach, subpoena, and regulatory
+liability magnet: it invites breach, subpoena, and regulatory
 classification as a biometric data controller (GDPR Article 9, Illinois
 BIPA, etc.). The reference design pushes that data **back to the
 user's device** and keeps only a hash-like deduplication digest at the
@@ -223,7 +223,7 @@ against §3 before adoption.
 
 A deployment may accept multiple providers and require an OR-of-proofs
 ("any one of these"), an AND-of-proofs ("at least two of these"), or a
-weighted scheme — provided each accepted provider individually
+weighted scheme, provided each accepted provider individually
 satisfies §3.
 
 ---
@@ -238,7 +238,7 @@ A deployment claiming 0xdx compliance **must not**:
 3. Accept a provider whose verifier or circuit is closed-source.
 4. Make verification require a live call to a vendor server during a
    governance action.
-5. Use the identity system to gate **economic exit** — a participant
+5. Use the identity system to gate **economic exit**. A participant
    must always be able to sell their position on the integrated DEX
    without identity verification.
 

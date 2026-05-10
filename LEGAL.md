@@ -13,7 +13,7 @@
 
 ## 1. Stance
 
-0xdx is a framework for **democratic decentralization** — communities
+0xdx is a framework for **democratic decentralization**: communities
 governing their own resources without rent-seeking intermediaries,
 without token-weighted plutocracy, and without permission from
 incumbent finance. Self-governance is not an activity for which
@@ -22,7 +22,7 @@ and outranks any regulatory regime.
 
 That said, the framework operates in a world where states, regulators,
 and incumbent platforms have at times responded to decentralized
-projects with hostility — particularly when those projects threaten
+projects with hostility, particularly when those projects threaten
 existing rent streams. This document names those risks honestly so
 deployers and participants can decide how, where, and how publicly to
 operate.
@@ -44,7 +44,7 @@ The publishers of this specification do not custody funds, route
 trades, or hold themselves out as a service provider to any deployment.
 
 A **deployment** is a separate organization that has chosen to use
-the framework. The deployment — not the framework — bears whatever
+the framework. The deployment, not the framework, bears whatever
 legal, regulatory, and tax consequences attach to its activity. **The
 framework's publishers are not party to any deployment.**
 
@@ -64,7 +64,7 @@ unincorporated DAO. The court accepted that:
    conduct.
 
 This precedent is real, and it is hostile. It was made possible by a
-default judgment — Ooki DAO did not appear to defend itself — and the
+default judgment (Ooki DAO did not appear to defend itself), and the
 underlying theory has not been adversarially tested. But until it is
 overturned or distinguished, U.S. authorities will reach for it.
 
@@ -121,7 +121,7 @@ A deployment may issue a token (e.g. a base asset traded on its
 integrated DEX). Whether that token is a security is a downstream
 question that depends on how the deployment markets, distributes, and
 uses it. The framework expresses no view on which side of that line
-any given token sits — the question is increasingly used by U.S.
+any given token sits. The question is increasingly used by U.S.
 regulators as a tool of selective enforcement, and the framework does
 not pretend to predict which way that selection will go.
 
@@ -167,9 +167,9 @@ interface. **It is not a KYC system, and the framework does not
 recommend bolting KYC on top of it.** Doing so would defeat the
 privacy properties the identity layer is engineered to provide.
 
-A deployment that engages in genuinely regulated activity — fiat
+A deployment that engages in genuinely regulated activity (fiat
 on/off-ramps, custodial services for non-self-custody clients,
-regulated derivatives — may be required by its chosen jurisdiction
+regulated derivatives) may be required by its chosen jurisdiction
 to add KYC at a specific surface (typically the on-ramp). That
 addition should be (a) narrow, (b) confined to the regulated surface,
 and (c) explicitly disclosed. A deployment that performs general
@@ -194,7 +194,7 @@ operating outside that infrastructure may legitimately decline.
 This is one of the cleanest examples of "the regulatory regime is not
 neutral." Sanctions enforcement is a tool of state power that
 deployments are entitled to take seriously, take symbolically, or
-decline — with eyes open to the consequences.
+decline, with eyes open to the consequences.
 
 ---
 
@@ -221,7 +221,7 @@ FRAMEWORK.
 
 This document is informational. **It is not legal advice and creates
 no attorney-client relationship.** Participants should obtain
-qualified counsel in jurisdictions they engage with — and should
+qualified counsel in jurisdictions they engage with, and should
 decide for themselves which jurisdictions those are.
 
 ---

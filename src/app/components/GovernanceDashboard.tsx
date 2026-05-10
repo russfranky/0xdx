@@ -40,7 +40,7 @@ export function GovernanceDashboard({ onBack }: GovernanceDashboardProps) {
             Real-time, <br /> on-chain.
           </h2>
           <p className="text-xl text-neutral-600 font-light leading-relaxed border-l-2 border-black pl-6">
-            Live proposals, committee votes, treasury flows, and sentiment signal will appear here once the framework is deployed. Until then, the dashboard is intentionally empty — there is no production data to show.
+            Live proposals, committee votes, treasury flows, and sentiment signal will appear here once the framework is deployed. Until then, the dashboard is intentionally empty. There is no production data to show.
           </p>
         </motion.div>
 
