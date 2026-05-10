@@ -333,7 +333,7 @@ export function tallyReferendum(w: World, propId: number) {
   const minTurnout =
     (w.config.totalSupply * BigInt(w.config.petitionMinTurnoutBps)) / 10000n;
   if (totalVotes < minTurnout) {
-    // Below minimum turnout — proposal proceeds (status quo from committee)
+    // Below minimum turnout, proposal proceeds (status quo from committee)
     p.status = 'queued';
     emit(w, `referendum #${propId}: turnout ${totalVotes} < minimum ${minTurnout}, proposal PROCEEDS to execution`);
     return;
@@ -486,7 +486,7 @@ export function execute(w: World) {
     .sort((a, b) => (a.queuedAt ?? 0) - (b.queuedAt ?? 0));
   for (const p of queued) {
     if (w.treasuryBase < p.amount) {
-      // Atomic revert — funds were never released
+      // Atomic revert, funds were never released
       p.status = 'executed-failed';
       w.treasuryReserved -= p.amount;
       emit(w, `execute: #${p.id} FAILED (treasury ${w.treasuryBase} < ${p.amount}, atomic revert)`);
@@ -529,7 +529,7 @@ export function runElection(
   const winners: Address[] = [];
   for (const cand of sorted) {
     if (winners.length >= seats) break;
-    if (winners.includes(cand.c)) continue; // already won — skip duplicate
+    if (winners.includes(cand.c)) continue; // already won, skip duplicate
     winners.push(cand.c);
   }
   const filled = winners.length;

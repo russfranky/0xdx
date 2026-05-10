@@ -111,11 +111,11 @@ export function flashLoanSignal(): Finding {
     title: 'Flash-loan signal attack (lock-on-stake defense)',
     status: reverted ? 'PASS' : 'FAIL',
     summary: reverted
-      ? `Attacker staked 500k flash-loaned tokens; transfer back to lender reverted. Loan cannot be repaid in same block — attack uneconomic.`
+      ? `Attacker staked 500k flash-loaned tokens; transfer back to lender reverted. Loan cannot be repaid in same block, attack uneconomic.`
       : `Attacker repaid loan after signaling. Defense failed.`,
     recommendation: reverted
       ? 'Pin signalLockUntilResolved=true in v1.'
-      : 'Lock-on-stake insufficient — add minimum stake duration.',
+      : 'Lock-on-stake insufficient, add minimum stake duration.',
     trace: dump(w),
   };
 }
@@ -170,7 +170,7 @@ export function missedQuorum(): Finding {
     status: ok ? 'PASS' : 'FAIL',
     summary: `Only 3 of 7 cast a vote; quorum is 5. Result: ${status}.`,
     recommendation:
-      'Distinct rejected-quorum status (vs rejected-majority) — surface in UI for accountability tracking.',
+      'Distinct rejected-quorum status (vs rejected-majority), surface in UI for accountability tracking.',
     trace: dump(w),
   };
 }
@@ -222,7 +222,7 @@ export function petitionLowTurnout(): Finding {
   // 100k = 10% of supply petitions to force referendum
   petition(w, 'holder0', 1, 50_000n);
   petition(w, 'holder1', 1, 50_000n);
-  // Referendum opens — but only one tiny voter shows up
+  // Referendum opens, but only one tiny voter shows up
   referendumVote(w, 'holder2', 1, 'no', 1_000n);
   tallyReferendum(w, 1);
 
@@ -259,14 +259,14 @@ export function guardianVetoQuorum(): Finding {
   advance(w, RESOLUTION_OFFSET - w.time);
   tally(w);
 
-  // g1 alone tries to veto — should fail (1 < quorum 2)
+  // g1 alone tries to veto, should fail (1 < quorum 2)
   guardianVeto(w, 'g1', 1);
   const stillQueuedAfterOne = w.proposals[0].status === 'queued';
-  // g2 also signs — now veto goes through
+  // g2 also signs, now veto goes through
   guardianVeto(w, 'g2', 1);
   const vetoedAfterTwo = w.proposals[0].status === 'vetoed';
 
-  // Try to veto another — budget exhausted
+  // Try to veto another, budget exhausted
   submit(w, 'alice', 'r2', 50_000n);
   // ^ this happens too late but test budget
   const budgetExhausted = w.guardianVetoesUsed === 1;
@@ -354,7 +354,7 @@ export function authorRecusal(): Finding {
   // Proposal pays c1 directly (self-affecting)
   submit(w, 'c1', 'c1', 50_000n, { affectsAddress: 'c1' });
   commit(w);
-  // c1 attempts to vote — should be blocked
+  // c1 attempts to vote, should be blocked
   vote(w, 'c1', 1, 'approve');
   recuse(w, 'c1', 1);
   for (const m of COMMITTEE.slice(1)) vote(w, m, 1, 'approve');
@@ -383,10 +383,10 @@ export function lateSubmissionCutoff(): Finding {
   setBalance(w, 'bob', 1n, 10000n);
 
   // Voting opens at day 25 (30d cycle - 5d voting). Cutoff = day 24.
-  // alice submits at day 23+12h — well before cutoff (>36h margin)
+  // alice submits at day 23+12h, well before cutoff (>36h margin)
   advance(w, 23 * 86400 + 12 * 3600);
   submit(w, 'alice', 'r', 1n);
-  // bob submits at day 24+12h — 12h after cutoff
+  // bob submits at day 24+12h, 12h after cutoff
   advance(w, 25 * 3600); // jump to day 24 + 13h
   submit(w, 'bob', 'r', 1n);
 
@@ -425,7 +425,7 @@ export function zeroVolumeStarvation(): Finding {
     status: ok ? 'PASS' : 'INFO',
     summary: `Genesis reserve 50k. Ops 5k/cycle. With no DEX revenue, runway = ${cyclesSurvived} cycles (~${cyclesSurvived} months at 30-day cycles).`,
     recommendation:
-      'Genesis must document target reserve runway (recommend ≥12 cycles). If revenue stays zero past runway, DAO must vote to raise capital or wind down — encode this as a constitutional check.',
+      'Genesis must document target reserve runway (recommend ≥12 cycles). If revenue stays zero past runway, DAO must vote to raise capital or wind down, encode this as a constitutional check.',
     trace: dump(w),
   };
 }
@@ -449,9 +449,9 @@ export function sybilCommittee(): Finding {
   const aliceSeats = w.committee.filter((c) => c.startsWith('alice')).length;
   return {
     id: '13',
-    title: 'Sybil committee — undetectable on-chain',
+    title: 'Sybil committee, undetectable on-chain',
     status: 'INFO',
-    summary: `4 alice* addresses won 4 of 7 seats — a single beneficial owner now controls majority. Cannot detect without off-chain signals.`,
+    summary: `4 alice* addresses won 4 of 7 seats, a single beneficial owner now controls majority. Cannot detect without off-chain signals.`,
     recommendation:
       'On-chain mitigations: nomination stake (raises Sybil cost), pseudonym registry, tenure requirement, and persistent identity weighting. Acknowledge in litepaper that pure-on-chain detection is not possible; community vetting is the primary defense.',
     trace: `committee=${w.committee.join(',')}, alice* seats: ${aliceSeats}`,
@@ -497,7 +497,7 @@ export function reorgReplay(): Finding {
   commit(w);
   for (const m of COMMITTEE) vote(w, m, 1, 'approve');
   close(w);
-  // Attempt a second execute pass — must be no-op
+  // Attempt a second execute pass, must be no-op
   const tBefore = w.treasuryBase;
   execute(w);
   const tAfter = w.treasuryBase;
@@ -506,7 +506,7 @@ export function reorgReplay(): Finding {
     id: '15',
     title: 'Replay protection (double-execute is a no-op)',
     status: ok ? 'PASS' : 'FAIL',
-    summary: 'Calling execute() again on the same proposal does nothing — status already executed.',
+    summary: 'Calling execute() again on the same proposal does nothing, status already executed.',
     recommendation:
       'Contract: status must transition only forward (executed/failed/vetoed are terminal). Reorg replays cannot drain treasury twice.',
     trace: dump(w),
@@ -613,7 +613,7 @@ export function timelockSweep(): Finding {
     for (const m of COMMITTEE) vote(w, m, 1, 'approve');
     advance(w, RESOLUTION_OFFSET - w.time);
     tally(w);
-    // Try to execute BEFORE timelock — must remain queued
+    // Try to execute BEFORE timelock, must remain queued
     advance(w, t.tl - 60); // 60s before timelock expires
     execute(w);
     const stillQueued = w.proposals[0].status === 'queued';
@@ -643,9 +643,9 @@ export function supermajority(): Finding {
   setBalance(w, 'alice', 1n, 10000n);
   fundTreasury(w, 100_000n);
 
-  // Case 1: 4-3 vote — should fail under supermajority
+  // Case 1: 4-3 vote, should fail under supermajority
   submit(w, 'alice', 'r1', 10_000n);
-  // Case 2: 5-2 vote — should pass
+  // Case 2: 5-2 vote, should pass
   submit(w, 'alice', 'r2', 10_000n);
 
   commit(w);
@@ -727,7 +727,7 @@ export function guardianSizeFive(): Finding {
   advance(w, RESOLUTION_OFFSET - w.time);
   tally(w);
 
-  // 2 sigs — not enough
+  // 2 sigs, not enough
   guardianVeto(w, 'g1', 1);
   guardianVeto(w, 'g2', 1);
   const after2 = w.proposals[0].status;
@@ -755,7 +755,7 @@ export function depositInNativeToken(): Finding {
   setCommittee(w, COMMITTEE);
 
   // Attacker has many cheap native tokens
-  // (in 'native' denomination, the deposit is just 1000 tokens — trivial after crash)
+  // (in 'native' denomination, the deposit is just 1000 tokens, trivial after crash)
   for (let i = 0; i < 50; i++) {
     setBalance(w, `attacker${i}`, 0n, 1000n); // each has just enough deposit
     submit(w, `attacker${i}`, 'spam', 1n);
@@ -769,7 +769,7 @@ export function depositInNativeToken(): Finding {
     status: willOverloadGovernance ? 'INFO' : 'INFO',
     summary: `${submittedCount} proposals submitted by attackers using native-token deposits. After a price crash, this floods the cycle and committee bandwidth.`,
     recommendation:
-      'Pin proposalDepositAsset=base (ETH/USDC). Deposit cost stable regardless of governance-token price. Native denomination is REJECTED — fails under price crash.',
+      'Pin proposalDepositAsset=base (ETH/USDC). Deposit cost stable regardless of governance-token price. Native denomination is REJECTED, fails under price crash.',
     trace: `submitted=${submittedCount} (no on-chain block; demonstrates spam vector when deposit is native + token price collapses)`,
   };
 }
@@ -865,7 +865,7 @@ export function termRotation(): Finding {
     title: 'Term length / election rotation (365d term)',
     status: ok ? 'PASS' : 'FAIL',
     summary: `Initial committee fully rotated to new winners after term end. ${result.filled}/7 seats filled.`,
-    recommendation: 'Term length 365d default. Stagger seats so first election after genesis only rotates ~half (e.g. set initial bootstrap term to 180d for half the seats). Sim does not yet model staggering — call out as v1 contract requirement.',
+    recommendation: 'Term length 365d default. Stagger seats so first election after genesis only rotates ~half (e.g. set initial bootstrap term to 180d for half the seats). Sim does not yet model staggering, call out as v1 contract requirement.',
     trace: `initial=${initial.join(',')}\n  final=${w.committee.join(',')}`,
   };
 }
@@ -905,7 +905,7 @@ export function quorumBoundary(): Finding {
 // ----- 27. Committee of one (legal minimum) -----
 
 export function committeeOfOne(): Finding {
-  // A single-member committee IS allowed by the framework — the rails still apply.
+  // A single-member committee IS allowed by the framework, the rails still apply.
   // Trade-off: the petition/referendum and Guardian paths become the primary
   // checks on the dictator, since there is no internal deliberation.
   const w = newWorld({
@@ -946,12 +946,12 @@ export function committeeOfOne(): Finding {
       'Solo committee approves a self-serving proposal. Community petitions, triggers referendum, votes NO with adequate turnout → proposal blocked. ' +
       'Framework rails still function with committee=1; the petition/referendum becomes the primary check.',
     recommendation:
-      'Allow committeeSize ≥ 1. Genesis guidance: with committee=1, set petitionThresholdBps lower (e.g. 5%) and shorter timelock for routine proposals — but CRITICAL: pin minimum referendum turnout high (≥30%) and make Guardian strongly recommended. Solo committees are legitimate (early-stage / solo-operator DAOs) but ship with a written warning.',
+      'Allow committeeSize ≥ 1. Genesis guidance: with committee=1, set petitionThresholdBps lower (e.g. 5%) and shorter timelock for routine proposals, but CRITICAL: pin minimum referendum turnout high (≥30%) and make Guardian strongly recommended. Solo committees are legitimate (early-stage / solo-operator DAOs) but ship with a written warning.',
     trace: dump(w),
   };
 }
 
-// ----- 28. Committee of one — recusal deadlock -----
+// ----- 28. Committee of one, recusal deadlock -----
 
 export function soloRecusalDeadlock(): Finding {
   const w = newWorld({
@@ -963,7 +963,7 @@ export function soloRecusalDeadlock(): Finding {
   setBalance(w, 'solo', 1n, 10000n);
   fundTreasury(w, 100_000n);
 
-  // Self-affecting proposal — recusal mandatory, but no other members
+  // Self-affecting proposal, recusal mandatory, but no other members
   submit(w, 'solo', 'solo', 10_000n, { affectsAddress: 'solo' });
   commit(w);
   recuse(w, 'solo', 1);
@@ -975,12 +975,12 @@ export function soloRecusalDeadlock(): Finding {
   const ok = status === 'rejected-quorum';
   return {
     id: '28',
-    title: 'Committee of one — self-affecting proposal deadlocks',
+    title: 'Committee of one, self-affecting proposal deadlocks',
     status: ok ? 'PASS' : 'FAIL',
     summary:
       `Solo committee + recusal-required + self-affecting = no voter available. Result: ${status}. Treasury protected; the dictator literally cannot pay themselves.`,
     recommendation:
-      'This is a feature, not a bug. With committee=1, the recusal rule prevents self-dealing — the framework forces the dictator to use the public proposal+petition path for self-payments, which the community can override.',
+      'This is a feature, not a bug. With committee=1, the recusal rule prevents self-dealing, the framework forces the dictator to use the public proposal+petition path for self-payments, which the community can override.',
     trace: dump(w),
   };
 }

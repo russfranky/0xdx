@@ -60,6 +60,28 @@ Motion), react-markdown, lucide-react.
 └── ATTRIBUTIONS.md           # third-party credits (shadcn/ui, Unsplash)
 ```
 
+## Deploy
+
+The site is set up to deploy two ways. Pick one.
+
+**Cloudflare Pages (preferred).** No repo-side action required. In the
+Cloudflare dashboard: Workers & Pages → Create → connect Git → pick this
+repo → framework preset Vite → build command `npm run build` → output
+directory `dist` → environment variable `NODE_VERSION=20`. Add
+`0xdx.com` as a custom domain. The `public/_redirects` file in this
+repo handles the SPA fallback.
+
+**GitHub Pages.** Repo settings → Pages → Source = "GitHub Actions".
+Then add a repo variable `GH_PAGES_AUTODEPLOY=true` (Settings → Secrets
+and variables → Actions → Variables) to enable auto-deploy on every push
+to `main`. The workflow lives at `.github/workflows/deploy.yml`. The
+`public/CNAME` file claims `0xdx.com` for the Pages site, and the build
+emits a `404.html` SPA fallback. To deploy manually without enabling
+auto-deploy, run the workflow from the Actions tab.
+
+The build job in the workflow runs on every push regardless of which
+hosting path is active, so the repo always has a passing CI build.
+
 ## License
 
 MIT. See [LICENSE](./LICENSE).
