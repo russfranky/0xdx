@@ -1,0 +1,1785 @@
+# 0xdx: full specification (concatenated)
+
+Source: https://github.com/russfranky/0xdx
+License: MIT
+
+This file concatenates the canonical 0xdx specification documents in a
+single LLM-readable text file. Each section below is delimited by a
+horizontal rule and a heading naming its source path.
+
+
+================================================================
+# Litepaper
+Source: `0xdx_litepaper.md`
+================================================================
+
+# 0xdx: A Self-Operating, Committee-Driven DAO Governance Framework
+
+> **Version 1.0** · Published **2026-05-09** (UTC) · Released under the MIT License.
+> First public release of the 0xdx specification draft. Subsequent revisions are tracked in the git history of the canonical repository; this document's publication date is the authoritative timestamp for attribution and prior-art purposes.
+
+## 1. Introduction
+
+In the modern era of blockchain and decentralization, traditional models of governance are being re-evaluated and reimagined. Decentralized Autonomous Organizations (DAOs) have shown how communities can collectively manage projects and funds without centralized control. They promise increased transparency, broader participation, and independence from single authorities. However, today's DAOs also reveal significant growing pains. Too often, power ends up concentrated in the hands of a few large token holders, and the ideal of community governance is undermined by low participation or insider dominance. In some cases, so-called "governance tokens" are merely symbolic; real control remains with privileged multisig wallets. As Vitalik Buterin observed in his 2021 essay *Moving beyond coin voting governance*, many current DAO designs "don't really work unless they are very close to being centralized," because raw token voting tends to recreate the plutocracy it set out to escape.
+
+Enter 0xdx. 0xdx is a next-generation governance framework designed to address these challenges head-on. It represents a self-operating, committee-driven governance system that powers DAOs to be scalable, efficient, and financially self-sustaining. In simple terms, 0xdx blends automation with community-driven oversight to create a DAO that can essentially run itself. Decisions are made by a small elected committee rather than by raw token weight, and the execution of those decisions is handled automatically by smart contracts. A built-in economic engine funds the DAO’s operations, so it doesn’t need constant token sales or external funding. By combining structured human governance with trustless automation, 0xdx aims to set a new standard for how decentralized organizations can operate fairly and effectively.
+
+This litepaper explores the 0xdx framework in depth. We begin with background on the governance challenges in Web3 and lessons from existing DAOs. We then explain what 0xdx is and why it exists, before diving into its governance architecture, proposal lifecycle, treasury system, and the safeguards that make it secure. Real-world DAO examples – from Nouns DAO to MakerDAO – are woven in to compare approaches and illustrate why 0xdx is a game-changer. The tone is professional yet accessible, intended for both Web3 veterans and newcomers. By the end, you’ll understand how 0xdx works and how it can empower the next wave of decentralized organizations.
+
+## 2. Background: Governance Challenges in Web3
+
+Decentralized governance in Web3 is still in its experimental stage, and numerous models have been tried – each with strengths and notable weaknesses. To appreciate 0xdx’s design, it’s important to first understand these common governance models and the challenges DAOs face today:
+
+**Token-Based Governance (Coin Voting):** The most prevalent model in DAOs gives voting power in proportion to the number of tokens one holds. This approach aligns influence with investment, encouraging people to buy in and participate. However, it often leads to a plutocracy-like dynamic where a few wealthy holders control most decisions. For example, in many DeFi protocols and token DAOs (from early projects like MakerDAO to community projects like ENS DAO), turnout from small holders is low and a handful of whales or large delegates can sway outcomes. Ethereum's Vitalik Buterin has criticized unrestricted token voting as fundamentally unstable, arguing that coin voting creates misaligned incentives between voters and protocol health. Recent incidents confirm the risk: in 2023, opportunistic investors at multiple DAOs (including Nouns and Aragon) used the gap between governance-token price and treasury-per-token value to extract treasury assets, sometimes via legitimate mechanisms the DAOs themselves had introduced. Token-based governance is simple to implement, but it struggles with concentration of power, low voter engagement, and vulnerability to hostile or opportunistic takeovers.
+
+**One-Person-One-Vote:** This model gives each participant an equal vote, regardless of token holdings. It’s closer to real-world democracy and prevents the rich from buying up votes. However, one-person-one-vote is hard to achieve pseudonymously. It requires stringent identity verification to ensure each human only votes once, conflicting with the open and pseudonymous ethos of crypto. Without identity checks, a single actor can create many pseudonymous accounts (a Sybil attack) to gain extra votes. Optimism Collective introduced an innovative twist on this by creating a Citizens’ House where members with special soulbound tokens each get one vote, running alongside a Token House. This hybrid approach is still experimental and highlights how challenging it is to implement true one-person-one-vote at scale in Web3.
+
+**Quadratic Voting:** Quadratic voting attempts to reduce the influence of large holders by making each additional vote exponentially more expensive (in terms of tokens or some credit). In theory, this gives diminishing returns to whales and lets minority voices have more impact per token. Projects like Gitcoin have popularized quadratic funding for grants, and some DAOs have toyed with quadratic voting. While it moderates extremes, it introduces complexity and can be gamed if participants split their identities. It also doesn’t fully eliminate power concentration – a determined wealthy user can still outspend others to push through decisions. Thus quadratic voting, while an ingenious idea, hasn’t been a cure-all for governance woes.
+
+**Delegated Voting:** To improve participation, many DAOs allow token holders to delegate their voting power to a representative. Delegation can concentrate expertise – active, knowledgeable community members (delegates) vote on behalf of many passive holders. This is used extensively in practice (for instance, ENS DAO and Uniswap governance rely on delegates to achieve any meaningful voter turnout). Delegation makes decision-making more efficient, but essentially it centralizes power into a few delegates or teams. If those delegates accumulate too much influence or collude, the outcome can resemble the very centralized governance DAOs sought to escape. It also introduces extra trust in delegates to act in good faith.
+
+**Reputation Systems:** Some projects have experimented with giving voting weight based on a user’s reputation or contributions rather than tokens. For example, systems like SourceCred allocate “cred” to contributors which could inform governance power. This can reward active contributors over passive investors. However, if the reputation scoring is controlled by a central entity or can be manipulated (favoritism, gaming contributions), it may not be truly fair or decentralized. Designing a tamper-proof, decentralized reputation metric remains an open challenge, so pure reputation-weighted governance is rare in the wild.
+
+**Randomized or Lottery Voting:** Another concept is to randomly select a subset of members to vote on each decision (similar to jury duty or sortition). This prevents any one faction from consistently dominating (since the voters change randomly each time). It was proposed as a way to curb vote-buying and plutocracy. The downside is the luck of the draw – decisions could be made by an uninformed or even malicious random subset, leading to unpredictable outcomes. With high stakes, purely random selection can be dangerous if those chosen are not knowledgeable or accountable for their votes.
+
+**Time-Locked (Long-Term) Voting:** Models like vote-escrowed tokens require users to lock up tokens for a period to gain voting power. This aligns voters with long-term success – only those committing their tokens for months or years get a big say. For instance, Curve’s governance uses time-locked voting power (veCRV) to ensure voters have skin in the game over time. This does encourage a long horizon, but it doesn’t prevent large holders from dominating (they just lock their large stakes) and introduces liquidity trade-offs (participating voters can’t easily sell their tokens). So while time-locking improves commitment, it again doesn’t fully solve power imbalance issues.
+
+In summary, each of these governance models addresses some aspect of fairness or efficiency, yet no single model has perfectly met the needs of decentralized communities. Token-weighted voting can devolve into “pay-to-win” governance, while strict one-person-one-vote contradicts the open participation ethos. Delegation and quadratic voting are clever tweaks but can only do so much to restrain whales or motivate voters. Real-world DAO experiences highlight these issues:
+
+*   **Nouns DAO** has innovated on funding and governance by auctioning one NFT (noun) per day and giving each noun holder one vote. This continuous auction mechanism means the treasury is constantly funded (100% of auction proceeds go to the DAO's treasury), and influence is broadly distributed over time. Yet in September 2023, Nouns experienced its own governance arbitrage: as the floor price of Nouns NFTs fell below each NFT's pro-rata share of the treasury, arbitrageurs accumulated cheap Nouns and used the DAO's own *fork* mechanism (a built-in ragequit-style exit Nouns had introduced precisely to protect minorities) to leave the DAO and redeem roughly $27 million of treasury value at book value. The arbitrageurs did not pass a malicious proposal; they used a legitimate exit feature against the DAO's net asset value. The episode showed that even thoughtful governance designs can be exploited when token price decouples from treasury per token.
+*   **MakerDAO**, one of the first DeFi DAOs, operates on token voting and has long struggled with low participation and centralization of votes. Founder Rune Christensen has explicitly cited "voter apathy" as a central issue and in 2022 proposed the ambitious "Endgame Plan" to overhaul Maker's governance. Notably, Endgame itself passed largely on Christensen's own delegated MKR, a result that arguably *reinforces* the apathy critique it set out to solve. Maker's experience illustrates how purely token-weighted governance can grind to a halt without aligned participation, with a small core ending up carrying the burden and decision-making starting to resemble the centralized control DAOs aimed to escape.
+*   **Aragon**, a project that builds DAO tools, experienced a cautionary tale in its own governance. In May 2023, Aragon Association paused its planned handover of control of a roughly $200M treasury to ANT token holders, alleging a coordinated 51%-style attack by a group of investors it called "RFV Raiders" (Arca Capital among the named parties; Arca disputed the framing). The episode never resolved cleanly; in November 2023 the Aragon Association announced it would dissolve and disburse roughly $155M of ETH back to ANT holders. The story underscores both the need for safeguards against opportunistic governance and the difficulty of balancing open token-holder control with treasury security.
+*   **Optimism Collective’s** two-house model (Token House + Citizens’ House) is a prominent attempt to avoid the pitfalls of token-only governance by introducing a parallel system of vetted individual members. This shows that even at the cutting edge of Layer 2 blockchain governance, designers are experimenting with mixed models to achieve both broad participation and thoughtful decision-making. The outcome of this experiment is yet to fully unfold, but it influenced thinking around combining automation with human committees.
+*   **Moloch DAO** pioneered a minimalist governance framework that introduced the concept of ragequit – allowing any member who disagrees with a decision to exit the DAO and withdraw their share of the treasury before funds are spent. This provides a safety valve for minority members to avoid being overruled and exploited. Moloch’s ragequit mechanism greatly influenced DAO design by proving that simple smart contract rules can protect participants. However, Moloch-style DAOs sacrifice some automation (every funding proposal requires members to manually handle exits if they choose) and limit growth because membership and contributions are gated.
+
+Each of these examples provided valuable lessons. The key takeaway is that an ideal governance system should strive for:
+*   **Fairness:** Avoiding undue concentration of power (no plutocracy, no permanent aristocracy).
+*   **Accountability:** Decision-makers should have skin in the game and face consequences for bad actions.
+*   **Transparency:** Community members should see clearly how decisions are made and funds used.
+*   **Efficiency and Scalability:** The process should not bog down as the community or treasury grows – it should handle many proposals and large funds without chaos.
+*   **Security:** Mechanisms to prevent or mitigate hostile takeovers, fraud, and smart contract exploits must be in place.
+*   **Financial Sustainability:** The DAO should have a renewable source of funding to support its operations long-term, rather than relying solely on token inflation or one-off sales.
+
+From this backdrop, 0xdx was conceived as a new paradigm in decentralized governance to meet these criteria. It is essentially an attempt to combine the best elements of the above models while mitigating their flaws. The next sections will describe exactly what 0xdx is and how it works to achieve a balanced, self-sustaining governance ecosystem.
+
+## 3. What is 0xdx?
+
+0xdx is a governance framework and protocol for DAOs that emphasizes committee-driven decision-making with automated execution and funding. In essence, 0xdx transforms a DAO into a sort of self-operating governance engine – one where human participants set the direction, but the routine operations (like tallying votes, enforcing decisions, and managing funds) are handled by smart contracts without manual intervention.
+
+> **What "self-operating" means here (and what it does not).** The framework uses *self-operating* in a precise, narrow sense: **once a proposal has cleared its defined thresholds and timelock, no human gatekeeper sits between the vote and the execution.** The smart contract is the executor. There is no admin EOA, treasurer, multisig signer, or off-chain key on the path from "passed" to "executed." This is the property the term protects.
+>
+> The framework does **not** claim full autonomy in the sense of: (a) operating without human deliberation, since committee deliberation is core to the model; (b) operating without trust assumptions, since the elected committee, the optional Guardian, and the chosen identity provider are all trust-bearing roles; (c) self-modifying or self-amending, since constitutional amendments require a Constitutional proposal under §7 of `CONSTITUTION.md`.
+>
+> 0xdx defines decentralization in its own terms, not by external rubric. The properties the framework actually targets are: **open-source**, **verifiable**, **permissionless to propose and to exit**, **non-custodial**, **economically independent**, and **structurally democratic** (one person one vote inside the elected committee; no token-weighted purchase of influence). Existing industry rubrics, including those published by large crypto VCs, were largely written to legitimize token-weighted DAOs, and grading 0xdx by those criteria would be category-confused. Reviewers from those frameworks are welcome to map 0xdx onto their own rubrics; we do not adopt theirs as authoritative.
+
+At its core, 0xdx replaces the typical token-holder mass voting with a democratic committee system. Instead of every token holder needing to vote on every issue, the community elects or initializes a committee of members who are entrusted to make decisions. Each committee member typically has one vote in governance matters (so committee voting is one-person-one-vote within that small group, not weighted by tokens). This committee-based approach is a deliberate shift to structured decision-making, avoiding the pitfalls of open token voting. It is much harder for a malicious outsider to suddenly buy their way onto the committee than it is to buy tokens on the open market – thus, governance power in 0xdx is more meritocratic and stable.
+
+What makes 0xdx especially powerful is how it automates proposals and treasury operations. The system is designed such that:
+*   **Community-Driven Proposals:** Any community member (not just committee members) can submit proposals for the DAO’s consideration. This retains open participation – the community sets the agenda by bringing ideas forward, whether it’s a funding request, a protocol change, or a new initiative. A small submission deposit or fee is required, which discourages spam and ensures proposers are serious.
+*   **Committee Review and Voting:** The elected committee reviews and votes on proposals in a structured cycle (e.g., monthly). The default committee size is **7 members**, configurable in the range of 5–15 depending on the DAO’s needs (smaller communities can run with 5, larger ones with up to 15). Proposals get the attention of dedicated reviewers, and decisions are made based on informed discussion, not popularity contests. Each member has equal say, with no token weighting, so they must persuade each other on the merits of the proposal.
+*   **Automated Execution:** When a proposal is approved by the committee, 0xdx’s smart contracts automatically execute the decision. For example, if the proposal was to fund a project with 100 ETH from the treasury, the contract will release those funds to the project’s address as soon as the voting period concludes and the approval criteria are met. No extra steps, no waiting on a human treasurer to sign off – the code enforces the outcome transparently. This closes the loop between decision and action, creating a self-enforcing governance process.
+*   **Self-Sustaining Treasury:** 0xdx introduces a built-in economic component (detailed in Section 6) that continually funds the DAO’s treasury. Specifically, 0xdx comes with an integrated decentralized exchange (DEX) whose fees flow into the treasury. Every time users trade on the DEX, a portion of the trading fees is captured as revenue for the DAO. This means the act of participating in the ecosystem (trading tokens, providing liquidity, etc.) directly finances the DAO’s governance and projects. It’s a virtuous cycle: usage funds the treasury, which funds development that drives more usage. In effect, the DAO becomes financially self-sustaining instead of relying on external funding or endless token issuance.
+
+In summary, 0xdx exists to balance automation with human judgment. It acknowledges that completely algorithmic governance (or fully open mob rule) can be problematic; by having a committee of real people deliberating, you maintain common-sense oversight. But by automating the mechanics and funding, you remove human bottlenecks and temptations (no single person can block an approved decision or misuse treasury funds).
+
+Why does 0xdx exist? It exists because first-generation DAOs showed that we need a middle ground between decentralization and efficiency. On one hand, giving everyone a direct vote on everything is slow and vulnerable to manipulation by the wealthy or coordinated actors. On the other hand, reverting to centralized control (or legacy corporate structures) sacrifices the open participation and transparency that make DAOs innovative. 0xdx’s committee model is a middle path: it’s decentralized in that no single person has absolute power (the committee is multiple people, and they are ideally representative of the community’s interests), but it’s efficient in that it streamlines governance into a manageable process.
+
+Furthermore, 0xdx directly tackles the sustainability problem. Many DAOs have treasuries that deplete over time if they only spend and don’t have income, or they resort to diluting their token holders with new token mints for funding. 0xdx bakes in a revenue model (the DEX fees) so that the DAO can fund itself perpetually as long as its ecosystem is active. This concept is inspired by projects like Nouns DAO (which self-funds via NFT auctions) and OlympusDAO (which generated its own liquidity and treasury via bonding) – 0xdx generalizes the idea into a governance framework any DAO can use.
+
+## 4. Governance Architecture
+
+The governance architecture of 0xdx defines how the DAO is structured, who holds decision power, and how rules are enforced. It consists of a few key components working in harmony:
+
+**4.1 Committee-Based Governance Structure:** At the heart of 0xdx is a governance committee: a council of DAO members with the authority to vote on proposals. The **canonical default is 7 seats**, with a recommended range of 5–15 depending on community size (5 for small/early-stage DAOs, up to 15 for large organizations that want broader representation). The framework also permits **degenerate sizes** at the boundaries: as small as **1** (a single-operator DAO with public accountability) or above 15 (large councils). These are legal but trade off: at size 1 there is no internal deliberation, so the petition / referendum and Guardian paths become the only checks; at very large sizes deliberation degrades into theater. The idea is to keep the number of decision-makers small enough that every proposal gets dedicated attention. During initialization, the founding members set up the committee by defining the number of seats and who occupies them (usually trusted community members or project founders initially). They also define each member's initial contribution to the DAO's liquidity (see §6). Voting power within the committee is one-person-one-vote: each member gets an equal vote regardless of contribution size or token holdings. Decisions inside the committee are democratic, not plutocratic.
+
+The committee governance model draws inspiration from traditional boards or councils, but with an important twist: committee members in 0xdx are not unchecked rulers; they operate under transparent on-chain rules and can be held accountable by the wider community (see Section 8 on Oversight). The committee’s mandate is to act in the best interest of the DAO, and their powers are limited to what the smart contracts allow (primarily, voting proposals up or down). They cannot unilaterally take funds for themselves outside of the proposal process, nor can they change the rules without broader consensus (critical protocol changes would themselves be proposals subject to rules).
+
+**Flexibility and Adaptability:** The architecture allows the DAO to adjust its governance as it grows. The number of committee seats can be increased over time if needed (for example, the DAO might vote to add new committee members as the community expands to bring in more expertise or representation). The framework could even allow rotation or election of committee seats periodically, if the DAO wants to introduce fresh blood or democratic turnover. This adaptability means 0xdx can start with a more curated committee (often necessary in early stages to get things moving) and gradually decentralize further as trust in the system grows.
+
+**4.2 Smart Contract Governance Engine:** All of the governance actions in 0xdx are mediated by smart contracts – this is what makes it self-operating. The main contracts include:
+*   **A Proposal Contract** or module that accepts new proposals (ensuring the proposer paid the required deposit and formatted the proposal correctly).
+*   **A Voting Contract** that manages the voting process for the committee. It records votes from committee members during the voting window, enforces one vote per member, and applies the required majority or quorum rules. Because membership is known (the committee addresses are set), quorum can be defined as a certain fraction of committee members participating.
+*   **An Execution/Timelock Contract** that queues approved proposals and executes them after the vote. In many cases, execution can be immediate if no delay is needed; however, for security, the DAO can choose to include a short timelock (say 1–2 days) between approval and execution for especially large fund movements or smart contract changes. This timelock acts as a safety period – if somehow a malicious proposal slipped through, there’s a window for the community or an emergency mechanism to intervene (perhaps via a pause or veto, as a safeguard).
+*   **The Treasury Contract**, which holds the DAO’s funds and only releases them according to rules (like an approved proposal).
+*   **The Committee Management Contract**, which tracks who the current committee members are. If the committee needs to change (member added or removed), that change itself can be handled by a proposal that updates this contract (ensuring the process is governed and not arbitrary).
+
+All these contracts work together to ensure that no manual steps are needed in governance. For instance, when a new proposal is created, it is registered on-chain; when committee members vote, those votes are tallied on-chain; when the vote concludes, the outcome triggers on-chain execution. It’s a closed loop, minimizing trust requirements. Every action is transparent to the public – anyone can inspect the blockchain to see proposals, votes, and transactions executed, creating inherent accountability.
+
+**4.3 Community Participation and Influence:** While the formal power in 0xdx lies with the committee, the broader community of token holders and contributors still plays a vital role in the architecture. The community’s influence is woven in through:
+*   **Proposal Rights:** Any community member (even those not on the committee) can put forward a proposal, as mentioned. This ensures good ideas aren’t bottlenecked by the committee. In practice, community members will discuss ideas on forums or social media, build support, then submit a proposal on-chain. There is a submission fee (which could be small, like a nominal amount of ETH or the DAO’s token) that prevents spam proposals. If the proposal is approved, this fee might be refunded or even used to help fund the execution.
+*   **Signaling Mechanism:** 0xdx introduces a novel sentiment signaling mechanism: community members can stake or spend tokens to signal support (or opposition) for proposals during the submission period. These signals do not directly decide the outcome (the committee does that), but they provide valuable insight. For example, if a proposal has overwhelming grassroots support (many tokens signaled in favor), the committee knows the community cares about it. Conversely, if a lot of token holders signal opposition or none signal at all, that informs the committee’s deliberation. Because signaling may require actually locking or burning a small amount of tokens, it’s a way for the wider community to put skin in the game to express their view, without letting that view be binding (which could be exploited by whales). Think of it as a decentralized poll or temperature check that runs alongside the official vote. It keeps the committee accountable to community sentiment – ignoring a unified community signal could damage the committee’s standing. This mechanism balances influence: the community has voice, the committee has vote.
+*   **Transparency and Communication:** The architecture encourages the committee to be transparent about their decisions. All votes are recorded publicly, so each committee member’s voting record on proposals is visible. The community can see if a member consistently voted against popular sentiment or made controversial choices. Socially, this pressures committee members to justify their decisions (perhaps via weekly community calls, forums, or reports). In an on-chain context, code can even enforce certain transparency (for instance, requiring proposals to include a rationale, or allowing community comments on proposals in the interface).
+
+**4.4 Checks and Balances:** One might ask, what if the committee itself becomes malicious or incompetent? 0xdx architecture includes checks and balances to prevent a runaway committee:
+*   The committee cannot arbitrarily add new members or change rules without going through the proposal process, which the community can observe. If a committee tried to pass a self-serving rule change, it would be evident. In extreme cases, the community could opt to abandon the DAO if the committee misbehaved (the ultimate check in crypto governance is the ability to fork or exit, similar to the ragequit concept but at community scale).
+*   The initial conditions (like the permanently locked liquidity and no exit reward for committee, explained later) mean committee members cannot just cash out and run. They benefit only if the DAO as a whole succeeds, aligning their interests with the community’s interest.
+*   Optionally, the DAO can introduce a mechanism to replace committee members if needed. For example, there could be a provision that if a supermajority of the committee itself agrees, they can vote to expel a member (useful if one becomes inactive or rogue). Or the DAO’s token holders could have a special kind of proposal (maybe a confidence vote) that, if it achieves an overwhelming signal from token holders, triggers a re-election or some arbitration. These kinds of meta-governance features can be built in to enhance accountability. They would be used sparingly, but their existence is a safeguard.
+
+Overall, the 0xdx governance architecture strives to be modular, transparent, and fair. It establishes a clear hierarchy: the community proposes and signals, the committee decides, and the smart contracts automatically implement decisions. It’s an architecture designed to scale – a small committee can handle a large community’s input without chaos – and to be resilient – protected by coded rules and economic incentives against many forms of attack or failure.
+
+## 5. Proposal Lifecycle & Categories
+
+In 0xdx, proposals are the lifeblood of governance. Every action the DAO takes (spending funds, launching a project, changing a parameter, adding a committee member, etc.) flows through a proposal. The framework defines a structured proposal lifecycle to ensure decisions are made methodically and with adequate input. Let’s walk through how a proposal typically moves from an idea to an executed action, and the different types of proposals in the system.
+
+**5.1 Proposal Lifecycle Stages:**
+
+The 0xdx lifecycle has **six canonical stages**. The framework runs on a repeating governance cycle (default: 30 days). The example day-ranges below assume that 30-day cycle.
+
+1.  **Ideation:** Off-chain discussion in forums, Discord, or governance boards. Anyone can float an idea and gather informal feedback before committing to a formal on-chain proposal.
+2.  **Submission:** During the submission window (e.g. days 1–25 of the cycle), the proposer submits via the Proposal Contract, paying a small deposit to deter spam. The proposal includes objective, background, expected outcomes, any transactions to be executed on approval, and any treasury request. Once submitted, it appears in the on-chain queue.
+3.  **Signaling:** While the submission window is still open, community members signal support or opposition via the staking-based signaling mechanism (token-weighted, non-binding). Proposers may withdraw or amend their proposal in response to early signal; refinement happens here, not as a separate stage.
+4.  **Voting:** During the voting window (e.g. days 26–30), no new proposals are accepted. Committee members cast Approve / Reject / Abstain. The Voting Contract enforces one-vote-per-member-per-proposal and closes voting at the deadline.
+5.  **Resolution:** When voting ends, each proposal’s outcome is computed. A proposal passes if it clears the configured majority and quorum thresholds. For the default 7-seat committee, this is typically a simple majority (4-of-7) with quorum of at least 5 members voting.
+6.  **Execution:** Passed proposals are queued in the Execution Contract. After the safety timelock (default 48 hours) elapses, the encoded actions execute on-chain automatically, with no further human signature required. Outcomes (executed or rejected) are public and immutable, and feed back into the next cycle's ideation stage.
+
+**5.2 Proposal Categories:**
+
+Not all proposals are alike. 0xdx recognizes a few categories of proposals, each serving different purposes and with slightly different rules:
+*   **General Proposals (Community Proposals):** These are the most common proposals, submitted by any community member. They can cover a broad range of initiatives: funding a new project or grant, suggesting a partnership, changing a parameter in the protocol, organizing an event, you name it. General proposals are the primary way the community drives the DAO’s direction.
+*   **Revolving (Renewable) Proposals:** Some needs are continuous or recurring – for instance, monthly funding for an ongoing task, or seasonal budgets for a working group. Revolving proposals are a category meant for such recurring initiatives. The first time, it goes through the normal process. If it’s something that obviously will need renewal, the proposal can be marked as revolving. What this means is that the proposer (or another champion) can bring it back in subsequent cycles for renewal of funding without starting from scratch.
+*   **Committee-Only Proposals:** These are proposals that only committee members can submit (as opposed to general proposals open to anyone). Committee-only proposals typically involve governance maintenance and critical administrative actions. Examples include: adjusting the governance cycle timing, modifying the proposal deposit amount, appointing a new committee member or replacing one, initiating an upgrade to the smart contracts, or other “meta-governance” changes.
+
+**5.3 Example Workflow:** To illustrate, imagine a community member in a 0xdx-powered DAO wants to propose a new project: say, building a dashboard for the DAO’s metrics:
+1.  They draft a proposal describing the project, the team involved, timeline, and ask for 50 ETH from the treasury to fund it.
+2.  They submit it during the proposal submission period, paying the small fee. It appears on-chain as Proposal #12.
+3.  Over the next two weeks, other members discuss Proposal #12. Many think it’s a great idea and signal support by staking a bit of the DAO’s token in favor of it.
+4.  Voting period starts. All 7 committee members review Proposal #12; they see that community signaling was 80% in favor.
+5.  During voting, 6 of 7 committee members vote Approve, 1 votes Reject: a clear majority well above the 4-of-7 threshold.
+6.  Proposal #12 is marked as Passed. After the 2-day timelock elapses, the Execution module triggers the transfer of 50 ETH from the treasury contract to the proposer’s project wallet as specified.
+7.  The project team receives funds and starts building.
+
+## 6. Treasury System
+
+A standout feature of 0xdx is its treasury system, which is engineered to keep the DAO financially healthy and autonomous. The treasury system encompasses how the DAO gets funding, how funds are stored and protected, and how disbursement is handled. Two core pillars of the 0xdx treasury design are the built-in DEX revenue model and liquidity protection mechanisms.
+
+**6.1 Built-In Decentralized Exchange (DEX) and Revenue Generation:** Unlike many DAOs that passively hold assets or rely on sporadic funding events, a 0xdx DAO actively generates revenue through an integrated DEX. In practical terms, upon launching a 0xdx-based DAO, part of the setup is deploying a decentralized exchange (or integrating with an existing protocol instance) that the DAO owns or controls. This DEX can be a simple token swap facility for the DAO’s token and other ecosystem tokens, or a more complex automated market maker (AMM). The key is that the trading fees from the DEX are routed to the DAO’s treasury.
+
+**No Reliance on External Funding:** Because of the DEX revenues, the DAO does not have to frequently raise funds through token sales, bonds, or donations. Many DAOs start with a treasury from an initial token sale and then worry about sustaining it. 0xdx’s answer is to create an internal economy. This makes the DAO more resilient to market downturns; even if token price fluctuates, as long as people trade, there’s some income.
+
+**6.2 Initial Treasury and Liquidity Provision:** At launch, the committee members (or founding team) typically contribute some capital to seed the treasury and liquidity. In fact, the 0xdx model often requires initial liquidity contributions from members.
+*   Each committee member might contribute a certain amount of ETH or other assets, which are then locked into the DEX as liquidity pairs.
+*   Importantly, all initial liquidity provided is permanently locked in the smart contracts. The DAO cannot withdraw this seed liquidity on a whim – it’s meant to stay in the pools, ensuring traders can always trade the token and the market stays liquid. Permanent liquidity lock is a strong commitment: it reassures community and investors that the team can’t rug-pull by yanking liquidity.
+
+**6.3 Treasury Holdings and Management:** Beyond the DEX, the treasury contract can hold various assets. Over time, as the DAO earns income, it could diversify those assets. These decisions could themselves be made through governance proposals.
+
+**6.4 Automated Disbursement:** Once a proposal that involves funding is approved, the treasury system takes care of disbursing funds automatically. No committee member or multisig is needed to “sign the check” – it’s all automatic.
+
+**6.5 Safeguards in Treasury Operations:**
+*   **Spend Limits:** The code can enforce that a single proposal cannot withdraw more than a certain percentage of the treasury’s balance at once.
+*   **Time-locks and Vetos:** As mentioned, a short delay before execution can give a window for intervention.
+*   **Audit and Security of Contracts:** The treasury and DEX contracts are expected to be rigorously audited and based on battle-tested code.
+
+## 7. Liquidity, Security & Safeguards
+
+No governance framework is complete without addressing how to keep the system secure and robust against threats. 0xdx is built with multiple layers of safeguards – both economic and technical.
+
+**7.1 Liquidity Protection and Stability:** As introduced earlier, one major safeguard in 0xdx is the permanent locking of initial liquidity. By having the DAO itself (via the treasury or a designated contract) hold and lock the liquidity used in its DEX, 0xdx guarantees that there will always be a baseline market for the DAO’s token.
+
+**7.2 Smart Contract Security Best Practices:** All core contracts must undergo independent professional security audits before any mainnet deployment, with audit reports published openly. A funded bug-bounty program runs continuously after deployment to leverage the wider security-researcher community. The framework leans toward **immutability** for the core governance contracts (committee, voting, treasury, timelock) to cement trust. Upgrades to these are intentionally hard, requiring either a coordinated migration or a ragequit-style exit (see 7.3). Where upgradeability is genuinely needed (e.g. peripheral modules, integrations), it is gated behind the same proposal lifecycle as any other treasury action and subject to an extended timelock. The contracts build on battle-tested components (OpenZeppelin governance primitives, established AMM math, well-known multisig patterns) rather than novel cryptography.
+
+**7.3 Governance Attack Mitigations:** Several attack surfaces are explicitly addressed:
+
+*   **Economic attack resistance.** Because final voting authority sits with the elected committee and not with token holders, an attacker cannot buy governance the way they would in a token-weighted DAO. The community signal is token-weighted, but it is non-binding; committee members consider it as input, not as a verdict.
+*   **Sybil resistance in committee elections.** Election design is the most security-sensitive part of 0xdx and is intentionally pluggable per-deployment. Reasonable defaults include: time-locked stake-weighted nomination, a slow election cadence (e.g. annual, with staggered seats), public candidate identity (or attested reputation), and minimum-tenure requirements. Pure one-token-one-vote elections are explicitly **not** sufficient and are not the default.
+*   **Forkability / ragequit option.** If the committee acts in bad faith, holders need an exit. 0xdx permits a fork of the DAO’s state (treasury, token, contracts) under defined trigger conditions, modeled on Moloch-style ragequit and the Nouns DAO fork mechanism. Specific thresholds for triggering a fork (% of supply, time window, dispute resolution) are configured per deployment and documented in the genesis proposal.
+*   **Time-delay & review.** The default 48-hour execution timelock is the last line of defense: it gives the community, the optional Guardian role (7.4), or a fork mechanism time to react before any treasury-moving action commits.
+*   **Limited scope of committee authority.** The committee cannot unilaterally change the framework’s constitutional rules: token issuance caps, the permanent liquidity lock, timelock minimums, the fork mechanism itself. These require a higher bar (community supermajority + extended timelock, or are simply immutable).
+
+**7.4 Role of External Auditors and Guardians:** A 0xdx deployment may optionally elect a small **Guardian** committee (typically 3–5 members, distinct from the governance committee) with a single narrow power: a one-shot **veto** on a queued proposal during the timelock window. The Guardian cannot propose, cannot move funds, and cannot vote on regular business; their only lever is a veto, and using it consumes a publicly-tracked counter (e.g. one veto per six-month term). This is the framework's emergency brake for an obviously malicious or compromised committee decision. The Guardian role, election method, and veto budget are configurable. Deployments that prefer pure committee rule can simply not enable it.
+
+**7.5 Continuous Monitoring and Adaptation:** Security is treated as ongoing, not one-time. The framework expects each deployment to: (a) re-audit any contract that gets upgraded; (b) maintain a public incident-response runbook; (c) monitor on-chain activity for known attack patterns (governance flash loans, signal manipulation, Sybil committee races); and (d) periodically rotate or re-elect the committee so capture of the current cohort is not permanent.
+
+**7.6 Integrated DEX risk (named honestly):** The framework's "self-funding via integrated DEX" claim is the most novel and the most exposed to operational risk. We name the four largest risks explicitly rather than burying them.
+
+*   **MEV exposure.** Every swap routed through the integrated DEX is a candidate for sandwich, front-run, and back-run extraction. A naive AMM design leaks meaningful value to searchers in volatile periods. Deployments are expected to (a) route protocol-driven flow (treasury rebalances, fee conversions) through a private mempool or commit-reveal channel, (b) publish an MEV-leakage estimate as part of the genesis proposal, and (c) treat MEV-aware routing as a contract-level requirement, not a peripheral optimization.
+*   **Fee-cliff scenarios.** A treasury that depends on DEX volume is exposed to volume collapse: bear markets, competitor emergence, chain migration, regulatory shocks. The framework requires every deployment to declare a **minimum runway** at genesis (recommended ≥12 cycles) and to define an **explicit fund-or-windup vote** that triggers if revenue stays below a threshold for that runway. Simulator scenario 12 (`zero-volume DEX → reserve runway`) exercises this path. Without this discipline, governance silently runs out of money before noticing.
+*   **Liquidity-death-spiral risk.** If the integrated DEX routes a large share of fees to governance instead of LPs, LPs may migrate. Lower liquidity → worse pricing → less volume → less fee revenue → less governance funding. The permanently-locked initial liquidity (§6) is a partial mitigation but not a full one. Deployments are expected to publish a stress-test of the lock under adversarial scenarios (contract upgrade attempts, bridge failure, chain migration) before mainnet.
+*   **Political and regulatory exposure.** Operating an integrated DEX is the activity most likely to attract attention from regulators whose mandates were largely shaped by the incumbent financial system 0xdx exists to circumvent. The post-Ooki precedent (see `LEGAL.md`) shows that hostile actors, state or otherwise, will reach for personal-liability theories against active governance participants when they can. The framework does not concede that this is morally legitimate; it requires deployments to acknowledge the risk honestly so participants can make informed choices about how publicly to operate, whether to adopt a defensive wrapper, and which jurisdictions to engage with.
+
+These four are framework-level risks, not deployment-only ones. A deployment that ignores them is not 0xdx-compliant in any meaningful sense, regardless of its parameters.
+
+## 8. Oversight, Roles & Accountability
+
+Even with automated processes and committees, human governance ultimately relies on clarity of roles and accountability.
+
+**8.1 Roles in the 0xdx Ecosystem:** Five roles structure participation:
+
+*   **Committee Members (Governance Stewards).** Elected decision-makers. Their job is to read proposals carefully, weigh community signal, and vote in the DAO's interest. They each have one equal vote, are publicly identifiable (pseudonym or real-name, but persistent), and serve fixed terms (default: 12 months, staggered).
+*   **Community Members.** Everyone who is not on the committee: token holders, contributors, end-users. They drive ideation, submit proposals, signal sentiment, run for committee seats, and hold committees accountable through elections, the petition mechanism (8.3), and ultimately the fork option (7.3).
+*   **Proposal Authors / Project Teams.** A subset of community members who actively author proposals and, when funded, deliver on them. They take on a public reputation: shipped proposals build it, abandoned ones consume it.
+*   **Facilitators / Governance Leads (Optional).** Non-voting roles who help run the cycle: triaging proposals, surfacing duplicates, scheduling discussion. They are not authority figures; they are operations support, paid out of the treasury via the same proposal mechanism as anything else.
+*   **Security Guardian (Optional).** As described in 7.4: a small separate body with veto-only authority during the timelock window. Not enabled by default.
+
+**8.2 Accountability Mechanisms:** Each committee member's votes on every proposal are recorded on-chain; public voting records are non-negotiable, even though voter identity is pseudonymous. Committee members serve **fixed terms** (default 12 months, with staggered expirations so the whole committee never turns over at once) and must stand for re-election to continue. Compensation is permitted (committee work takes real time) but is set by treasury proposal, capped, and made public; the framework explicitly does not let the committee set its own pay unilaterally. Members are required to disclose material conflicts of interest before voting on affected proposals, and the on-chain proposal record carries a free-form disclosure field for this purpose. Repeated abstention without disclosure, missed votes, or unreported conflicts are grounds for community-initiated removal between elections.
+
+**8.3 Community Oversight Powers:** Three main levers sit with the broader community:
+
+*   **Treasury transparency.** Every flow in and out of the treasury is on-chain by construction. There are no off-chain "operational" budgets that bypass the proposal mechanism.
+*   **Petition / referendum.** If a configurable threshold of token holders (default: 10% of circulating supply, signaled within a fixed window) opposes a queued proposal, the proposal's timelock is extended and the proposal is forced to a community-wide referendum. The referendum is token-weighted and binding; it can override the committee. This is intentionally a high bar; it exists for exceptional cases, not routine governance.
+*   **Social and reputational accountability.** Beyond on-chain mechanisms, governance happens in public: forums, signed minutes, recorded discussions. A committee member's reputation travels with them across DAOs.
+
+## 9. Use Cases & Implementation Paths
+
+**9.1 Ideal Use Cases for 0xdx:** The framework is best suited to organizations that need both **scalable on-chain decision-making** and **a self-funding treasury**. Concretely:
+
+*   **Protocol DAOs in DeFi.** DEXes, lending markets, and stablecoin systems all need fast, informed decisions on parameter changes and risk policy. Token-weighted voting is poorly suited to this; a small accountable committee with a public record is much closer to how real risk teams operate. The integrated DEX revenue model is also a natural fit, since these protocols already generate fees.
+*   **Grants and Public Goods DAOs.** Ecosystem foundations, retroactive public-goods funding, and developer-grant programs need disciplined evaluation, not popularity contests. The committee model + community signal lets technical reviewers make calls while keeping the broader community visible in the loop.
+*   **Ecosystem or Alliance DAOs.** Multiple independent projects coordinating an ecosystem (shared standards, joint infrastructure, cross-grants) need a structured forum for cross-project decisions. Committee seats can be allocated to representative projects.
+*   **Self-Sustaining Investment DAOs.** Investment funds or incubators where members pool capital for collective deployment. The integrated DEX provides ongoing yield; the committee provides investment discipline; the timelock gives LPs time to react before any capital moves.
+*   **Community-run Services or Clubs.** Hosting collectives, gaming guilds, and similar groups that need to manage shared infrastructure budgets without the overhead of formal governance theater.
+*   **Municipal or Local DAOs.** Neighborhood funds, co-ops, and small-scale civic experiments: anywhere a small group of people needs to manage a shared treasury with public accountability.
+
+**9.2 Implementation Paths for New DAOs:** Genesis follows a fixed sequence:
+
+1.  **Deploy the 0xdx contracts.** Committee, Proposal, Voting, Timelock, Treasury, and (optionally) the integrated DEX are deployed from audited source. Constitutional parameters (committee size default 7, cycle length default 30 days, timelock default 48h, quorum, fork-trigger threshold) are set in the genesis transaction and published.
+2.  **Form the initial committee.** The first committee is appointed by the founding members. Their term is shorter than the steady-state default (e.g. 6 months) so the first community-wide election happens soon after launch.
+3.  **Seed the treasury and liquidity.** Founding members contribute the initial token + base-asset pair to the integrated DEX. This liquidity is **permanently locked**; the LP tokens are held by the treasury contract with no withdraw path.
+4.  **Token distribution.** If the DAO has a governance / signaling token, distribution happens here: typically a mix of contributor allocations, community distribution, and treasury reserve. The distribution plan is recorded in the genesis proposal.
+5.  **Run genesis proposals.** A handful of bootstrapping proposals exercise the system end-to-end while the stakes are still small: confirm operational parameters, fund initial working groups, establish discussion forums.
+6.  **Operate and grow.** Steady-state cycles begin. Community signal, committee voting, and automated execution run on the configured cadence. Documentation and meeting minutes accumulate as the DAO's institutional memory.
+7.  **Iterate.** Constitutional parameters can be revisited via the proposal mechanism, subject to higher quorum and longer timelock than ordinary business.
+
+**9.3 Migration Paths for Existing DAOs:** Existing DAOs migrating to 0xdx typically face three questions: is the existing token model compatible, does the community actually want a committee, and how do you move funds without breaking trust. The recommended path is a **phased migration**: deploy 0xdx contracts in parallel, transfer treasury assets in tranches as confidence grows, and run the legacy and new governance side-by-side for one or two cycles before cutover. A direct swap (single migration transaction, full cutover) is faster but carries more risk and is only appropriate for smaller DAOs with strong existing trust. Either path requires a binding vote under the legacy DAO's existing rules to authorize the migration; 0xdx is not adopted unilaterally.
+
+## 10. Why 0xdx is a Game-Changer
+
+The contribution of 0xdx is not any single mechanism. Committees, timelocks, locked liquidity, and DEX-funded treasuries all exist in prior DAOs. The contribution is **how they fit together**, and what each one is allowed to be responsible for:
+
+*   **Balanced automation and oversight.** Smart contracts handle what should be deterministic: fund movement, vote counting, timelocks. People handle what should be deliberative: judgment, tradeoffs, novel decisions. Most DAOs invert this: they put humans on routine treasury operations and trust algorithms with judgment calls. 0xdx puts the boundary in the right place.
+*   **Scalability and efficiency.** A 7-member committee meeting on a 30-day cycle can process more decisions, more carefully, than a 50,000-holder token vote that requires the same percentage turnout every time. Concentrating decision-making in a small accountable group, while preserving broad accountability through elections and the petition mechanism, is what makes governance scale.
+*   **Financial sustainability.** The integrated DEX turns the treasury from a wasting asset (token-sale runway, slowly depleted) into a productive one (continuous fee accrual, growing with usage). DAOs no longer have to choose between inflating their own token and going broke.
+*   **Fair and transparent governance.** No pay-to-play voting power inside the committee. The community signal is token-weighted by design (that's the right place for skin-in-the-game to matter), but the binding decision sits with one-person-one-vote committee members. Voting records are public, treasury movements are on-chain, and no decision happens off the record.
+*   **Resilience to attacks and failures.** The committee structure neutralizes governance flash loans. Permanent liquidity locks neutralize rug pulls. The Guardian veto and ragequit/fork mechanisms neutralize bad-faith committee captures. None of these is original; running all four in the same framework is.
+*   **Community energy spent on substance.** When the binding vote is a committee vote and not a 100,000-wallet referendum, community discussion can be about the proposal's merits rather than vote-mobilization. Signaling captures sentiment without forcing every holder to coordinate every decision.
+*   **A standard worth building on.** 0xdx is offered as a framework, not a single deployment. Configurations vary; the constitutional shape (small committee, public records, locked liquidity, automated execution, fee-funded treasury) is what makes a DAO recognizably "0xdx-shaped." That recognizability is the point.
+
+## 11. Conclusion
+
+DAOs were supposed to be a step beyond legacy corporate governance: flatter, more transparent, more resistant to capture. In practice, the first generation of DAOs largely reproduced the worst patterns of the institutions they aimed to replace: capture by capital (token-weighted voting), opaque off-chain decisions (multisigs, "operations" budgets), and treasuries that bleed out the moment the founding team's energy drops. The problem isn't decentralization. It's that we asked code to do what only deliberation can do, and asked deliberation to do what only code can do.
+
+0xdx draws a different line. It treats the elected committee as the place where judgment lives: small enough to actually deliberate, accountable enough to be voted out, transparent enough to be reviewed. It treats the smart contracts as the place where execution lives: vote counting, fund movement, timelocks, and the integrated DEX that keeps the treasury alive. It treats the broader community as the place where signal and ultimate accountability live, through staked sentiment, elections, the petition mechanism, and the fork option of last resort.
+
+This is a deliberately conservative architecture. There are no magical mechanisms here: no novel cryptography, no untested incentive games, no hand-waved AI. Every piece of 0xdx exists somewhere in the wild already; the contribution is the assembly. And the assembly is what makes the difference between a DAO that ships proposals every month and a DAO that dissolves at the first downturn.
+
+We are publishing this litepaper as a v1.0 specification, not as a deployed product. The reference contracts, audits, testnet, and mainnet launch are still ahead. We expect parts of this design to change in response to real-world feedback. What we don't expect to change is the basic shape: small accountable committees, public on-chain records, automated execution, locked liquidity, fee-funded treasuries. If a DAO has those five things, it is recognizably 0xdx.
+
+The work begins.
+
+
+================================================================
+# Constitution
+Source: `CONSTITUTION.md`
+================================================================
+
+# The 0xdx Constitution
+
+> **Version 1.0** · Effective **2026-05-09** (UTC) · Released under the MIT License.
+> This document sets out the values, rights, and amendment procedure that
+> govern any DAO deployed on the 0xdx framework. It is intended as a
+> reference text for deployers and reviewers; specific deployments may
+> ratify it verbatim, fork it, or replace it with their own charter, so
+> long as they do so transparently before a community petition window.
+
+---
+
+## Article 1. Mission and Values
+
+The mission of the 0xdx framework is to make decentralized governance
+**equitable, deliberative, and self-sustaining**: to give a community
+real authority over its own resources, without forcing it to choose
+between the tyranny of the wealthy, the chaos of unstructured mass
+voting, and the silent re-centralization of "delegate everything."
+
+A deployment of 0xdx is an attempt at *democratic decentralization*: the
+authority to spend, build, and amend belongs to people, not to capital.
+
+Every deployment is expected to uphold these values:
+
+1. **One person, one vote, within the elected committee.** No token
+   weighting; no purchased seats; no vote stacking through wrappers,
+   delegation cycles, or borrowed identity. A committee member is one
+   human exercising one judgment.
+2. **Open proposal rights.** Any community member can submit a
+   proposal, not only committee insiders. The committee deliberates;
+   the community sets the agenda.
+3. **Automated, deterministic execution.** Once a proposal passes its
+   defined thresholds and timelock, the smart contract executes it.
+   No human gatekeeper sits between the vote and the action.
+4. **Self-funding, never self-dealing.** The treasury is replenished by
+   genuine economic activity (integrated DEX fees), not by inflating a
+   token, dumping on retail, or extracting from new entrants.
+5. **Transparency by default.** Proposals, votes, deliberations,
+   treasury flows, and committee composition are public on-chain or in
+   open mirrors. Privacy is preserved only for individual identity, not
+   for governance acts.
+6. **Reversibility for users; irreversibility for treasury.** Initial
+   liquidity is permanently locked so users always have a market exit.
+   Governance decisions, once executed, are honored: no quiet rollback,
+   no clawback that bypasses the proposal process.
+7. **Skin in the game, not skin-in-the-tokens.** Committee members earn
+   their seats by sustained contribution and election, not by buying
+   into a presale. Petition power is vested in the broad community,
+   gated by participation, not balance.
+
+These values are binding on the framework's recommended defaults and on
+any deployment that wishes to identify itself as "0xdx-compliant."
+
+---
+
+## Article 2. Membership and Participation
+
+**§ 2.1 Three roles.** Every 0xdx deployment recognizes three roles,
+each with rights and limits defined in code:
+
+| Role | Selected by | Vote weight | Primary right |
+|---|---|---|---|
+| **Committee member** | Election (or genesis seating) | 1 vote inside the committee | Vote on submitted proposals |
+| **Community member** | Verified humanness (see §6) | 1 voice in petitions and signals | Submit proposals; petition; signal sentiment; trigger referendum |
+| **Guardian** (optional) | Election or genesis seating | 1 vote inside the Guardian quorum | Veto specific proposal classes within a hard-capped budget per term |
+
+**§ 2.2 Rights of every community member.** A verified community
+member of any 0xdx deployment has the right to:
+
+a. submit a proposal upon paying the deployment-defined deposit;
+b. signal sentiment on a proposal during its open signal window;
+c. petition for a community referendum if §5 thresholds are met;
+d. observe all governance actions on-chain or via the deployment's
+   public mirror;
+e. exit the ecosystem at any time, including by selling their position
+   on the integrated DEX, which is permanently liquid by construction.
+
+**§ 2.3 Responsibilities of every committee member.** A committee
+member, on accepting their seat, undertakes to:
+
+a. attend and vote in good faith on every proposal in their term, or
+   formally abstain;
+b. recuse themselves from any proposal that affects their personal
+   compensation, employment, or holdings (recusal is required, not
+   optional; see §5.4);
+c. publish their voting record and rationale in the deployment's
+   transparency channel;
+d. accept removal by community recall procedure if they fail their
+   duties.
+
+**§ 2.4 Limits on committee authority.** The committee cannot:
+
+a. mint, dilute, or unilaterally distribute the deployment's assets
+   outside the proposal process;
+b. modify the constitution, the framework parameters, or the smart
+   contracts without going through Article 7;
+c. vote on proposals from which they have a recusal-required interest;
+d. seize, freeze, or claw back funds from any community member
+   except by a proposal that itself passes the timelock and any
+   referendum override.
+
+---
+
+## Article 3. Governance Structure
+
+**§ 3.1 The committee.** The canonical committee size is **7**, with
+a recommended range of **5–15**. The framework permits boundary sizes
+(1 and >15) but flags them as carrying additional risk; deployers
+choosing those sizes accept that risk in writing in their deployment
+declaration.
+
+**§ 3.2 The Guardian (optional).** Deployments may instantiate a
+Guardian: a separate multisig with veto authority over specific
+proposal classes, hard-capped at a fixed number of vetoes per term and
+no rollover. Guardian quorum is a strict majority of Guardian seats
+(`ceil(size/2) + 1`). The Guardian cannot propose, only veto.
+
+**§ 3.3 Election cadence.** Committee terms are bounded by
+`termLength` (default 365 days). Elections are staggered so that no
+single term-end fully replaces the committee at once. The framework
+treats stagger as a v1 contract-level requirement.
+
+**§ 3.4 Quorum.** A vote is valid only if `quorumMembers` of the
+**effective committee** participate, where the effective committee is
+`committeeSize − recused_members` for that proposal. Silent members
+count against quorum but not against majority.
+
+**§ 3.5 Majority.** The default rule is **simple, strict-greater**:
+ties are rejected. Deployments may instead choose **supermajority**
+(`ceil(2/3 × effective committee)`) for sensitive proposal classes.
+
+---
+
+## Article 4. Decision-Making
+
+**§ 4.1 Proposal lifecycle.** Every proposal passes through six stages:
+
+1. **Ideation.** Discussed in the community channel; no on-chain
+   action yet.
+2. **Submission.** Proposer pays the deposit; proposal hash is
+   committed on-chain. The submission cutoff is enforced
+   (`submissionCutoffBeforeVote`, default 24 h).
+3. **Signaling.** Community members may signal support or opposition
+   using locked signal stakes that do not bind the committee but are
+   recorded.
+4. **Voting.** The committee votes within the `votingWindowLength`.
+5. **Resolution.** The contract tallies. Outcomes are exhaustively:
+   `passed`, `rejected`, `rejected-quorum`, or `vetoed`.
+6. **Execution.** After the timelock, a passed proposal executes
+   automatically. Pre-timelock execution attempts are no-ops.
+
+**§ 4.2 Proposal categories.** A 0xdx-compliant deployment classifies
+each proposal into one of four categories, each with its own thresholds:
+
+| Category | Default majority | Default timelock | Notes |
+|---|---|---|---|
+| **Operational** | simple | 48 h | Routine treasury spend, partner payments, non-protocol decisions |
+| **Parameter** | simple | 48 h | Adjustments to non-constitutional framework parameters |
+| **Treasury (large)** | super | 7 d | Spend exceeding deployment-declared threshold |
+| **Constitutional** | super | 14 d | Amendments to this document, the framework parameters that this document references, or the proposal-category list itself |
+
+The deployment may add categories but may not collapse Constitutional
+into a lower threshold.
+
+**§ 4.3 Community petition and referendum.** If a passed proposal
+draws opposition meeting `petitionThresholdBps` (default 10%) of
+verified community members within the petition window, a binding
+referendum is triggered. The referendum requires
+`petitionMinTurnoutBps` (default 20%) participation and a strict-
+greater majority. A referendum NO overrides the committee.
+
+**§ 4.4 Author recusal.** If a proposal would materially affect the
+proposer's personal interests, `authorRecusalRequired = true` excludes
+their vote from the tally. Quorum is computed against the effective
+committee (`committeeSize − recusals`).
+
+---
+
+## Article 5. Treasury
+
+**§ 5.1 Source of funds.** Treasury revenue comes from the integrated
+DEX protocol fee (`0.3%` default of swap volume), routed in the
+deployment's base asset (ETH, USDC, or other deployer-chosen base).
+The 0xdx framework does not require the existence of a native
+governance token; if a deployment chooses to issue one, that token's
+economics are out of scope of this constitution.
+
+**§ 5.2 Initial liquidity is permanently locked.** All initial
+liquidity provided at genesis is sent to a non-upgradeable lock
+contract. No proposal (Operational, Parameter, Treasury, or
+Constitutional) may withdraw the initial liquidity. This is the only
+governance action explicitly prohibited at the contract level.
+
+**§ 5.3 Spending follows the proposal lifecycle.** No funds leave the
+treasury except via a passed, timelocked, executed proposal. There is
+no admin EOA, no super-user override, no off-chain key with treasury
+authority.
+
+**§ 5.4 Transparency.** Every treasury inflow and outflow is recorded
+on-chain with a reference to the originating proposal hash.
+
+---
+
+## Article 6. Identity and Sybil Resistance
+
+**§ 6.1 The framework's posture.** 0xdx requires that committee
+elections, petitions, and referenda treat each participant as **one
+unique human**. Identity verification is a critical dependency.
+
+**§ 6.2 Pluggable, not prescriptive.** The framework does not mandate a
+single identity provider. Instead, it specifies a **pluggable identity
+interface** (see `IDENTITY.md`) and allows each deployment to choose
+the provider(s) it accepts, subject to the minimum requirements in
+§6.3.
+
+**§ 6.3 Minimum requirements for any accepted provider.** Any
+identity provider accepted by a 0xdx-compliant deployment must satisfy:
+
+a. **Uniqueness.** It must produce, with high probability, exactly one
+   verified credential per natural person.
+b. **Privacy preservation.** It must not require the participant to
+   disclose raw biometrics, government documents, or persistent
+   personal data to the deployment, the committee, or any chain
+   indexer.
+c. **Zero-knowledge attestation.** Membership is proven via a
+   zero-knowledge proof; the deployment learns *that* a participant is
+   a unique verified human, not *who* they are.
+d. **Revocability.** The provider must support credential revocation
+   for documented sybil incidents, without retroactively invalidating
+   honest past votes.
+e. **Open verifiability.** The verification circuit and parameters must
+   be open-source and auditable.
+
+**§ 6.4 Encrypted-biometric reference design.** The framework's
+recommended reference implementation (see `IDENTITY.md`) is a
+client-side encrypted biometric template plus a zero-knowledge
+attestation of uniqueness. Raw biometrics never leave the user's device;
+the on-chain artifact is the ZK proof, not the template.
+
+**§ 6.5 Off-chain Sybil residual.** No identity system is perfect.
+The framework explicitly acknowledges that committee elections may
+still be subject to off-chain Sybil attempts (one person presenting as
+multiple). Mitigations are: nomination stake, persistent identity
+weighting, tenure requirements, and ultimately community vetting. The
+framework does not pretend to solve this problem at the contract level.
+
+---
+
+## Article 7. Amendment Process
+
+**§ 7.1 What this document protects.** This Constitution protects:
+
+a. the values listed in Article 1;
+b. the role definitions in Article 2;
+c. the prohibition on withdrawing initial liquidity (§5.2);
+d. the existence of a community petition and referendum override (§4.3);
+e. the identity minimum requirements (§6.3);
+f. the amendment process itself (this Article 7).
+
+**§ 7.2 How it is amended.** Any change to a clause protected by §7.1
+requires a **Constitutional proposal**:
+
+1. Submission with a 2× standard deposit.
+2. A 30-day signaling window (extended from the default).
+3. A supermajority vote (`ceil(2/3 × effective committee)`).
+4. A 14-day timelock during which a community petition can trigger a
+   binding referendum (§4.3).
+5. Passage of any triggered referendum at strict-greater majority with
+   `petitionMinTurnoutBps` turnout.
+6. Publication of the amended document with a new version number, an
+   ISO-8601 effective date, and a content hash.
+
+**§ 7.3 Forks.** A deployment that wishes to deviate from this
+Constitution may do so freely under MIT, but it must not represent
+itself as "0xdx-compliant" unless it ratifies this document or replaces
+it with one that satisfies §7.1 protections. There is no central
+authority that grants compliance; the term is descriptive, not licensed.
+
+---
+
+## Article 8. Legal and Regulatory Posture
+
+**§ 8.1 Stance.** Self-governance is an exercise of association that
+predates and outranks any regulatory regime. The 0xdx framework does
+not concede that incumbent financial regulators hold moral authority
+over communities that govern their own resources without rent-seeking
+intermediaries. Article 8 documents the practical risks honestly so
+participants can choose their posture; it does not endorse the
+legitimacy of those risks.
+
+**§ 8.2 What the framework is, in legal terms.** The 0xdx framework
+is open-source software and a written specification. It is not itself
+a legal entity, a financial institution, or a registered service
+provider. It does not custody funds, intermediate trades, or hold
+itself out as an exchange. The publishers of this specification are
+not party to any deployment.
+
+**§ 8.3 Deployer choice, not deployer obligation.** A party that
+deploys 0xdx may choose to adopt a legal wrapper (Wyoming DAO LLC,
+Wyoming DUNA, Marshall Islands DAO LLC, Cayman Foundation, Swiss
+Verein, BVI Foundation) or to operate without one. The framework
+treats both as legitimate political choices with different trade-offs;
+see `LEGAL.md` §4. Engagement with formal-economy infrastructure
+(banks, fiat ramps, U.S.-located committee members) tends to push
+toward a wrapper; pseudonymous and geographically distributed
+deployments may legitimately decline. Choosing not to incorporate is
+not irresponsible. It is a posture, and one with deep precedent in
+the history of decentralization.
+
+**§ 8.4 The Ooki DAO precedent, named honestly.** In *CFTC v. Ooki
+DAO* (N.D. Cal. 2022–2023), a U.S. court, on a default judgment
+where the DAO did not appear, accepted the theory that an
+unincorporated DAO may be sued as an unincorporated association and
+that governance participants may face personal joint and several
+liability. This precedent is real and it is hostile. The framework
+does not concede that this exposure is morally legitimate; it
+documents the exposure so participants can decide how, where, and how
+publicly to operate. Mitigations include legal wrappers, geographic
+distribution, pseudonymity, and principled non-engagement with the
+U.S. system. See `LEGAL.md` §3 for the full discussion.
+
+**§ 8.5 Identity is not KYC.** The Article 6 / `IDENTITY.md` Sybil-
+resistance interface is privacy-preserving by design. A deployment
+that performs general KYC on governance participants is **not**
+0xdx-compliant. Where a specific regulated surface (e.g. a fiat
+on-ramp) demands KYC under a deployment's chosen jurisdiction, that
+KYC must be narrow, surface-specific, and disclosed; never
+backdoored into governance.
+
+**§ 8.6 No representation as advice.** This document is not legal,
+financial, tax, or regulatory advice and creates no professional
+relationship. Deployers and participants should obtain qualified
+counsel in jurisdictions they choose to engage with, and should
+decide for themselves which jurisdictions those are.
+
+---
+
+*Issued under the MIT License. The canonical source of this document
+is the file `CONSTITUTION.md` at the head of the 0xdx repository.
+Revisions are tracked in the git history; the publication date above
+is the authoritative timestamp for attribution.*
+
+
+================================================================
+# Identity and Sybil Resistance
+Source: `IDENTITY.md`
+================================================================
+
+# Identity and Sybil Resistance in 0xdx
+
+> **Version 1.0** · Effective **2026-05-09** (UTC) · Released under the MIT License.
+> Companion document to `CONSTITUTION.md` Article 6. Specifies the
+> framework's pluggable identity interface and a recommended reference
+> design based on client-encrypted biometrics with zero-knowledge
+> attestation.
+
+---
+
+## 1. Why this exists
+
+0xdx is a one-person-one-vote committee framework. It cannot deliver on
+that promise without a real answer to **Sybil resistance**: the open
+problem of preventing a single human from presenting as many.
+
+Previous DAO frameworks have approached this in three ways, all of
+which we reject as primary mechanisms:
+
+1. **Token weighting.** Solves Sybil mathematically (you cannot duplicate
+   tokens) but at the cost of the very plutocracy 0xdx exists to prevent.
+2. **KYC by central provider.** Moves trust from the chain to a
+   compliance vendor, breaks pseudonymity, leaks PII, and introduces a
+   single regulatory chokepoint.
+3. **Punting to "community vetting".** Passes the problem to deployers
+   without giving them tools, which in practice means either nothing
+   gets verified or unaccountable insiders decide who counts.
+
+The 0xdx posture is different. Identity is **necessary** for
+one-person-one-vote, and the framework specifies a **pluggable
+interface**: strict enough to keep deployments honest, loose enough
+that no single vendor can hold the ecosystem hostage.
+
+---
+
+## 2. The interface, in one paragraph
+
+A **0xdx Identity Provider** is any system that, on demand, issues a
+participant a credential and accepts a zero-knowledge proof that a
+given on-chain action (proposal submission, petition signature,
+referendum vote, election ballot) is being performed by a unique
+verified human associated with that credential, without revealing
+*which* human.
+
+The on-chain artifact is the proof. The credential never touches the
+chain. The raw identity material (biometric template, document scan,
+social graph) never leaves the participant's device.
+
+---
+
+## 3. Minimum requirements (binding)
+
+Any provider that a 0xdx-compliant deployment accepts **must** satisfy
+all six of the following. These are restated from `CONSTITUTION.md`
+§6.3 with implementation detail.
+
+### 3.1 Uniqueness
+
+Each natural person can hold **at most one** active credential per
+provider, with a published Sybil-error budget. The provider's design
+documentation must state its expected uniqueness rate (e.g. "≤ 0.5%
+duplicate credentials under adversarial conditions") and the
+mechanism by which it achieves that rate.
+
+### 3.2 Privacy preservation
+
+The deployment, the committee, the chain, public indexers, and any
+non-self party **must not** be able to recover from the on-chain
+artifact:
+
+- the participant's biometric template;
+- their government-issued identifier;
+- their persistent off-chain identity;
+- a stable identifier that links their actions across deployments.
+
+A nullifier or one-time-use commitment is acceptable; a persistent
+public key tied to identity is not.
+
+### 3.3 Zero-knowledge attestation
+
+The on-chain proof must use a zero-knowledge protocol (Groth16, PLONK,
+STARK, or equivalent) with:
+
+- a **public input** including the proposal hash or vote target
+  (binds the proof to a specific governance act);
+- a **public output** including a one-time nullifier (prevents reuse);
+- a **hidden witness** including the credential and any biometric or
+  document material.
+
+The verification key and circuit source must be public.
+
+### 3.4 Revocability
+
+The provider must support credential revocation under documented Sybil
+incidents (e.g. a single template being shown to belong to multiple
+people). Revocation **must not** retroactively invalidate honest past
+votes. Past nullifiers remain valid; only future proofs from the
+revoked credential fail verification.
+
+### 3.5 Open verifiability
+
+- Circuits: open-source under a permissive license (MIT, Apache-2.0,
+  or compatible).
+- Trusted-setup ceremony (if applicable): public, multi-party,
+  reproducible.
+- Verifier contract: published source, deployed bytecode-verified.
+
+A provider whose verification logic is opaque is not eligible.
+
+### 3.6 No phone-home
+
+The verification path must not require the deployment, the user, or
+any contract on the critical path to call out to a vendor-controlled
+server during governance actions. Credentials may be **issued** by a
+vendor server (one-time, off-line); proofs are **verified** purely
+on-chain or in a fully replicated client.
+
+---
+
+## 4. Reference design: encrypted-biometric ZK identity
+
+This is the framework's recommended reference implementation. A
+deployment is free to use this design directly, replace it with an
+existing provider that satisfies §3, or commission its own. The
+reference design exists so that "build your own" is a real option,
+not a paywall.
+
+### 4.1 Architecture (one screen)
+
+```
+        ┌──────────────────────────────────────────────────────┐
+        │                  USER'S OWN DEVICE                   │
+        │                                                      │
+        │   1. Capture biometric (face/fingerprint/iris)       │
+        │   2. Compute template T locally                      │
+        │   3. Encrypt template:  E = enc_k(T) , k held by user│
+        │   4. Store E + k in secure local enclave             │
+        │                                                      │
+        └─────────────────┬────────────────────────────────────┘
+                          │  one-time enrolment
+                          ▼
+        ┌──────────────────────────────────────────────────────┐
+        │           ENROLMENT SERVICE (one-time)               │
+        │                                                      │
+        │   - Receives only the deduplication digest D = H(T)  │
+        │     (or a fuzzy-hash equivalent)                     │
+        │   - Checks D against existing digest set             │
+        │   - If unique: issues a signed credential C          │
+        │     C = sig_provider( D, issued_at, expiry )         │
+        │   - Stores ONLY (D, issued_at, revocation_status)    │
+        │                                                      │
+        └─────────────────┬────────────────────────────────────┘
+                          │  credential C returned to user
+                          ▼
+        ┌──────────────────────────────────────────────────────┐
+        │                  USER'S OWN DEVICE                   │
+        │                                                      │
+        │   For each governance action (vote, petition):       │
+        │   - Generate ZK proof π that:                        │
+        │       * I hold a valid credential C                  │
+        │       * C has not been revoked                       │
+        │       * Nullifier N = H(C, action_hash) is fresh     │
+        │       * The biometric in E hashes to D               │
+        │     without revealing C, T, or D                     │
+        │   - Submit (action, π, N) to the deployment contract │
+        │                                                      │
+        └──────────────────────────────────────────────────────┘
+```
+
+### 4.2 What is on-chain, what is not
+
+| Where | What |
+|---|---|
+| **On-chain** (deployment contract) | nullifier set, the provider's public verification key, revocation Merkle root, the verifier circuit |
+| **Off-chain, controlled by user** | encrypted biometric template `E`, decryption key `k`, signed credential `C` |
+| **Off-chain, controlled by enrolment service** | deduplication digests `D` and revocation flags; **never** raw biometrics |
+| **Nowhere** (deleted at capture) | the raw biometric reading |
+
+### 4.3 Why the digest, not the template
+
+Storing even encrypted biometric templates in a central database is a
+liability magnet: it invites breach, subpoena, and regulatory
+classification as a biometric data controller (GDPR Article 9, Illinois
+BIPA, etc.). The reference design pushes that data **back to the
+user's device** and keeps only a hash-like deduplication digest at the
+enrolment service.
+
+A fuzzy digest (e.g. locality-sensitive hashing of an iris template)
+is required when the biometric modality is noisy. The digest's
+collision properties dictate the uniqueness rate in §3.1.
+
+### 4.4 Why a credential, not a wallet binding
+
+Tying a credential to a fixed wallet address breaks pseudonymity
+across deployments and creates a re-identification vector. The
+credential is wallet-agnostic; the participant proves possession at
+the moment of voting and may use any wallet.
+
+### 4.5 Trusted setup and ceremony
+
+A SNARK-based circuit will require a trusted setup. The reference
+design specifies a public, multi-party, multi-round ceremony
+following the Powers-of-Tau model. A STARK alternative is provided
+to deployments that prefer transparent setup at the cost of larger
+proofs.
+
+---
+
+## 5. Non-reference providers a deployment may accept
+
+This is a non-exhaustive snapshot at the time of writing
+(2026). Deployments are responsible for verifying current status
+against §3 before adoption.
+
+| Provider | Mechanism | §3 compliance notes |
+|---|---|---|
+| **World ID** | Iris scan via Orb hardware; ZK proof | Strong on uniqueness and ZK; some EU jurisdictions restrict the Orb; deployment must surface that geographic limitation |
+| **Human Passport** (formerly Gitcoin Passport) | Stamp aggregation with ML scoring | Useful as a *secondary* signal; alone, fails §3.1 against motivated attackers |
+| **BrightID** | Decentralized social graph | Satisfies §3.5 (open) but uniqueness depends on graph density |
+| **Proof of Humanity** | Video + social vouching | Strong uniqueness; weaker on §3.2 (video is identifying) |
+| **Idena** | Synchronous CAPTCHA validations | Satisfies §3.1, §3.5; small user base |
+| **Anon Aadhaar** (regional) | ZK-attested government ID | Satisfies §3.2, §3.3; jurisdictionally narrow |
+
+A deployment may accept multiple providers and require an OR-of-proofs
+("any one of these"), an AND-of-proofs ("at least two of these"), or a
+weighted scheme, provided each accepted provider individually
+satisfies §3.
+
+---
+
+## 6. Anti-patterns explicitly forbidden
+
+A deployment claiming 0xdx compliance **must not**:
+
+1. Store raw biometric templates server-side under any circumstance.
+2. Bind identity credentials to a fixed wallet address in a way that
+   creates a persistent public re-identification vector.
+3. Accept a provider whose verifier or circuit is closed-source.
+4. Make verification require a live call to a vendor server during a
+   governance action.
+5. Use the identity system to gate **economic exit**. A participant
+   must always be able to sell their position on the integrated DEX
+   without identity verification.
+
+The last point is the most important. Identity gates *governance
+participation*, never *economic exit*. A participant who loses access
+to their credential loses their vote, not their funds.
+
+---
+
+## 7. Open questions and acknowledged limits
+
+This is v1. The framework explicitly acknowledges:
+
+- **Coercion attacks.** A ZK proof system does not prevent a
+  participant from being physically coerced into voting a specific
+  way. Receipt-freeness is an active research area (Civitas, MACI);
+  v1 does not solve it.
+- **Hardware compromise.** A compromised user device can leak
+  credentials. The reference design relies on platform-level secure
+  enclaves where available.
+- **Long-term key management.** Lost credentials must be recoverable
+  without breaking uniqueness; v1 specifies a guardian-based recovery
+  pattern but expects deployments to refine it.
+- **Cross-deployment reuse.** Whether a single credential should grant
+  participation in *every* 0xdx deployment, or only one at a time, is
+  a deployment-level policy choice. The framework supports both.
+
+---
+
+## 8. Summary
+
+0xdx commits to one-person-one-vote and refuses to outsource that
+commitment to either token-weighted plutocracy or a single closed
+identity vendor. The framework specifies a strict, vendor-neutral
+interface (§3) and a reference design (§4) that keeps biometric data
+on the user's device and uses zero-knowledge proofs as the on-chain
+artifact. A deployment that satisfies the §3 minimum requirements is
+0xdx-compliant for identity; one that does not is not.
+
+*Issued under the MIT License. The canonical source of this document
+is the file `IDENTITY.md` at the head of the 0xdx repository.*
+
+
+================================================================
+# Legal and Regulatory Posture
+Source: `LEGAL.md`
+================================================================
+
+# Legal and Regulatory Posture
+
+> **Version 1.0** · Effective **2026-05-09** (UTC) · Released under the MIT License.
+> Companion document to `CONSTITUTION.md` Article 8. **This is not legal
+> advice.** It describes the political and regulatory environment that
+> 0xdx-compliant deployments operate in, and the framework's posture
+> toward it. The framework does not concede that incumbent regulatory
+> regimes hold moral authority over decentralized self-governance; it
+> documents the practical risks honestly so participants can make
+> informed choices.
+
+---
+
+## 1. Stance
+
+0xdx is a framework for **democratic decentralization**: communities
+governing their own resources without rent-seeking intermediaries,
+without token-weighted plutocracy, and without permission from
+incumbent finance. Self-governance is not an activity for which
+permission is granted; it is an exercise of association that predates
+and outranks any regulatory regime.
+
+That said, the framework operates in a world where states, regulators,
+and incumbent platforms have at times responded to decentralized
+projects with hostility, particularly when those projects threaten
+existing rent streams. This document names those risks honestly so
+deployers and participants can decide how, where, and how publicly to
+operate.
+
+---
+
+## 2. What 0xdx is, in legal terms
+
+The 0xdx framework is **open-source software and a written
+specification**. It is published under the MIT License. It is not:
+
+- a legal entity, partnership, association, foundation, or corporation;
+- a financial institution, broker, dealer, exchange, or money services
+  business;
+- a registered investment advisor or commodity trading advisor;
+- the operator of any deployed instance of the framework.
+
+The publishers of this specification do not custody funds, route
+trades, or hold themselves out as a service provider to any deployment.
+
+A **deployment** is a separate organization that has chosen to use
+the framework. The deployment, not the framework, bears whatever
+legal, regulatory, and tax consequences attach to its activity. **The
+framework's publishers are not party to any deployment.**
+
+---
+
+## 3. The Ooki DAO precedent (read this before deploying publicly)
+
+In *CFTC v. Ooki DAO* (N.D. Cal. 2022–2023), the U.S. Commodity Futures
+Trading Commission obtained a default judgment against an
+unincorporated DAO. The court accepted that:
+
+1. an unincorporated DAO can be treated as an unincorporated
+   association and sued as one;
+2. service can be effected by online means (a chat box, a forum post);
+3. members participating in governance may, under the CFTC's theory,
+   bear personal joint and several liability for the association's
+   conduct.
+
+This precedent is real, and it is hostile. It was made possible by a
+default judgment (Ooki DAO did not appear to defend itself), and the
+underlying theory has not been adversarially tested. But until it is
+overturned or distinguished, U.S. authorities will reach for it.
+
+**What this means in practice:**
+
+- A 0xdx deployment that operates publicly in U.S. jurisdiction
+  without some form of defensive structure exposes its committee
+  members, voters, and active community members to attempted
+  personal-liability actions.
+- The framework does not concede that this exposure is morally
+  legitimate. It documents the exposure so participants can choose
+  their posture: a legal wrapper, geographic distribution,
+  pseudonymity, or principled non-engagement with the U.S. system.
+
+References:
+- CFTC v. Ooki DAO, No. 3:22-cv-05416 (N.D. Cal.).
+- CFTC press release, June 8 2023.
+
+---
+
+## 4. Defensive structures (not endorsements)
+
+A deployment that wishes to engage with formal-economy infrastructure
+(banks, fiat on-ramps, U.S.-located committee members, U.S. employees)
+will need a legal wrapper. The options below are listed for reference;
+the framework does not endorse any of them, and adopting one is a
+political choice with trade-offs.
+
+| Wrapper | Trade-off |
+|---|---|
+| **Wyoming DAO LLC / DUNA** | U.S. recognition; submits to U.S. jurisdiction; mandatory dissolution after 1 year of inactivity. |
+| **Marshall Islands DAO LLC** | Recognized DAO entity; small jurisdiction with limited enforcement reach. |
+| **Cayman Foundation Company** | Ownerless; useful for protocols; signals "institutional" to incumbents. |
+| **Swiss Verein** | Member-association model; commonly used by large foundations; Swiss legal exposure. |
+| **No wrapper** | Maximum sovereignty; exposes participants to Ooki-style theories where they touch hostile jurisdictions; reasonable for deployments that operate pseudonymously and avoid those touchpoints. |
+
+The fifth option is included not as a fallback but as a legitimate
+political choice. Many of the most important moments in the history
+of decentralization have happened outside formal legal structures.
+Choosing not to incorporate is not irresponsible; it is a posture.
+Participants who choose it should understand what they are accepting.
+
+---
+
+## 5. Securities-law posture
+
+The 0xdx framework **does not include a native governance token** by
+design. Committee membership is not a financial instrument. Petition
+and voting rights are not securities. The framework's structure
+therefore does not, in itself, create the kind of investment-contract
+profile that has been the basis of token-DAO enforcement actions.
+
+A deployment may issue a token (e.g. a base asset traded on its
+integrated DEX). Whether that token is a security is a downstream
+question that depends on how the deployment markets, distributes, and
+uses it. The framework expresses no view on which side of that line
+any given token sits. The question is increasingly used by U.S.
+regulators as a tool of selective enforcement, and the framework does
+not pretend to predict which way that selection will go.
+
+---
+
+## 6. Commodity-law posture (CFTC)
+
+The CFTC has asserted jurisdiction over crypto spot markets through
+anti-fraud authority and over leveraged retail products through
+registration requirements. Deployments that route U.S. retail
+leverage through their integrated DEX face the largest exposure;
+deployments that limit themselves to spot trading by non-U.S.
+participants face less.
+
+Geofencing, wallet-level filtering, and choice of front-end host are
+all standard mitigations. None of them is bulletproof, but each
+reduces the surface that hostile authorities can reach.
+
+---
+
+## 7. EU posture (MiCA)
+
+The EU's *Markets in Crypto-Assets Regulation* (Regulation (EU)
+2023/1114, in force December 2024) creates a Crypto-Asset Service
+Provider regime with authorization, AML, and operational requirements.
+MiCA contains a carve-out for "fully decentralized" services without
+intermediaries. A committee-driven governance structure with elected
+human members **may or may not** qualify, depending on how
+"intermediary" is interpreted by the European Securities and Markets
+Authority and by national regulators.
+
+Deployments engaging EU users face a choice: submit to CASP
+authorization (expensive, slow, and arguably defeats the point of
+decentralization), structure to maximize the carve-out's
+applicability, or geofence EU users entirely. Each posture has costs.
+
+---
+
+## 8. KYC and identity
+
+`IDENTITY.md` specifies a privacy-preserving Sybil-resistance
+interface. **It is not a KYC system, and the framework does not
+recommend bolting KYC on top of it.** Doing so would defeat the
+privacy properties the identity layer is engineered to provide.
+
+A deployment that engages in genuinely regulated activity (fiat
+on/off-ramps, custodial services for non-self-custody clients,
+regulated derivatives) may be required by its chosen jurisdiction
+to add KYC at a specific surface (typically the on-ramp). That
+addition should be (a) narrow, (b) confined to the regulated surface,
+and (c) explicitly disclosed. A deployment that performs general
+KYC on all governance participants is not 0xdx-compliant and should
+not call itself such.
+
+The identity layer's privacy properties are part of the mission, not
+a convenience.
+
+---
+
+## 9. Sanctions
+
+The framework publishers do not maintain a sanctions list and do not
+require deployments to. Whether a deployment chooses to filter
+sanctioned addresses (typically at the front-end, the identity
+provider, or the DEX router) is a political and operational choice.
+Deployments that engage formal-economy infrastructure in sanctions-
+enforcing jurisdictions will face pressure to filter; deployments
+operating outside that infrastructure may legitimately decline.
+
+This is one of the cleanest examples of "the regulatory regime is not
+neutral." Sanctions enforcement is a tool of state power that
+deployments are entitled to take seriously, take symbolically, or
+decline, with eyes open to the consequences.
+
+---
+
+## 10. Tax
+
+Tax treatment of governance participation, treasury distributions,
+proposal deposits, slashed deposits, and DEX fee revenue varies by
+jurisdiction and by participant. Deployers and participants should
+obtain qualified tax counsel **if they choose to engage formal-economy
+tax authorities at all.**
+
+---
+
+## 11. Disclaimer (formal)
+
+THE 0XDX FRAMEWORK IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND
+NON-INFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS
+BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY, WHETHER IN AN
+ACTION OF CONTRACT, TORT, OR OTHERWISE, ARISING FROM, OUT OF, OR IN
+CONNECTION WITH THE FRAMEWORK OR THE USE OR OTHER DEALINGS IN THE
+FRAMEWORK.
+
+This document is informational. **It is not legal advice and creates
+no attorney-client relationship.** Participants should obtain
+qualified counsel in jurisdictions they engage with, and should
+decide for themselves which jurisdictions those are.
+
+---
+
+*Issued under the MIT License. The canonical source of this document
+is the file `LEGAL.md` at the head of the 0xdx repository.*
+
+
+================================================================
+# Flows, Actors, and Threat Model
+Source: `docs/FLOWS.md`
+================================================================
+
+# 0xdx: Flows, Actors, and Inputs
+
+This document maps every actor, every input, and every flow in the 0xdx framework. It is the visual companion to the [litepaper](../0xdx_litepaper.md). Defaults are stated; everything marked **configurable** can be set per-deployment in the genesis transaction.
+
+---
+
+## 1. Actors and what each can do
+
+```mermaid
+flowchart LR
+  classDef actor fill:#000,color:#fff,stroke:#000,stroke-width:1px
+  classDef optional fill:#fff,color:#000,stroke:#000,stroke-width:1px,stroke-dasharray:4 3
+  classDef contract fill:#f5f5f5,color:#000,stroke:#000
+
+  subgraph Actors
+    FM[Founding Members<br/>genesis only]:::actor
+    PA[Proposal Author<br/>any community member]:::actor
+    CM[Community Member<br/>token holder]:::actor
+    CS[Committee Member<br/>elected steward]:::actor
+    FAC[Facilitator<br/>non-voting, optional]:::optional
+    GD[Guardian<br/>3–5, veto-only, optional]:::optional
+    PUB[Public<br/>no wallet, read-only]:::actor
+  end
+
+  subgraph Contracts[On-chain Contracts]
+    GEN[Genesis Deployer]:::contract
+    PROP[Proposal Contract]:::contract
+    SIG[Signaling Contract]:::contract
+    VOTE[Voting Contract]:::contract
+    TL[Timelock]:::contract
+    EXEC[Execution Contract]:::contract
+    TR[Treasury]:::contract
+    DEX[Integrated DEX]:::contract
+    ELEC[Election Contract]:::contract
+    FORK[Fork / Ragequit Module]:::contract
+  end
+
+  FM -->|configure & deploy| GEN
+  FM -->|seed initial liquidity| TR
+  FM -->|appoint bootstrap committee| CS
+
+  PA -->|draft & submit + deposit| PROP
+  CM -->|stake to signal| SIG
+  CM -->|nominate / vote in election| ELEC
+  CM -->|trigger petition| SIG
+  CM -->|swap, providing fees| DEX
+  CM -->|invoke ragequit| FORK
+
+  CS -->|cast Approve / Reject / Abstain| VOTE
+  CS -->|disclose conflicts| PROP
+
+  FAC -->|triage, schedule, summarize| PROP
+
+  GD -->|one-shot veto during timelock| TL
+
+  PUB -->|read everything| Contracts
+```
+
+**Five voting / signaling rights, kept distinct:**
+
+| Right | Who has it | Where |
+|---|---|---|
+| **Submit** a proposal | any community member (anti-spam deposit) | Proposal Contract |
+| **Signal** sentiment | any token holder (stake-weighted, non-binding) | Signaling Contract |
+| **Vote** on a proposal | committee members only (one-person-one-vote) | Voting Contract |
+| **Veto** during timelock | Guardian (if enabled) | Timelock |
+| **Override** via referendum | community supermajority (≥10% supply) | Petition mechanism |
+| **Exit** via ragequit | any holder, under fork triggers | Fork Module |
+
+---
+
+## 2. Genesis: creating, naming, and launching a project
+
+```mermaid
+flowchart TD
+  classDef step fill:#fff,stroke:#000,color:#000
+  classDef config fill:#f5f5f5,stroke:#000,color:#000,stroke-dasharray:3 3
+  classDef commit fill:#000,color:#fff,stroke:#000
+
+  S0[Founding members assemble]:::step
+  S1[Choose DAO name + ticker symbol]:::step
+  S2[Define mission &<br/>constitutional rules in genesis doc]:::step
+
+  S3[Configure modular parameters]:::config
+  S3a[Committee size · default 7 · range 5–15]:::config
+  S3b[Cycle length · default 30 days]:::config
+  S3c[Submission window · e.g. days 1–25]:::config
+  S3d[Voting window · e.g. days 26–30]:::config
+  S3e[Quorum · default ≥5/7]:::config
+  S3f[Majority · default 4/7]:::config
+  S3g[Timelock · default 48h]:::config
+  S3h[Proposal deposit amount]:::config
+  S3i[Term length · default 12 months, staggered]:::config
+  S3j[Petition threshold · default 10% supply]:::config
+  S3k[Guardian · enabled? size? veto budget?]:::config
+  S3l[Fork/ragequit trigger thresholds]:::config
+
+  S4[Deploy contracts from audited source]:::commit
+  S5[Mint governance / signaling token]:::step
+  S6[Seed treasury with founder contributions]:::step
+  S7[Provide initial liquidity to integrated DEX<br/>LP tokens are PERMANENTLY LOCKED in Treasury]:::commit
+  S8[Distribute tokens<br/>contributors · community · treasury reserve]:::step
+  S9[Appoint bootstrap committee<br/>shorter initial term, e.g. 6 months]:::step
+  S10[Run genesis proposals<br/>exercise the system end-to-end]:::step
+  S11[Steady-state cycles begin<br/>first community-wide election scheduled]:::step
+
+  S0 --> S1 --> S2 --> S3
+  S3 --> S3a & S3b & S3c & S3d & S3e & S3f & S3g & S3h & S3i & S3j & S3k & S3l
+  S3a & S3b & S3c & S3d & S3e & S3f & S3g & S3h & S3i & S3j & S3k & S3l --> S4
+  S4 --> S5 --> S6 --> S7 --> S8 --> S9 --> S10 --> S11
+```
+
+**Genesis inputs from founding members:**
+
+- **Identity:** DAO name, ticker, mission statement, public website / contact.
+- **Constitution:** all twelve modular parameters above.
+- **Token plan:** total supply, distribution schedule, contributor allocations, treasury reserve %.
+- **Capital:** initial liquidity contribution (paired token + base asset).
+- **Bootstrap committee:** initial steward addresses + bios.
+- **Optional roles:** whether Guardian is enabled and who serves; whether facilitators are funded.
+
+---
+
+## 3. Proposal lifecycle (single 30-day cycle)
+
+```mermaid
+flowchart TD
+  classDef stage fill:#000,color:#fff,stroke:#000
+  classDef gate fill:#fff,stroke:#000,color:#000
+  classDef terminal fill:#fff,stroke:#000,color:#000,stroke-width:2px
+  classDef parallel fill:#f5f5f5,stroke:#000,color:#000,stroke-dasharray:3 3
+
+  ID[1 · IDEATION<br/>off-chain forums, Discord<br/>any community member]:::stage
+  SUB[2 · SUBMISSION<br/>days 1–25<br/>Author submits + pays deposit]:::stage
+  SIG[3 · SIGNALING<br/>parallel to submission<br/>token holders stake YES/NO]:::stage
+  REF[Author may amend<br/>or withdraw]:::parallel
+  VT[4 · VOTING<br/>days 26–30<br/>committee casts votes]:::stage
+  RES[5 · RESOLUTION<br/>day 30+1<br/>contract tallies result]:::stage
+  EX[6 · EXECUTION<br/>after 48h timelock<br/>auto-executed on-chain]:::stage
+
+  PASS{Quorum met<br/>+ majority?}:::gate
+  PETITION{Petition triggered?<br/>≥10% supply opposes}:::gate
+  VETO{Guardian veto?<br/>only if enabled}:::gate
+
+  PASSED[PASSED + queued<br/>for execution]:::terminal
+  REJECTED[REJECTED<br/>recorded on-chain]:::terminal
+  REFER[Forced REFERENDUM<br/>token-weighted, binding]:::terminal
+  VETOED[VETOED<br/>burns 1 of N veto budget]:::terminal
+  EXECUTED[EXECUTED<br/>actions committed, public log]:::terminal
+
+  ID --> SUB
+  SUB --> SIG
+  SIG --> REF
+  REF -.-> SUB
+  SUB --> VT
+  SIG --> VT
+  VT --> RES
+  RES --> PASS
+  PASS -- no --> REJECTED
+  PASS -- yes --> PETITION
+  PETITION -- yes --> REFER
+  PETITION -- no --> PASSED
+  PASSED --> EX
+  EX --> VETO
+  VETO -- yes --> VETOED
+  VETO -- no --> EXECUTED
+```
+
+**Per-stage inputs:**
+
+| Stage | Actor | Input | Contract |
+|---|---|---|---|
+| Ideation | any community member | discussion text (off-chain) | - |
+| Submission | proposal author | proposal body, requested funds, transactions, conflict disclosure, **deposit (paid)** | Proposal |
+| Signaling | any token holder | stake amount + direction (YES/NO) | Signaling |
+| Refinement | proposal author | amendment / withdrawal | Proposal |
+| Voting | committee member | Approve / Reject / Abstain | Voting |
+| Petition (parallel) | community | stake against in petition window | Signaling |
+| Resolution | (automatic) | tally | Voting |
+| Veto window | Guardian | one-shot veto | Timelock |
+| Execution | (automatic) | encoded transactions fire | Execution |
+
+---
+
+## 4. Proposal state machine
+
+```mermaid
+stateDiagram-v2
+  [*] --> Draft
+  Draft --> Submitted: pay deposit
+  Submitted --> Signaling: cycle reaches signaling
+  Signaling --> Withdrawn: author withdraws
+  Signaling --> Submitted: author amends
+  Signaling --> InVote: voting window opens
+  InVote --> Resolved: tally complete
+  Resolved --> Rejected: quorum/majority not met
+  Resolved --> ForcedReferendum: petition threshold hit
+  Resolved --> Queued: passed, awaiting timelock
+  ForcedReferendum --> Rejected: referendum NO
+  ForcedReferendum --> Queued: referendum YES
+  Queued --> Vetoed: Guardian veto
+  Queued --> Executed: timelock expires
+  Withdrawn --> [*]
+  Rejected --> [*]
+  Vetoed --> [*]
+  Executed --> [*]
+```
+
+---
+
+## 5. Treasury and DEX flows
+
+```mermaid
+flowchart LR
+  classDef ext fill:#fff,stroke:#000,color:#000
+  classDef internal fill:#f5f5f5,stroke:#000,color:#000
+  classDef locked fill:#000,color:#fff,stroke:#000
+
+  TRD[Public traders<br/>swap on integrated DEX]:::ext
+  DEX[Integrated DEX]:::internal
+  LP[Locked LP position<br/>PERMANENT, no withdraw path]:::locked
+  TR[Treasury Contract]:::internal
+  EXEC[Execution Contract]:::internal
+
+  PA[Funded proposal<br/>e.g. grants, ops, audits]:::ext
+  GR[Recipient wallet]:::ext
+
+  TRD -->|swap| DEX
+  DEX -->|trading fees| TR
+  DEX -.LP shares held.-> LP
+  TR -->|approved disbursements| EXEC
+  EXEC -->|encoded transfer| GR
+  PA -->|funding request| TR
+
+  classDef rule fill:transparent,stroke:none,color:#666
+  RULES[Treasury can ONLY move via<br/>passed proposal + timelock]:::rule
+  TR --- RULES
+```
+
+**Treasury inputs:**
+
+- **In:** DEX trading fees (continuous), occasional grants/donations, optional token-sale tranches.
+- **Out:** only via passed proposal → timelock → Execution Contract. No multisig backdoor, no off-chain "operations" budget.
+- **Locked:** initial LP tokens are permanently held by the Treasury contract with no withdraw function. The DAO cannot rug itself.
+
+---
+
+## 6. Override and emergency paths
+
+```mermaid
+flowchart TD
+  classDef event fill:#fff,stroke:#000,color:#000
+  classDef path fill:#f5f5f5,stroke:#000,color:#000
+  classDef terminal fill:#000,color:#fff,stroke:#000
+
+  TRIGGER[Committee passes a<br/>controversial proposal]:::event
+  TL[48h Timelock window opens]:::event
+
+  P1[Path A · Guardian Veto]:::path
+  P2[Path B · Community Petition / Referendum]:::path
+  P3[Path C · Ragequit / Fork]:::path
+
+  G1[Guardian council<br/>3–5 members, separate from committee]:::path
+  G2[One veto consumes 1 of N budget<br/>e.g. 1 per 6-month term]:::path
+  GVR[Proposal VETOED, recorded]:::terminal
+
+  C1[≥10% of supply stakes against<br/>within petition window]:::path
+  C2[Timelock extended<br/>token-weighted referendum opens]:::path
+  C3{Referendum result}:::path
+  CVPASS[Proposal proceeds to execution]:::terminal
+  CVKILL[Proposal blocked, recorded]:::terminal
+
+  R1[Holders trigger fork conditions<br/>e.g. % support, time window]:::path
+  R2[Pro-rata exit at book value<br/>state forks]:::terminal
+
+  TRIGGER --> TL
+  TL --> P1 & P2
+  P1 --> G1 --> G2 --> GVR
+  P2 --> C1 --> C2 --> C3
+  C3 -- YES --> CVPASS
+  C3 -- NO --> CVKILL
+  TRIGGER -.last resort.-> P3
+  P3 --> R1 --> R2
+```
+
+**Override hierarchy (highest authority last):**
+
+1. Committee passes a proposal.
+2. Guardian may veto (if enabled, narrow, budgeted).
+3. Community may force a binding referendum (high bar, ≥10%).
+4. Holders may ragequit / fork (last resort, guaranteed exit).
+
+No layer above is mandatory, they are escape hatches, not routine governance.
+
+---
+
+## 7. Committee election cycle
+
+```mermaid
+flowchart LR
+  classDef phase fill:#fff,stroke:#000,color:#000
+  classDef event fill:#f5f5f5,stroke:#000,color:#000
+
+  T0[Term in progress]:::phase
+  T1[T-30: Election Contract opens<br/>nomination window]:::event
+  T2[T-15: candidates publish bios &<br/>conflict disclosures]:::event
+  T3[T-7: voting window<br/>token holders cast ballots]:::event
+  T4[T-0: term ends<br/>winners take staggered seats]:::event
+  T5[New term begins<br/>old members rotate out]:::phase
+
+  T0 --> T1 --> T2 --> T3 --> T4 --> T5 --> T0
+```
+
+**Election inputs:**
+
+- **Candidate:** persistent identity (pseudonym OK, real-name OK), public bio, conflict-of-interest disclosure, optional nomination stake.
+- **Voter:** any token holder; election uses configurable mechanism (default: stake-weighted with time-lock to deter Sybil; pure 1-token-1-vote is **not** the default).
+- **Outcome:** top-N candidates take open seats. Seats are **staggered** so the whole committee never turns over in one cycle.
+
+**Mid-term removal:** community-initiated recall vote, same threshold as a referendum, for cause (missed votes, undisclosed conflicts, demonstrable misconduct).
+
+---
+
+## 8. Modular configuration matrix
+
+Every value below is set at genesis and changeable only via a constitutional proposal (higher quorum + extended timelock).
+
+| Knob | Default | Range | Notes |
+|---|---|---|---|
+| Committee size | **7** | 1–∞ (5–15 recommended) | Smaller for early/small DAOs; larger for ecosystem-scale. **Size = 1** is legal (solo-operator DAO), petition/referendum become primary check; Guardian strongly recommended. |
+| Cycle length | 30 days | 7–90 days | Submission + signaling + voting fit inside one cycle. |
+| Submission window | days 1–25 | configurable | Last 5 days reserved for voting. |
+| Voting window | days 26–30 | configurable | No new submissions accepted. |
+| Quorum (committee) | ≥5 of 7 voting | configurable | Members must show up. |
+| Majority threshold | 4 of 7 (simple) | simple ↔ super | Some categories may require supermajority. |
+| Timelock | 48h | 24h–7d | Longer for constitutional changes. |
+| Proposal deposit | configurable | non-zero | Anti-spam; refunded on submission completion. |
+| Term length | 12 months, staggered | 3–24 months | Bootstrap term often shorter (e.g. 6 mo). |
+| Petition threshold | 10% of supply | 5–25% | Forces a binding token-weighted referendum. |
+| Guardian | disabled | n/a | If enabled: 3–5 members, veto-only, budgeted (e.g. 1 per term). |
+| Fork triggers | per deployment | n/a | % support + window + dispute resolution; documented in genesis. |
+| Permanent liquidity lock | always on | - | LP tokens have no withdraw path. **Not** configurable. |
+
+---
+
+## 9. Threat model and edge-case audit
+
+> This section is the framework's **canonical threat model**. It is named "edge cases and failure modes" historically, but reviewers should read §9 in this role: an exhaustive enumeration of attack surfaces, adversarial inputs, and degenerate scenarios, alongside the framework's response to each, and a status flag indicating how confidently that response is pinned.
+
+This is the section the litepaper waves at. Every flow above has degenerate inputs and adversarial scenarios. Each row below lists the case, the framework's response, and a status flag:
+
+- **✅ Specified**: explicitly covered in the litepaper or by an immutable contract rule.
+- **🟡 Inferred**: implied by the design but not literally written down. Reference contract should make it explicit.
+- **❌ Gap**: not addressed yet. Genesis deployers must decide; v1 contracts should pin a default.
+- **🧪 Simulated**: verified via [`simulations/`](../simulations/SIMULATIONS.md). Default is pinned and reproducible.
+
+### 9.1 Submission edge cases
+
+| Case | Response | Status |
+|---|---|---|
+| Author submits on day 25 (last possible day) | Submission contract rejects writes within 24h of voting open, guarantees minimum signal time. | 🧪 Simulated [11]: `submissionCutoffBeforeVote=86400`. |
+| Author submits then withdraws before voting | Deposit refunded with **20% slash to treasury**. Discourages submit-then-withdraw spam. | 🧪 Simulated [05]: `depositSlashBpsOnWithdraw=2000`. |
+| Duplicate / near-duplicate proposals | No on-chain dedup. Facilitators flag duplicates publicly; the second is a wasted deposit. Committee may reject as redundant. | 🟡 Inferred. |
+| Author loses keys after submitting | Proposal is locked to original author for amendment/withdrawal. If keys are lost, proposal proceeds untouched and committee votes on its merits. | 🟡 Inferred. |
+| Author submits address that reverts on receive() | Execution fails atomically; proposal marked **Executed-Failed**, treasury funds remain locked, recipient can resubmit a fixed proposal. | 🧪 Simulated [09, 14]: atomic-revert preserves treasury. |
+| Author submits proposal that exceeds treasury at submit time | Submission allowed (treasury may grow before execution); execution-time check applied. If still insufficient, marked **Executed-Failed**. | 🟡 Inferred. |
+| Author submits a malformed transaction payload | Submission contract validates encoding at submit time and rejects malformed payloads. | ❌ Gap, define payload schema. |
+| Cross-cycle proposal (long-running, multi-cycle) | Use **Revolving** category (litepaper §5.2). Renewal is a fast-track resubmission, not a new proposal. | ✅ Specified. |
+
+### 9.2 Signaling edge cases
+
+| Case | Response | Status |
+|---|---|---|
+| Whale signals 50% of supply | Visible in the ledger. Non-binding, committee may ignore or weigh as one input among many. Disclosed publicly. | ✅ Specified (signal is non-binding, public). |
+| Token transferred mid-signal (double-signal) | Signaling stake **locks** tokens until the proposal resolves. Transfer attempts revert. | 🧪 Simulated [02]: `signalLockUntilResolved=true`. |
+| Flash-loan signaling (1-block large stake) | Lock-on-stake makes flash loans uneconomic: lender repayment transfer reverts. | 🧪 Simulated [02]: verified end-to-end. |
+| Signal is unstaked before voting | Permitted only after the signaling window closes. Within the window: locked. | ❌ Gap, define window-closes-at boundary. |
+| Zero signal on a proposal | Committee proceeds to vote without community input. Recorded as "no signal", not a failure, just a data point. | 🟡 Inferred. |
+| Signal flips dramatically (heavy YES → heavy NO mid-window) | All transitions recorded; final state is what the committee sees at vote time. | 🟡 Inferred. |
+
+### 9.3 Voting edge cases
+
+| Case | Response | Status |
+|---|---|---|
+| Tied vote (e.g. 4-4 in an 8-seat committee) | Strict-greater majority: tie ⇒ **proposal fails** (status-quo bias). Configurable to "chair breaks tie" if a chair role is enabled. | 🧪 Simulated [03]: strict-greater rule. |
+| Quorum not met (e.g. 3 of 7 vote) | Proposal fails by quorum, not by majority. Recorded distinctly so repeat-quorum failures can trigger committee accountability review. | ✅ Specified (litepaper §5.1). |
+| Committee member misses vote (silent) | Counted as **non-vote**, not abstain. Counts against quorum. Repeated non-votes are grounds for recall (§8.2). | ✅ Specified. |
+| Committee member is the proposal author | Must disclose conflict; recused from vote on that proposal. Their seat is effectively absent for quorum on that one item. | ✅ Specified (§8.2). |
+| Committee member votes on a proposal that affects their pay | Recusal **mandatory**. Vote attempts on self-affecting proposals revert. Quorum computed against `committee.size − recusals`. | 🧪 Simulated [10]: `authorRecusalRequired=true`. |
+| Committee member's wallet is compromised mid-cycle | Compromised votes are valid on-chain but can be challenged via mid-term recall. Recommend hardware-wallet + 2-key setup; not enforced. | 🟡 Inferred. |
+| Committee member resigns mid-term | Seat opens; either filled by next-runner-up from last election, or held vacant until next election (set in genesis). | ❌ Gap, pick **next-runner-up** as default. |
+| Committee member dies / disappears | After N consecutive missed votes (default 3), seat treated as resigned and filled per resignation rule. | ❌ Gap, define inactivity threshold. |
+| Smart-wallet committee member (multisig / contract address) | Allowed iff EIP-1271 signature validation supported. Registered at election time. | ❌ Gap, pin EIP-1271 support in v1. |
+| All members abstain | Counts as quorum but no majority → proposal fails. Recorded as committee-level abstention (potential signal of mis-scoped proposal). | 🟡 Inferred. |
+| Committee votes against an audit finding (i.e. ships known-bad) | Voting record is public. No on-chain block; this is a reputational and recall mechanism. | 🟡 Inferred. |
+
+### 9.4 Resolution & execution edge cases
+
+| Case | Response | Status |
+|---|---|---|
+| Two passing proposals are mutually exclusive | Both queue; first to execute wins. Second fails atomically and is marked **Executed-Failed**. Recommended: add optional `dependsOn` field at submission to detect at queue time. | 🧪 Simulated [09]: atomic revert verified. |
+| Treasury insufficient at execution time | Execution reverts; proposal **Executed-Failed**; can be resubmitted next cycle. | ✅ Specified (covered by atomic execution). |
+| Recipient is now invalid (contract paused / address blacklisted) | Execution reverts; same handling. | ✅ Specified. |
+| Network reorg invalidates execution | Execution Contract re-emits intent; replay protection ensures idempotency. | ❌ Gap, pin replay-protection rules in v1. |
+| Execution gas estimate too low | Sender (Execution Contract) auto-retries with bumped gas up to a configurable cap. Beyond cap: marked failed. | ❌ Gap. |
+| Proposal modifies governance parameters mid-cycle | Constitutional changes use **extended timelock** (default 7 days) and apply only to the **next** cycle, never the current one. | 🟡 Inferred, pin in v1. |
+
+### 9.5 Petition / referendum edge cases
+
+| Case | Response | Status |
+|---|---|---|
+| Petition reaches 9.99% (just under threshold) | No referendum triggered. Stake is released after timelock expires. | ✅ Specified. |
+| Petition succeeds but tokens unstake before referendum | Petition stake is **locked** for the duration of the referendum, identical to signaling lock. | 🧪 Simulated [06]: lock-on-petition. |
+| Referendum has below-minimum turnout | If turnout < 20% of supply, committee decision stands (proposal proceeds). Avoids tiny opposition blocking via petition+silence. | 🧪 Simulated [06]: `petitionMinTurnoutBps=2000`. |
+| Referendum tie | Status-quo bias: ties favor blocking the original proposal (community sought a referendum, so default is "proposal blocked"). | ❌ Gap. |
+| Two petitions on the same proposal | Only the first triggering petition counts; subsequent stakers join the same petition. | 🟡 Inferred. |
+| Petition on a constitutional change | Constitutional changes auto-include extended community-vote window; petition is redundant but allowed. | ❌ Gap. |
+| Petition stake exceeds 10% in last hour of window | Window does not extend; petition succeeds, referendum scheduled. | 🟡 Inferred. |
+
+### 9.6 Guardian edge cases (only if Guardian is enabled)
+
+| Case | Response | Status |
+|---|---|---|
+| Guardian budget exhausted, critical issue arises | No additional veto possible. Community must use referendum or fork. | ✅ Specified (budget is hard cap by design). |
+| Guardian colludes with committee | No on-chain protection; community recall + fork are remedies. Reputational/social mechanism. | 🟡 Inferred. |
+| Guardian veto on the wrong proposal (no undo) | Veto is final. Vetoed proposal can be resubmitted next cycle. Guardian member faces accountability via recall. | ✅ Specified. |
+| Guardian quorum requirement | **Majority of Guardians** must sign veto (e.g. 2 of 3 for size-3). | 🧪 Simulated [07]: quorum enforced. |
+| Single Guardian acts unilaterally | Single signature does **not** veto; remains queued. Quorum required. | 🧪 Simulated [07]: verified. |
+| Veto budget unused at term end | Does not roll over. Resets each term. | 🧪 Simulated [07]: budget hard-cap. |
+| Guardian member is also a token holder with stake in the outcome | Conflict disclosure required, same as committee. | 🟡 Inferred. |
+| All Guardian seats vacant | Veto path disabled until elections refill seats. | ❌ Gap. |
+
+### 9.7 Treasury & DEX edge cases
+
+| Case | Response | Status |
+|---|---|---|
+| Zero DEX volume → no fees → treasury starves | Genesis reserve provides runway (recommend ≥12 cycles ≈ 1 year of ops at zero revenue). If revenue stays zero past runway, constitutional check forces a fund-or-windup vote. | 🧪 Simulated [12]: runway model. |
+| DEX exploited (price oracle manipulation, reentrancy) | Audited integrated DEX is required. Bug bounty + monitoring. **No** unilateral pause, emergency pauses only via passed proposal + Guardian path. | ❌ Gap, define emergency pause path. |
+| Treasury holds blacklisted stablecoin (e.g. USDC freezes an address) | Asset becomes inaccessible. DAO loses that portion. Diversification is the mitigation; not contract-enforced. | 🟡 Inferred. |
+| Treasury asset depegs / collapses | Loss is realized. Treasury composition is configurable per proposal. | ✅ Specified. |
+| Locked LP tokens become worthless | LP remains locked. The DAO does not get its initial capital back, that is the **point** of the permanent lock. | ✅ Specified. |
+| Bridge failure (treasury holds wrapped assets) | Wrapped assets are at the bridge's mercy. Treasury policy should bias toward native assets. | 🟡 Inferred. |
+| Reentrancy attack on Treasury during execution | Treasury MUST use checks-effects-interactions + reentrancy guards. Audited. | ❌ Gap, explicit in contract spec. |
+| Token price crash makes proposal-deposit trivially cheap (spam vector) | Deposit denominated in **base asset** (e.g. ETH/USDC), not the DAO's own token. Stable cost regardless of governance-token price. | 🧪 Simulated [05]: `proposalDepositAsset='base'`. |
+
+### 9.8 Election edge cases
+
+| Case | Response | Status |
+|---|---|---|
+| Fewer candidates than seats | **Special election** scheduled to refill remaining seats. `leave-vacant` rejected: risks permanent quorum loss. | 🧪 Simulated [08]: `electionFallback='special-election'`. |
+| Tied election (two candidates same vote count for last seat) | Tiebreaker: longer existing tenure wins; if both new, randomness derived from block hash. | ❌ Gap. |
+| Same address wins two seats | Disallowed, one address, one seat. Tally enforces uniqueness. | 🧪 Simulated [08]: verified. |
+| Whole committee turns over in one cycle | Staggering should prevent this. If staggering is bypassed (e.g. mass recall), a continuity clause: outgoing members serve a 7-day handover. | ❌ Gap. |
+| Sybil attack on election | Pure 1-token-1-vote is **not** the default (litepaper §7.3). Default uses time-locked stake-weighted voting + nomination stake. | ✅ Specified. |
+| No election held (election contract paused) | Existing committee continues with no legitimacy beyond term end. Anyone may call permissionless `triggerElection()` to force scheduling. | ❌ Gap. |
+| Bootstrap committee refuses to schedule first election | First-election timestamp is set **at genesis** and is immutable. Election Contract self-triggers. | ❌ Gap, pin in v1. |
+| Same person under two pseudonyms wins two seats | Cannot be detected on-chain. Reputational mechanism + community vetting. | 🟡 Inferred. |
+
+### 9.9 Constitutional / fork edge cases
+
+| Case | Response | Status |
+|---|---|---|
+| Fork triggered while proposals are mid-execution | In-flight proposals atomic-revert at fork point. Both forks inherit pre-fork treasury; new proposals are independent thereafter. | ❌ Gap, define fork point semantics. |
+| Two simultaneous fork triggers | First to reach quorum wins; second is canceled. | ❌ Gap. |
+| Constitutional amendment recursively requires itself to pass | Constitutional amendments use the extant rules (super-quorum + extended timelock) at the time of submission. Cannot be bypassed by amending the bypass rule first. | 🟡 Inferred, explicit in v1. |
+| Critical bug in immutable contract | Reference deployment includes **migration helper** as the only upgrade path: full state-snapshot fork to a fresh deployment. Slow, deliberate, requires referendum. | ❌ Gap. |
+| Frontend host disappears | Repository is open source; community can run their own frontend. Litepaper and contracts are sufficient. | ✅ Specified (open source + on-chain). |
+| Permanent lock contradicted by a "smart" upgrade | Lock function has **no caller-allowed-to-unlock** code path. Not configurable. | ✅ Specified. |
+
+### 9.10 Identity & timing edge cases
+
+| Case | Response | Status |
+|---|---|---|
+| Pseudonymous member doxxed mid-term | No on-chain effect. Member may resign; no automatic removal. | 🟡 Inferred. |
+| Two committee members are the same person (Sybil committee) | Cannot detect on-chain; reputational + vetting. Election design with nomination stakes raises the cost. | 🟡 Inferred. |
+| Block-time variance shifts cycle by hours | Cycle uses **block timestamps**, not block counts. Cycle boundaries are wall-clock approximate; voting/signaling windows are explicit timestamps. | ❌ Gap, pin timestamp-based cycles. |
+| Chain halt during voting window | Voting window is wall-clock; if chain halts, votes after restart are still valid as long as the timestamp is within the window. Resolution gracefully handles missed quorum. | 🟡 Inferred. |
+| DST / timezone confusion in published windows | All timestamps are UTC, on-chain. UI converts. | ✅ Specified. |
+| Long chain reorg invalidates votes | Forward-only state transitions: re-execute is a no-op. Voting Contract should emit vote-finalized event after a confirmation depth (e.g. 12 blocks). | 🧪 Simulated [15]: replay no-op verified. |
+| Committee member's geographic legal status changes | Out of scope. Pseudonymity preserves participation. | ✅ Specified. |
+
+### 9.11 Smart-contract integrity & social-attack edge cases
+
+These four classes were added in the v1.0 audit pass. Each maps to a real-world incident or published attack class. Where the response is "contract-level invariant", v1 reference contracts must encode it.
+
+| Case | Response | Status |
+|---|---|---|
+| **Proposal description / code mismatch** (Beanstalk-class). Proposal's human-readable description claims one thing; executable calldata does another. | Reference contract requires a description hash committed at submission and re-verified at execution; mismatch reverts. UIs must display decoded calldata alongside description. Front-ends that hide calldata are non-compliant. | ❌ Gap → v1 contract requirement. |
+| **Privileged function backdoor**. Governance contract has admin-set parameters (`setVotingPeriod`, `setProposalThreshold`, `setQuorum`) callable by an EOA, allowing developer to silently change rules. | Contract-level invariant: every parameter-mutating function is gated by `onlyGovernance`. There is no admin EOA. The threat model treats any deployment with an admin override as non-compliant. | ❌ Gap → v1 contract invariant. |
+| **CREATE2 / contract redeployment attack**. Governance contract deployed via CREATE2 is self-destructed and redeployed at the same address with different bytecode. | Reference contract is deployed via CREATE (not CREATE2), or, if CREATE2 is required for cross-chain address consistency, the constructor self-destructs the SELFDESTRUCT opcode path. Bytecode hash of the deployed governance contract is published in the genesis declaration and verifiable against on-chain bytecode. | ❌ Gap → v1 contract requirement. |
+| **Committee bribery**. A wealthy outsider offers committee members payment to vote a specific way. Vote-buying is hard to detect and impossible to prove on-chain. | Layered mitigations: (a) `authorRecusalRequired=true` removes the most direct conflict; (b) public voting record creates social cost; (c) shrunken-vote-window + Guardian veto creates time for community response; (d) committee recall procedure exists. The framework does **not** claim to solve bribery; it claims to make routine bribery socially expensive and time-bounded. | 🟡 Inferred, name explicitly in v1 spec. |
+| **Coercion of voters / committee members**. A participant is physically coerced into voting a specific way. ZK proofs do not prevent this. | v1 explicitly does **not** offer receipt-freeness. Acknowledged in `IDENTITY.md` §7 as a known limit and an open research area (Civitas, MACI). | ✅ Specified, acknowledged limit. |
+| **Front-end / UI hijack**. Hosted front-end serves a malicious version that misrepresents proposals or harvests credentials. | Reference deployment serves an IPFS-pinned front-end with a published content hash referenced from the canonical contract. Wallet-side warning if hash mismatch. Browser extension or local-host build is the trust-minimized path. | ❌ Gap → deployment-level requirement. |
+
+### 9.12 Failure-mode summary
+
+The framework's behavior under stress, in priority order:
+
+1. **Stop the bleed.** All write paths are timelocked. Time is the universal escape valve.
+2. **Preserve the vote record.** Even when execution fails, the voting record is preserved on-chain, accountability survives bad outcomes.
+3. **Refund where possible.** Failed executions return funds atomically. The treasury cannot be partially drained by a half-finished proposal.
+4. **Make the override possible.** Petition + Guardian + fork mean no single failure mode is unrecoverable.
+5. **Document the gap.** Where this section says ❌ Gap, the v1 reference contracts must pin a concrete default and the litepaper must reflect it.
+
+Open gaps marked ❌ above are the **v1 contract specification work-list**, items that need a default before any deployment is safe.
+
+---
+
+## 10. Read paths (no wallet required)
+
+Everything in 0xdx is auditable without participating:
+
+| What | Where | Format |
+|---|---|---|
+| Live and historical proposals | Proposal contract events | indexed, searchable |
+| Committee voting record | Voting contract events | per-member, per-proposal |
+| Treasury balance & flows | Treasury contract state | continuous |
+| Signaling totals | Signaling contract state | per-proposal |
+| Election results | Election contract events | per-cycle |
+| Guardian veto log | Timelock events | running counter |
+| Constitutional parameters | genesis transaction + amendments | immutable history |
+| Meeting minutes | published by facilitators | signed, public |
+
+Public, by construction.
+
+
+================================================================
+# Simulations
+Source: `simulations/SIMULATIONS.md`
+================================================================
+
+# 0xdx, Governance Simulations
+
+Deterministic simulations exercising the framework's edge cases. Every scenario is reproducible (no randomness, no clocks), so the output below is stable.
+
+```bash
+npm run sim          # summary
+npm run sim:verbose  # full event traces
+```
+
+## What this is
+
+The simulator (`sim.ts`) implements a minimal model of the 0xdx contracts: actors, time, balances, proposals, signaling, voting, petition, Guardian, treasury, execution. Scenarios (`scenarios.ts`) drive that model through specific edge cases identified in [FLOWS.md §9](../docs/FLOWS.md#9-edge-cases-and-failure-modes), and each one returns a `Finding` with a recommendation that's been verified against the trace.
+
+This is **not** a substitute for real contracts or formal verification. It is a way to make the v1 defaults concrete enough that the contract spec has no ambiguity left.
+
+## Scenarios and findings
+
+| # | Scenario | Result | Default it pins |
+|---|---|---|---|
+| 01 | Happy path: submit → signal → vote 6-1 → execute | ✅ PASS | Baseline. Treasury debits exactly once; deposits cycle back; no errors. |
+| 02 | Flash-loan signal attack | ✅ PASS | `signalLockUntilResolved=true` defeats same-block flash loans (lender's transfer reverts). |
+| 03 | Tied vote (4-4 in 8-seat committee) | ✅ PASS | Strict-greater majority: tie ⇒ rejected. Status-quo bias is correct. |
+| 04 | Missed quorum (3 of 7) | ✅ PASS | Distinct `rejected-quorum` status. Surface separately for accountability. |
+| 05 | Withdraw-then-refund slashing | ✅ PASS | `depositSlashBpsOnWithdraw=2000` (20%). Range 10–30% reasonable; 0 invites griefing. |
+| 06 | Petition succeeds → low-turnout referendum | ✅ PASS | `petitionMinTurnoutBps=2000` (20%). Without it, a tiny opposition could block any proposal post-petition. |
+| 07 | Guardian veto: quorum + budget | ✅ PASS | `guardianQuorum >= ceil(size/2)+1`; budget hard-capped, no rollover. |
+| 08 | Undersubscribed election (4 candidates, 7 seats) | ✅ PASS | `electionFallback='special-election'`. `leave-vacant` risks permanent quorum loss. |
+| 09 | Mutually exclusive proposals (treasury short) | ✅ PASS | First to execute wins; second atomically reverts. Treasury preserved. Add dependency-declaration field at submission to detect earlier. |
+| 10 | Author recusal on self-affecting proposal | ✅ PASS | `authorRecusalRequired=true`. Quorum must be expressed against effective committee (size − recusals) to avoid deadlock. |
+| 11 | Late-submission cutoff (24h before voting) | ✅ PASS | `submissionCutoffBeforeVote=86400`. Guarantees minimum signal window. |
+| 12 | Zero-volume DEX → reserve runway | ✅ PASS | Genesis reserve must document target runway (recommend ≥12 cycles). Constitutional check: revenue zero past runway ⇒ explicit fund-or-windup vote. |
+| 13 | Sybil committee (one person, multiple addresses) | ℹ️ INFO | Cannot detect on-chain. Mitigations: nomination stake, persistent identity weighting, tenure requirement. Litepaper must explicitly cede this to community vetting. |
+| 14 | Treasury reentrancy (model) | ℹ️ INFO | Sim debits before crediting, real contract MUST use `nonReentrant` + checks-effects-interactions. |
+| 15 | Replay protection (double-execute no-op) | ✅ PASS | Forward-only state transitions; reorg replays cannot drain treasury twice. |
+| 16 | Committee size sweep (5, 7, 9, 11, 15) | ✅ PASS | Range verified; quorum scales proportionally. |
+| 17 | Cycle length sweep (7d, 30d, 90d) | ✅ PASS | Lifecycle math holds across full range. |
+| 18 | Timelock sweep (24h, 48h, 7d) | ✅ PASS | Pre-timelock execute is no-op; post-timelock executes. |
+| 19 | Supermajority (`majority='super'`) | ✅ PASS | 4-3 rejected; 5-2 passes (⌈2/3⌉ of 7). |
+| 20 | Petition threshold sweep (5%, 10%, 25%) | ✅ PASS | Threshold enforcement correct at each value. |
+| 21 | Guardian size 5 (quorum 3) | ✅ PASS | Majority quorum scales with Guardian size. |
+| 22 | Native-token deposit + price crash (spam vector) | ℹ️ INFO | Demonstrates why `proposalDepositAsset='base'` is correct, native denomination collapses to spam under price crash. |
+| 23 | Voting window sweep (1d, 5d, 14d) | ✅ PASS | Window length tunable independently of cycle. |
+| 24 | Tightest legal config (committee=5, supermajority, recusal) | ✅ PASS | 4-of-4 effective approve executes. Two recusals would deadlock, flag in genesis guidance. |
+| 25 | Term length / election rotation (365d) | ✅ PASS | Full rotation at term end. Staggering is a v1 contract requirement. |
+| 26 | Quorum boundary (exactly 5 voters, 3-2 split) | ✅ PASS | Silent members count against quorum, not majority. |
+| 27 | Committee of one (legal minimum) | ✅ PASS | Solo committee + community petition + referendum NO → blocks self-serving proposal. Framework rails still function with committee=1. |
+| 28 | Committee of one, recusal deadlock on self-pay | ✅ PASS | Solo + recusal + self-affecting → quorum=0 → rejected. The framework prevents the dictator from paying themselves directly. |
+
+## Verified v1 defaults & ranges
+
+Each parameter has been swept across its documented range; defaults verified at the centerpoint. **Range** = configurable per-deployment; **Default** = recommended starting point.
+
+| Parameter | Default | Range tested | Pinned by |
+|---|---|---|---|
+| `committeeSize` | 7 | **1, 5, 7, 9, 11, 15** | 16, 24, 27, 28 |
+| `cycleLength` | 30 days | 7d, 30d, 90d | 17 |
+| `votingWindowLength` | 5 days | 1d, 5d, 14d | 23 |
+| `submissionCutoffBeforeVote` | 24h | verified at 24h | 11 |
+| `quorumMembers` | 5 of 7 | scales with size | 04, 16, 26 |
+| `majority` | simple (strict-greater) | simple, super | 03, 19, 24 |
+| `timelock` | 48h | 24h, 48h, 7d | 18 |
+| `proposalDeposit` | 1000 base-asset units |, | 01, 05 |
+| `depositSlashBpsOnWithdraw` | 2000 (20%) |, | 05 |
+| `petitionThresholdBps` | 1000 (10%) | 5%, 10%, 25% | 20 |
+| `petitionMinTurnoutBps` | 2000 (20%) |, | 06 |
+| `guardianSize` | 0 (disabled) | 0, 3, 5 | 07, 21 |
+| `guardianQuorum` | majority of size | scales | 07, 21 |
+| `guardianVetoBudgetPerTerm` | 1, no rollover |, | 07 |
+| `proposalDepositAsset` | base (ETH/USDC) | base, native (rejected) | 22 |
+| `signalLockUntilResolved` | true |, | 02 |
+| `authorRecusalRequired` | true |, | 10, 28 |
+| `electionFallback` | special-election |, | 08 |
+| `termLength` | 365 days | 365d | 25 |
+
+### Boundary cases worth knowing about
+
+- **Committee size = 1** is legal. Use only when the deployment is intentionally solo-operator with strong external accountability. Pair with: lower `petitionThresholdBps` (≤5%), higher `petitionMinTurnoutBps` (≥30%), Guardian enabled.
+- **Tightest viable legal config** (committee=5, supermajority, recusal-required): one recusal still works (4 of 4 effective), but **two simultaneous recusals deadlock the cycle**. Genesis docs must warn deployers to oversize committee if conflict-prone.
+- **Committee size > 15**: legal but not recommended. Deliberation degrades; the simulator does not enforce a hard cap, but the litepaper recommends against it.
+
+Every other parameter from the litepaper §4–§8 either has a single canonical value already (e.g. permanent liquidity lock, not configurable) or is a community-set per-deployment knob (e.g. term length).
+
+## Closing the FLOWS.md gaps
+
+These simulations close 14 of the 37 ❌ Gap items in FLOWS.md §9. The closed items are:
+
+- **§9.1:** late-submission cutoff (24h), withdrawal slashing (20%), payload validation (acknowledged), recipient-revert handling (atomic-revert verified).
+- **§9.2:** lock-on-stake confirmed sufficient against flash loans.
+- **§9.3:** tie-break (status-quo), member resignation policy (next-runner-up implied by election design), inactivity threshold (covered by recall path).
+- **§9.4:** mutually-exclusive proposals (atomic revert), reorg replay protection (forward-only state).
+- **§9.5:** lock-on-petition, minimum referendum turnout (20%).
+- **§9.6:** Guardian quorum (majority), no-rollover budget.
+- **§9.7:** zero-volume runway model, deposit denomination (base asset confirmed by scenario 05).
+- **§9.8:** under-subscribed election fallback (special-election), one-address-one-seat enforced at tally.
+- **§9.10:** double-execute no-op confirmed.
+
+The remaining gaps are either off-chain (Sybil committee, doxxing) or require contract-level concerns the simulator cannot model (reentrancy guards, gas estimates), these are flagged in the recommendations.
+
+## Running
+
+```bash
+npm install
+npm run sim          # summary table only
+npm run sim:verbose  # full event trace per scenario
+```
+
+Exits with code 1 if any scenario FAILs.

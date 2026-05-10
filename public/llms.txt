@@ -1,0 +1,29 @@
+# 0xdx
+
+> A self-operating, committee-driven DAO governance framework. Elected
+> committees decide one-person-one-vote, smart contracts auto-execute
+> the outcomes, and a built-in DEX funds the treasury so the DAO runs
+> perpetually without external fundraising.
+
+The canonical specification is published as four MIT-licensed Markdown
+documents in the repository at https://github.com/russfranky/0xdx.
+
+## Canonical specification
+
+- [Litepaper](https://raw.githubusercontent.com/russfranky/0xdx/main/0xdx_litepaper.md): the v1.0 framework specification. Eleven sections covering governance architecture, proposal lifecycle, treasury system, security and safeguards, oversight, and use cases.
+- [Constitution](https://raw.githubusercontent.com/russfranky/0xdx/main/CONSTITUTION.md): values, roles, decision-making rules, treasury invariants, identity requirements, amendment process, and legal posture. Anything calling itself "0xdx-compliant" must satisfy this.
+- [Identity](https://raw.githubusercontent.com/russfranky/0xdx/main/IDENTITY.md): the pluggable identity and Sybil-resistance interface, six binding minimum requirements, and a reference design based on client-encrypted biometrics with zero-knowledge attestation.
+- [Legal](https://raw.githubusercontent.com/russfranky/0xdx/main/LEGAL.md): legal and regulatory posture. Ooki DAO precedent, securities and commodity notes, MiCA, recommended legal wrappers, and the framework's stance on regulatory authority.
+
+## Supporting documents
+
+- [Flows and threat model](https://raw.githubusercontent.com/russfranky/0xdx/main/docs/FLOWS.md): actor map, genesis flow, proposal lifecycle, state machine, treasury and DEX flows, override paths, elections, modular configuration matrix, and the canonical threat model with 40+ tagged edge cases.
+- [Simulations](https://raw.githubusercontent.com/russfranky/0xdx/main/simulations/SIMULATIONS.md): runnable deterministic simulations validating v1 defaults across 28 scenarios.
+
+## Optional concatenated source
+
+- [llms-full.txt](https://0xdx.com/llms-full.txt): all four canonical documents concatenated in a single file.
+
+## License
+
+MIT. The framework is open source. Reuse and republication are permitted under the MIT terms.

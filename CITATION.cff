@@ -1,0 +1,31 @@
+cff-version: 1.2.0
+title: "0xdx: A Self-Operating, Committee-Driven DAO Governance Framework"
+abstract: >-
+  0xdx is a self-operating, committee-driven DAO governance framework.
+  Elected committees decide one-person-one-vote, smart contracts
+  auto-execute the outcomes, and a built-in DEX funds the treasury so
+  the DAO runs perpetually without external fundraising. The
+  specification covers governance architecture, proposal lifecycle,
+  treasury system, security and safeguards, identity and Sybil
+  resistance, and legal posture.
+message: "If you reference, build on, or fork this specification, please cite it."
+type: software
+authors:
+  - name: "0xdx contributors"
+    website: "https://0xdx.com/"
+repository-code: "https://github.com/russfranky/0xdx"
+url: "https://0xdx.com/"
+license: MIT
+version: "1.0.0"
+date-released: "2026-05-09"
+keywords:
+  - DAO
+  - governance
+  - decentralization
+  - web3
+  - ethereum
+  - zero-knowledge-proofs
+  - sybil-resistance
+  - one-person-one-vote
+  - committee-governance
+  - decentralized-exchange
