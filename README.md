@@ -51,6 +51,7 @@ Supporting documents:
 
 | Document | Purpose |
 |---|---|
+| [`OVERVIEW.md`](./OVERVIEW.md) | Concise 11-section explainer of the full framework. Start here for a plain-language introduction before reading the litepaper. |
 | [`docs/FLOWS.md`](./docs/FLOWS.md) | Actor map, genesis flow, proposal lifecycle, state machine, treasury & DEX flows, override paths, elections, modular-config matrix, and the **canonical threat model** (§9: 40+ edge cases tagged Specified / Inferred / Gap / Simulated). |
 | [`simulations/SIMULATIONS.md`](./simulations/SIMULATIONS.md) | 28 runnable deterministic scenarios validating v1 defaults (`npm run sim`). |
 
