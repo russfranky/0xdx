@@ -8,7 +8,7 @@
 <br/>
 <br/>
 
-**A self-operating, committee-driven DAO governance framework.**
+**The Decentralized Governance Ecosystem (DGE) framework.**
 
 [![Spec](https://img.shields.io/badge/spec-v1.0-black?style=flat-square)](./0xdx_litepaper.md)
 [![License: MIT](https://img.shields.io/badge/license-MIT-black?style=flat-square)](./LICENSE)
@@ -23,12 +23,14 @@
 
 ---
 
-0xdx blends structured human governance with trustless automation: a small elected committee makes decisions one-person-one-vote, smart contracts auto-execute the outcomes, and a built-in DEX funds the treasury so the DAO runs perpetually without external fundraising.
+0xdx defines the **Decentralized Governance Ecosystem (DGE)**: a self-contained governance unit any organization, project, or community can deploy. It pairs a small elected committee with a built-in DEX that funds the treasury perpetually, and a community signaling layer that generates a live **Community Alignment Score (CAS)** reflecting how closely the committee's decisions track the community's sentiment. Every active DGE is listed and ranked by CAS on the **0xdx Index**.
 
 | | |
 |---|---|
+| **DGE framework** | Deploy a self-sustaining governance unit: committee, treasury, DEX, and signaling in one system |
+| **0xdx Index** | Live registry of every active DGE, ranked by Community Alignment Score (CAS) |
 | **Committee governance** | Small elected body, one-person-one-vote, term limits, quorum rules |
-| **Trustless execution** | Smart contracts auto-execute passed proposals — no human in the loop |
+| **Trustless execution** | Smart contracts auto-execute passed proposals, no human in the loop |
 | **Self-funded treasury** | Built-in DEX generates protocol fees; no external fundraising required |
 | **Sybil resistance** | Pluggable identity layer with ZK-attestation reference design |
 
