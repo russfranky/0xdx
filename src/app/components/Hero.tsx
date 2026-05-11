@@ -14,9 +14,9 @@ export function Hero({ phase, onLitepaperClick }: HeroProps) {
   const isPrelaunch = phase === 'prelaunch';
 
   return (
-    <section className="relative min-h-[95vh] flex items-center pt-32 pb-20 bg-white overflow-hidden">
+    <section className="relative min-h-[95vh] flex items-center pt-32 pb-20 bg-white dark:bg-neutral-950 overflow-hidden">
       {/* Abstract Background Mesh */}
-      <div className="absolute inset-0 pointer-events-none opacity-[0.05]"
+      <div className="absolute inset-0 pointer-events-none opacity-[0.05] dark:opacity-[0.08]"
         aria-hidden="true"
         style={{
           backgroundImage: `linear-gradient(to right, #000 1px, transparent 1px), linear-gradient(to bottom, #000 1px, transparent 1px)`,
@@ -25,8 +25,8 @@ export function Hero({ phase, onLitepaperClick }: HeroProps) {
       />
       
       {/* Large decorative circles */}
-      <div className="absolute -right-[10%] top-[10%] w-[800px] h-[800px] rounded-full border border-neutral-100 opacity-50 pointer-events-none" aria-hidden="true" />
-      <div className="absolute -right-[5%] top-[20%] w-[600px] h-[600px] rounded-full border border-neutral-100 opacity-50 pointer-events-none" aria-hidden="true" />
+      <div className="absolute -right-[10%] top-[10%] w-[800px] h-[800px] rounded-full border border-neutral-100 dark:border-neutral-800 opacity-50 pointer-events-none" aria-hidden="true" />
+      <div className="absolute -right-[5%] top-[20%] w-[600px] h-[600px] rounded-full border border-neutral-100 dark:border-neutral-800 opacity-50 pointer-events-none" aria-hidden="true" />
 
       <div className="max-w-7xl mx-auto px-6 w-full relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
@@ -42,7 +42,7 @@ export function Hero({ phase, onLitepaperClick }: HeroProps) {
               <span className="flex h-2 w-2 relative">
                 <span className={`relative inline-flex rounded-full h-2 w-2 ${isPrelaunch ? 'bg-neutral-400' : isTestnet ? 'bg-orange-500' : 'bg-emerald-500'}`}></span>
               </span>
-              <span className="text-sm font-mono text-neutral-500 uppercase tracking-widest">
+              <span className="text-sm font-mono text-neutral-500 dark:text-neutral-400 uppercase tracking-widest">
                 {isPrelaunch ? 'Specification Draft · v1.0' : isTestnet ? 'Incentivized Testnet Live' : 'Protocol V2 is Live'}
               </span>
             </motion.div>
@@ -52,7 +52,7 @@ export function Hero({ phase, onLitepaperClick }: HeroProps) {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 }}
-              className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-black tracking-tighter mb-8 leading-[0.95] uppercase"
+              className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-black dark:text-white tracking-tighter mb-8 leading-[0.95] uppercase"
             >
               Decentralized <br />
               Governance <br />
@@ -64,7 +64,7 @@ export function Hero({ phase, onLitepaperClick }: HeroProps) {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
-              className="text-xl md:text-2xl text-neutral-600 max-w-xl mb-12 leading-normal font-light"
+              className="text-xl md:text-2xl text-neutral-600 dark:text-neutral-300 max-w-xl mb-12 leading-normal font-light"
             >
               {isPrelaunch
                 ? "0xdx is a governance framework specification: elected committees decide one-person-one-vote, smart contracts auto-execute, and a built-in DEX funds the treasury. Read the litepaper."
@@ -97,7 +97,7 @@ export function Hero({ phase, onLitepaperClick }: HeroProps) {
                   </Button>
                   <button
                     onClick={onLitepaperClick}
-                    className="group flex items-center gap-2 text-black font-medium hover:text-neutral-600 transition-colors"
+                    className="group flex items-center gap-2 text-black dark:text-white font-medium hover:text-neutral-600 dark:hover:text-neutral-400 transition-colors"
                   >
                     Read Litepaper
                     <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
@@ -115,13 +115,13 @@ export function Hero({ phase, onLitepaperClick }: HeroProps) {
             className="lg:col-span-5 relative"
           >
             {/* Main "Device" */}
-            <div className="relative z-10 bg-white rounded-lg border-2 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,0.1)] overflow-hidden">
-              <div className={`${isTestnet ? 'bg-orange-50 border-orange-100' : 'bg-neutral-50 border-neutral-200'} border-b-2 border-black p-4 flex items-center justify-between`}>
+            <div className="relative z-10 bg-white dark:bg-neutral-900 rounded-lg border-2 border-black dark:border-neutral-700 shadow-[8px_8px_0px_0px_rgba(0,0,0,0.1)] dark:shadow-[8px_8px_0px_0px_rgba(255,255,255,0.05)] overflow-hidden">
+              <div className={`${isTestnet ? 'bg-orange-50 border-orange-100 dark:bg-orange-950/30' : 'bg-neutral-50 border-neutral-200 dark:bg-neutral-800'} border-b-2 border-black dark:border-neutral-700 p-4 flex items-center justify-between`}>
                 <div className="flex gap-2">
                   <div className={`w-3 h-3 rounded-full border border-black ${isTestnet ? 'bg-orange-400' : 'bg-neutral-200'}`} />
                   <div className={`w-3 h-3 rounded-full border border-black ${isTestnet ? 'bg-orange-400' : 'bg-neutral-200'}`} />
                 </div>
-                <div className={`text-xs font-mono font-bold uppercase tracking-wider ${isTestnet ? 'text-orange-600' : 'text-neutral-500'}`}>
+                <div className={`text-xs font-mono font-bold uppercase tracking-wider ${isTestnet ? 'text-orange-600' : 'text-neutral-500 dark:text-neutral-400'}`}>
                   {isPrelaunch ? 'Illustrative · Sample Flow' : isTestnet ? 'Testnet Consensus' : 'Live Consensus'}
                 </div>
               </div>
@@ -130,24 +130,24 @@ export function Hero({ phase, onLitepaperClick }: HeroProps) {
                 {/* Visualizing a proposal execution */}
                 <div className="mb-8">
                   <div className="flex items-center justify-between mb-2">
-                    <div className="text-xs font-mono text-neutral-500 uppercase tracking-wide">
+                    <div className="text-xs font-mono text-neutral-500 dark:text-neutral-400 uppercase tracking-wide">
                       Proposal #124
                     </div>
-                    <div className="flex items-center gap-1 text-[10px] font-bold uppercase bg-neutral-100 px-2 py-0.5 rounded text-neutral-600">
+                    <div className="flex items-center gap-1 text-[10px] font-bold uppercase bg-neutral-100 dark:bg-neutral-700 px-2 py-0.5 rounded text-neutral-600 dark:text-neutral-300">
                       <Zap className="w-3 h-3" /> Auto-Executing
                     </div>
                   </div>
-                  
-                  <div className="text-2xl font-bold text-black mb-1">
+
+                  <div className="text-2xl font-bold text-black dark:text-white mb-1">
                     Fund DEX Liquidity Pair
                   </div>
-                  <div className="text-sm text-neutral-500 mb-6">
+                  <div className="text-sm text-neutral-500 dark:text-neutral-400 mb-6">
                     Releasing 50,000 USDC from Treasury to Uniswap V3 Pool.
                   </div>
                   
                   {/* Committee Votes Visual */}
                   <div className="space-y-3 mb-6">
-                    <div className="flex justify-between text-xs font-bold text-neutral-900 mb-1">
+                    <div className="flex justify-between text-xs font-bold text-neutral-900 dark:text-neutral-100 mb-1">
                       <span>Committee Votes (5/7)</span>
                       <span>Passed</span>
                     </div>
@@ -156,30 +156,30 @@ export function Hero({ phase, onLitepaperClick }: HeroProps) {
                          <div key={i} className={`h-2 flex-1 rounded-sm ${isTestnet ? 'bg-orange-500' : 'bg-emerald-500'}`} />
                        ))}
                        {[6,7].map(i => (
-                         <div key={i} className="h-2 flex-1 rounded-sm bg-neutral-100" />
+                         <div key={i} className="h-2 flex-1 rounded-sm bg-neutral-100 dark:bg-neutral-700" />
                        ))}
                     </div>
                   </div>
                 </div>
 
-                <div className="space-y-4 border-t border-neutral-100 pt-6">
+                <div className="space-y-4 border-t border-neutral-100 dark:border-neutral-700 pt-6">
                   <div className="flex items-center gap-4 text-sm">
-                    <div className="w-8 h-8 rounded-full bg-neutral-900 text-white flex items-center justify-center border border-neutral-200 shrink-0">
+                    <div className="w-8 h-8 rounded-full bg-neutral-900 dark:bg-neutral-100 text-white dark:text-neutral-900 flex items-center justify-center border border-neutral-200 dark:border-neutral-600 shrink-0">
                       <ShieldCheck className="w-4 h-4" />
                     </div>
                     <div className="flex-1">
-                      <div className="font-bold text-black text-xs uppercase tracking-wide">Timelock Ended</div>
-                      <div className="font-mono text-xs text-neutral-500">48h Safety Period Complete</div>
+                      <div className="font-bold text-black dark:text-white text-xs uppercase tracking-wide">Timelock Ended</div>
+                      <div className="font-mono text-xs text-neutral-500 dark:text-neutral-400">48h Safety Period Complete</div>
                     </div>
                   </div>
                   
                   <div className="flex items-center gap-4 text-sm opacity-50">
-                    <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center border border-neutral-200 shrink-0">
+                    <div className="w-8 h-8 rounded-full bg-white dark:bg-neutral-800 flex items-center justify-center border border-neutral-200 dark:border-neutral-600 shrink-0">
                       <div className={`w-2 h-2 rounded-full ${isTestnet ? 'bg-orange-500' : 'bg-emerald-500'}`} />
                     </div>
                     <div className="flex-1">
-                      <div className="font-bold text-black text-xs uppercase tracking-wide">Tx Broadcast</div>
-                      <div className="font-mono text-xs text-neutral-500">0x8a...92b1</div>
+                      <div className="font-bold text-black dark:text-white text-xs uppercase tracking-wide">Tx Broadcast</div>
+                      <div className="font-mono text-xs text-neutral-500 dark:text-neutral-400">0x8a...92b1</div>
                     </div>
                   </div>
                 </div>
@@ -193,8 +193,8 @@ export function Hero({ phase, onLitepaperClick }: HeroProps) {
             </div>
 
             {/* Background elements */}
-            <div className="absolute -top-10 -right-10 w-full h-full border border-neutral-200 rounded-xl -z-10" />
-            <div className="absolute -bottom-10 -left-10 w-full h-full bg-neutral-50 rounded-xl -z-10" />
+            <div className="absolute -top-10 -right-10 w-full h-full border border-neutral-200 dark:border-neutral-700 rounded-xl -z-10" />
+            <div className="absolute -bottom-10 -left-10 w-full h-full bg-neutral-50 dark:bg-neutral-800 rounded-xl -z-10" />
           </motion.div>
 
         </div>

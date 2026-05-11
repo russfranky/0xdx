@@ -1,4 +1,5 @@
 import { useState, lazy, Suspense } from 'react';
+import { useTheme } from './hooks/useTheme';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { ActivityFeed } from './components/ActivityFeed';
@@ -26,13 +27,14 @@ export type Phase = 'prelaunch' | 'testnet' | 'mainnet';
 export type View = 'landing' | 'minutes' | 'litepaper' | 'roadmap' | 'projects' | 'project-detail' | 'governance';
 
 function ViewFallback() {
-  return <div className="min-h-screen bg-white" />;
+  return <div className="min-h-screen bg-white dark:bg-neutral-950" />;
 }
 
 export default function App() {
   const [phase] = useState<Phase>('prelaunch');
   const [view, setView] = useState<View>('landing');
   const [selectedProjectId, setSelectedProjectId] = useState<number | null>(null);
+  const { theme, toggleTheme } = useTheme();
 
   if (view === 'minutes') {
     return (
@@ -83,13 +85,13 @@ export default function App() {
   if (view === 'governance') {
     return (
       <Suspense fallback={<ViewFallback />}>
-        <GovernanceDashboard onBack={() => setView('landing')} />
+        <GovernanceDashboard onBack={() => setView('landing')} theme={theme} onThemeToggle={toggleTheme} />
       </Suspense>
     );
   }
 
   return (
-    <div className="min-h-screen bg-white text-black font-sans selection:bg-black selection:text-white">
+    <div className="min-h-screen bg-white dark:bg-neutral-950 text-black dark:text-white font-sans selection:bg-black selection:text-white dark:selection:bg-white dark:selection:text-black">
       <a href="#main" className="skip-to-content">Skip to content</a>
       <Navbar
         onHomeClick={() => setView('landing')}
@@ -97,6 +99,8 @@ export default function App() {
         onDiscoverClick={() => setView('projects')}
         onRoadmapClick={() => setView('roadmap')}
         onGovernanceClick={() => setView('governance')}
+        theme={theme}
+        onThemeToggle={toggleTheme}
       />
       <main id="main">
         <Hero phase={phase} onLitepaperClick={() => setView('litepaper')} />

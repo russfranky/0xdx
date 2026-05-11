@@ -25,17 +25,17 @@ export function Resources({ onLitepaperClick, onRoadmapClick }: ResourcesProps) 
   ];
 
   return (
-    <section className="py-28 bg-white border-t border-neutral-100">
+    <section className="py-28 bg-white dark:bg-neutral-950 border-t border-neutral-100 dark:border-neutral-800">
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {resources.map((item, idx) => {
             const inner = (
               <>
-                <div className="flex items-center justify-between mb-4 border-b-2 border-neutral-200 pb-4 group-hover:border-black transition-colors">
-                  <h3 className="font-bold text-lg text-black uppercase tracking-wide">{item.title}</h3>
-                  <ArrowUpRight className="w-4 h-4 text-neutral-600 group-hover:text-black transition-colors" />
+                <div className="flex items-center justify-between mb-4 border-b-2 border-neutral-200 dark:border-neutral-700 pb-4 group-hover:border-black dark:group-hover:border-white transition-colors">
+                  <h3 className="font-bold text-lg text-black dark:text-white uppercase tracking-wide">{item.title}</h3>
+                  <ArrowUpRight className="w-4 h-4 text-neutral-600 dark:text-neutral-400 group-hover:text-black dark:group-hover:text-white transition-colors" />
                 </div>
-                <p className="text-neutral-600 text-sm leading-relaxed font-light text-left">
+                <p className="text-neutral-600 dark:text-neutral-300 text-sm leading-relaxed font-light text-left">
                   {item.desc}
                 </p>
               </>

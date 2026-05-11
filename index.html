@@ -24,6 +24,18 @@
 
     <link rel="canonical" href="https://0xdx.com/" />
 
+    <!-- FOIT prevention: apply dark class before React hydrates -->
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme');
+          if (t === 'dark' || (!t && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+          }
+        } catch (e) {}
+      })();
+    </script>
+
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",

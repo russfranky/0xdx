@@ -10,28 +10,28 @@ export function Footer({ onLitepaperClick, onRoadmapClick }: FooterProps) {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="bg-white border-t border-neutral-200 py-16">
+    <footer className="bg-white dark:bg-neutral-950 border-t border-neutral-200 dark:border-neutral-700 py-16">
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-16">
           <div>
             <div className="flex items-center gap-2 mb-6">
-              <div className="w-6 h-6 bg-black flex items-center justify-center">
-                <span className="text-white font-bold text-xs">0x</span>
+              <div className="w-6 h-6 bg-black dark:bg-white flex items-center justify-center">
+                <span className="text-white dark:text-black font-bold text-xs">0x</span>
               </div>
-              <span className="text-xl font-bold text-black tracking-tighter">0xdx</span>
+              <span className="text-xl font-bold text-black dark:text-white tracking-tighter">0xdx</span>
             </div>
-            <p className="text-xs text-neutral-600 font-mono uppercase tracking-wide leading-relaxed">
+            <p className="text-xs text-neutral-600 dark:text-neutral-400 font-mono uppercase tracking-wide leading-relaxed">
               A self-operating, committee-driven DAO governance framework.
             </p>
           </div>
 
           <div>
-            <h4 className="font-bold text-black mb-6 text-xs uppercase tracking-widest">Framework</h4>
+            <h4 className="font-bold text-black dark:text-white mb-6 text-xs uppercase tracking-widest">Framework</h4>
             <ul className="space-y-3">
               <li>
                 <button
                   onClick={onLitepaperClick}
-                  className="text-neutral-600 hover:text-black text-sm uppercase tracking-wide font-medium"
+                  className="text-neutral-600 dark:text-neutral-400 hover:text-black dark:hover:text-white text-sm uppercase tracking-wide font-medium"
                 >
                   Litepaper
                 </button>
@@ -39,7 +39,7 @@ export function Footer({ onLitepaperClick, onRoadmapClick }: FooterProps) {
               <li>
                 <button
                   onClick={onRoadmapClick}
-                  className="text-neutral-600 hover:text-black text-sm uppercase tracking-wide font-medium"
+                  className="text-neutral-600 dark:text-neutral-400 hover:text-black dark:hover:text-white text-sm uppercase tracking-wide font-medium"
                 >
                   Roadmap
                 </button>
@@ -48,15 +48,15 @@ export function Footer({ onLitepaperClick, onRoadmapClick }: FooterProps) {
           </div>
 
           <div>
-            <h4 className="font-bold text-black mb-6 text-xs uppercase tracking-widest">Status</h4>
-            <p className="text-neutral-600 text-sm font-mono uppercase tracking-wide">
+            <h4 className="font-bold text-black dark:text-white mb-6 text-xs uppercase tracking-widest">Status</h4>
+            <p className="text-neutral-600 dark:text-neutral-400 text-sm font-mono uppercase tracking-wide">
               Pre-launch · Specification draft v1.0
             </p>
           </div>
         </div>
 
-        <div className="border-t border-neutral-100 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-[10px] text-neutral-600 font-mono uppercase tracking-widest">
+        <div className="border-t border-neutral-100 dark:border-neutral-800 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+          <p className="text-[10px] text-neutral-600 dark:text-neutral-400 font-mono uppercase tracking-widest">
             © {year} <span className="normal-case">0xdx</span> · MIT License
           </p>
           <a
@@ -64,7 +64,7 @@ export function Footer({ onLitepaperClick, onRoadmapClick }: FooterProps) {
             target="_blank"
             rel="noopener noreferrer"
             aria-label="0xdx on GitHub"
-            className="flex items-center gap-2 text-neutral-400 hover:text-black transition-colors"
+            className="flex items-center gap-2 text-neutral-400 hover:text-black dark:hover:text-white transition-colors"
           >
             <Github className="w-5 h-5" aria-hidden="true" />
           </a>

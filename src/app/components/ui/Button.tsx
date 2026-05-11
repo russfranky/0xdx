@@ -18,10 +18,10 @@ export function Button({
   ...props 
 }: ButtonProps) {
   const variants = {
-    primary: 'bg-black text-white hover:bg-neutral-800 border border-transparent',
-    secondary: 'bg-neutral-100 text-black hover:bg-neutral-200 border border-transparent',
-    ghost: 'bg-transparent text-neutral-600 hover:text-black hover:bg-neutral-50',
-    outline: 'bg-transparent text-black border border-black hover:bg-black hover:text-white',
+    primary: 'bg-black text-white hover:bg-neutral-800 border border-transparent dark:bg-white dark:text-black dark:hover:bg-neutral-200',
+    secondary: 'bg-neutral-100 text-black hover:bg-neutral-200 border border-transparent dark:bg-neutral-800 dark:text-white dark:hover:bg-neutral-700',
+    ghost: 'bg-transparent text-neutral-600 hover:text-black hover:bg-neutral-50 dark:text-neutral-400 dark:hover:text-white dark:hover:bg-neutral-800',
+    outline: 'bg-transparent text-black border border-black hover:bg-black hover:text-white dark:text-white dark:border-white dark:hover:bg-white dark:hover:text-black',
   };
 
   const sizes = {

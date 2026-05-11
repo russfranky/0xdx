@@ -12,31 +12,31 @@ export function Comparison() {
   ];
 
   return (
-    <section className="py-28 bg-white">
+    <section className="py-28 bg-white dark:bg-neutral-950">
       <div className="max-w-7xl mx-auto px-6">
         <div className="mb-12">
-          <h2 className="text-3xl md:text-5xl font-bold text-black mb-2 uppercase tracking-tighter">Compare Models</h2>
+          <h2 className="text-3xl md:text-5xl font-bold text-black dark:text-white mb-2 uppercase tracking-tighter">Compare Models</h2>
         </div>
 
         <div className="overflow-x-auto">
           <table className="w-full min-w-[700px] text-sm text-left">
             <thead>
-              <tr className="border-b-2 border-black">
-                <th className="py-4 pr-8 font-bold text-black uppercase tracking-wider">Feature</th>
-                <th className="py-4 px-4 text-neutral-500 font-bold uppercase tracking-wider">Uniswap</th>
-                <th className="py-4 px-4 text-neutral-500 font-bold uppercase tracking-wider">Compound</th>
-                <th className="py-4 px-4 text-neutral-500 font-bold uppercase tracking-wider">Snapshot</th>
-                <th className="py-4 px-4 text-black font-bold bg-neutral-100 uppercase tracking-wider"><span className="normal-case">0xdx</span></th>
+              <tr className="border-b-2 border-black dark:border-neutral-600">
+                <th className="py-4 pr-8 font-bold text-black dark:text-white uppercase tracking-wider">Feature</th>
+                <th className="py-4 px-4 text-neutral-500 dark:text-neutral-400 font-bold uppercase tracking-wider">Uniswap</th>
+                <th className="py-4 px-4 text-neutral-500 dark:text-neutral-400 font-bold uppercase tracking-wider">Compound</th>
+                <th className="py-4 px-4 text-neutral-500 dark:text-neutral-400 font-bold uppercase tracking-wider">Snapshot</th>
+                <th className="py-4 px-4 text-black dark:text-white font-bold bg-neutral-100 dark:bg-neutral-800 uppercase tracking-wider"><span className="normal-case">0xdx</span></th>
               </tr>
             </thead>
             <tbody>
               {data.map((row, idx) => (
-                <tr key={idx} className="border-b border-neutral-100 hover:bg-neutral-50 transition-colors">
-                  <td className="py-4 pr-8 font-bold text-black uppercase tracking-wide">{row.feature}</td>
-                  <td className="py-4 px-4 text-neutral-500 font-mono">{row.uniswap}</td>
-                  <td className="py-4 px-4 text-neutral-500 font-mono">{row.compound}</td>
-                  <td className="py-4 px-4 text-neutral-500 font-mono">{row.snapshot}</td>
-                  <td className="py-4 px-4 font-bold text-black bg-neutral-100 uppercase tracking-wide">{row.dx}</td>
+                <tr key={idx} className="border-b border-neutral-100 dark:border-neutral-800 hover:bg-neutral-50 dark:hover:bg-neutral-800/50 transition-colors">
+                  <td className="py-4 pr-8 font-bold text-black dark:text-white uppercase tracking-wide">{row.feature}</td>
+                  <td className="py-4 px-4 text-neutral-500 dark:text-neutral-400 font-mono">{row.uniswap}</td>
+                  <td className="py-4 px-4 text-neutral-500 dark:text-neutral-400 font-mono">{row.compound}</td>
+                  <td className="py-4 px-4 text-neutral-500 dark:text-neutral-400 font-mono">{row.snapshot}</td>
+                  <td className="py-4 px-4 font-bold text-black dark:text-white bg-neutral-100 dark:bg-neutral-800 uppercase tracking-wide">{row.dx}</td>
                 </tr>
               ))}
             </tbody>

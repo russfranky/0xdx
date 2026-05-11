@@ -28,10 +28,10 @@ export function UseCases({ phase }: { phase: Phase }) {
   ];
 
   return (
-    <section className="py-28 bg-neutral-50 border-y border-neutral-200">
+    <section className="py-28 bg-neutral-50 dark:bg-neutral-900 border-y border-neutral-200 dark:border-neutral-700">
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex items-end justify-between mb-20">
-          <h2 className="text-4xl md:text-5xl font-bold tracking-tighter text-black max-w-xl uppercase leading-[0.9]">
+          <h2 className="text-4xl md:text-5xl font-bold tracking-tighter text-black dark:text-white max-w-xl uppercase leading-[0.9]">
             {isPrelaunch ? <>Where <span className="normal-case">0xdx</span> fits.</> : isTestnet ? 'Early adopters building the future.' : 'Powering the next generation of organizations.'}
           </h2>
           {/* Ecosystem index link will be added once testnet/mainnet ships. */}
@@ -45,19 +45,19 @@ export function UseCases({ phase }: { phase: Phase }) {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: idx * 0.1 }}
-              className="group bg-white p-8 border-2 border-transparent hover:border-black transition-all duration-300"
+              className="group bg-white dark:bg-neutral-950 p-8 border-2 border-transparent hover:border-black dark:hover:border-neutral-400 transition-all duration-300"
             >
               <div className="w-12 h-12 bg-black text-white flex items-center justify-center font-bold text-sm mb-8">
                 {project.logo}
               </div>
 
-              <div className="text-xs font-mono text-neutral-500 uppercase tracking-widest mb-2">{project.type}</div>
-              <h3 className="text-xl font-bold text-black mb-4 group-hover:underline decoration-2 underline-offset-4">{project.title}</h3>
-              <p className="text-neutral-600 text-sm leading-relaxed mb-8">
+              <div className="text-xs font-mono text-neutral-500 dark:text-neutral-400 uppercase tracking-widest mb-2">{project.type}</div>
+              <h3 className="text-xl font-bold text-black dark:text-white mb-4 group-hover:underline decoration-2 underline-offset-4">{project.title}</h3>
+              <p className="text-neutral-600 dark:text-neutral-300 text-sm leading-relaxed mb-8">
                 {project.desc}
               </p>
 
-              <div className={`flex items-center gap-2 text-xs font-bold uppercase tracking-wider ${isPrelaunch ? 'text-neutral-500' : isTestnet ? 'text-orange-600' : 'text-black'}`}>
+              <div className={`flex items-center gap-2 text-xs font-bold uppercase tracking-wider ${isPrelaunch ? 'text-neutral-500 dark:text-neutral-400' : isTestnet ? 'text-orange-600' : 'text-black dark:text-white'}`}>
                 <span className={`w-2 h-2 rounded-sm ${isPrelaunch ? 'bg-neutral-400' : isTestnet ? 'bg-orange-500' : 'bg-emerald-500'}`} />
                 {isPrelaunch ? 'Reference Use Case' : isTestnet ? 'Deployed on Testnet' : 'Live on Mainnet'}
               </div>

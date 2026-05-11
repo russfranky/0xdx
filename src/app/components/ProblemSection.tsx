@@ -28,23 +28,23 @@ export function ProblemSection() {
   ];
 
   return (
-    <section className="py-28 bg-neutral-50 border-b border-neutral-200">
+    <section className="py-28 bg-neutral-50 dark:bg-neutral-900 border-b border-neutral-200 dark:border-neutral-700">
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 mb-20">
           <div>
-            <h2 className="text-4xl md:text-5xl font-bold text-black mb-6 tracking-tighter uppercase leading-[0.9]">Why DAOs <br/> Are Broken</h2>
-            <p className="text-xl text-neutral-600 leading-relaxed font-light">
+            <h2 className="text-4xl md:text-5xl font-bold text-black dark:text-white mb-6 tracking-tighter uppercase leading-[0.9]">Why DAOs <br/> Are Broken</h2>
+            <p className="text-xl text-neutral-600 dark:text-neutral-300 leading-relaxed font-light">
               Every governance model forces you to choose: plutocracy OR privacy, efficiency OR fairness, automation OR community.
             </p>
           </div>
           <div className="flex items-end">
-            <p className="text-2xl font-bold text-black border-l-4 border-black pl-6 uppercase tracking-tight leading-tight">
+            <p className="text-2xl font-bold text-black dark:text-white border-l-4 border-black dark:border-neutral-400 pl-6 uppercase tracking-tight leading-tight">
               <span className="normal-case">0xdx</span> eliminates <br/> those choices.
             </p>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-neutral-200 border-t-2 border-b-2 border-black">
+        <div className="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-neutral-200 dark:divide-neutral-700 border-t-2 border-b-2 border-black dark:border-neutral-600">
           {cards.map((card, idx) => (
             <motion.div
               key={idx}
@@ -55,12 +55,12 @@ export function ProblemSection() {
               className="py-12 md:px-12 first:pl-0 last:pr-0"
             >
               <div className="mb-8">
-                <div className="text-6xl font-bold text-black mb-2 tracking-tighter">{card.stat}</div>
-                <div className="text-xs font-bold uppercase tracking-widest text-neutral-500">{card.statDesc}</div>
+                <div className="text-6xl font-bold text-black dark:text-white mb-2 tracking-tighter">{card.stat}</div>
+                <div className="text-xs font-bold uppercase tracking-widest text-neutral-500 dark:text-neutral-400">{card.statDesc}</div>
               </div>
 
-              <h3 className="text-xl font-bold text-black mb-3 uppercase tracking-tight">{card.title}</h3>
-              <p className="text-neutral-600 leading-relaxed text-sm font-light">{card.problem}</p>
+              <h3 className="text-xl font-bold text-black dark:text-white mb-3 uppercase tracking-tight">{card.title}</h3>
+              <p className="text-neutral-600 dark:text-neutral-300 leading-relaxed text-sm font-light">{card.problem}</p>
             </motion.div>
           ))}
         </div>
