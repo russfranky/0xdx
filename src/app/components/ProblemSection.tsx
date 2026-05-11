@@ -28,9 +28,9 @@ export function ProblemSection() {
   ];
 
   return (
-    <section className="py-28 bg-neutral-50 dark:bg-neutral-900 border-b border-neutral-200 dark:border-neutral-700">
+    <section className="py-20 bg-neutral-50 dark:bg-neutral-900 border-b border-neutral-200 dark:border-neutral-700">
       <div className="max-w-7xl mx-auto px-6">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 mb-20">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-14">
           <div>
             <h2 className="text-4xl md:text-5xl font-bold text-black dark:text-white mb-6 tracking-tighter uppercase leading-[0.9]">Why DAOs <br/> Are Broken</h2>
             <p className="text-xl text-neutral-600 dark:text-neutral-300 leading-relaxed font-light">
@@ -52,9 +52,9 @@ export function ProblemSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: idx * 0.1 }}
-              className="py-12 md:px-12 first:pl-0 last:pr-0"
+              className="py-10 md:px-10 first:pl-0 last:pr-0"
             >
-              <div className="mb-8">
+              <div className="mb-6">
                 <div className="text-6xl font-bold text-black dark:text-white mb-2 tracking-tighter">{card.stat}</div>
                 <div className="text-xs font-bold uppercase tracking-widest text-neutral-500 dark:text-neutral-400">{card.statDesc}</div>
               </div>

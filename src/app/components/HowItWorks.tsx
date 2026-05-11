@@ -27,9 +27,9 @@ export function HowItWorks() {
   ];
 
   return (
-    <section className="py-28 bg-white dark:bg-neutral-950">
+    <section className="py-20 bg-white dark:bg-neutral-950">
       <div className="max-w-7xl mx-auto px-6">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
           <div className="lg:col-span-4">
             <h2 className="text-4xl md:text-5xl font-bold tracking-tighter text-black dark:text-white mb-6 uppercase leading-[0.9]">
               From signal <br /> to execution.
@@ -40,15 +40,15 @@ export function HowItWorks() {
           </div>
 
           <div className="lg:col-span-8">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-16 relative">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-12 relative">
               {/* Connecting Line (Desktop) */}
-              <div className="absolute left-[39px] top-8 bottom-8 w-px bg-neutral-200 dark:bg-neutral-700 hidden md:block" />
+              <div className="absolute left-[31px] top-8 bottom-8 w-px bg-neutral-200 dark:bg-neutral-700 hidden md:block" />
 
               {steps.map((step, idx) => (
-                <div key={idx} className="relative pl-28 md:pl-32 group">
+                <div key={idx} className="relative pl-20 md:pl-24 group">
                   {/* Step Number/Icon */}
-                  <div className="absolute left-0 top-0 w-20 h-20 border-2 border-black dark:border-neutral-500 bg-white dark:bg-neutral-900 flex items-center justify-center rounded-none z-10 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,0.15)] group-hover:translate-x-[2px] group-hover:translate-y-[2px] group-hover:shadow-none transition-all">
-                     <step.icon className="w-8 h-8 text-black dark:text-white" aria-hidden="true" />
+                  <div className="absolute left-0 top-0 w-16 h-16 border-2 border-black dark:border-neutral-500 bg-white dark:bg-neutral-900 flex items-center justify-center rounded-none z-10 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,0.15)] group-hover:translate-x-[2px] group-hover:translate-y-[2px] group-hover:shadow-none transition-all">
+                     <step.icon className="w-7 h-7 text-black dark:text-white" aria-hidden="true" />
                   </div>
 
                   {/* Content */}

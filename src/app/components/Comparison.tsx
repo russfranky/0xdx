@@ -12,9 +12,9 @@ export function Comparison() {
   ];
 
   return (
-    <section className="py-28 bg-white dark:bg-neutral-950">
+    <section className="py-20 bg-white dark:bg-neutral-950">
       <div className="max-w-7xl mx-auto px-6">
-        <div className="mb-12">
+        <div className="mb-8">
           <h2 className="text-3xl md:text-5xl font-bold text-black dark:text-white mb-2 uppercase tracking-tighter">Compare Models</h2>
         </div>
 

@@ -28,16 +28,16 @@ export function UseCases({ phase }: { phase: Phase }) {
   ];
 
   return (
-    <section className="py-28 bg-neutral-50 dark:bg-neutral-900 border-y border-neutral-200 dark:border-neutral-700">
+    <section className="py-20 bg-neutral-50 dark:bg-neutral-900 border-y border-neutral-200 dark:border-neutral-700">
       <div className="max-w-7xl mx-auto px-6">
-        <div className="flex items-end justify-between mb-20">
+        <div className="flex items-end justify-between mb-14">
           <h2 className="text-4xl md:text-5xl font-bold tracking-tighter text-black dark:text-white max-w-xl uppercase leading-[0.9]">
             {isPrelaunch ? <>Where <span className="normal-case">0xdx</span> fits.</> : isTestnet ? 'Early adopters building the future.' : 'Powering the next generation of organizations.'}
           </h2>
           {/* Ecosystem index link will be added once testnet/mainnet ships. */}
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {projects.map((project, idx) => (
             <motion.div
               key={idx}
@@ -45,15 +45,15 @@ export function UseCases({ phase }: { phase: Phase }) {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: idx * 0.1 }}
-              className="group bg-white dark:bg-neutral-950 p-8 border-2 border-transparent hover:border-black dark:hover:border-neutral-400 transition-all duration-300"
+              className="group bg-white dark:bg-neutral-950 p-6 border-2 border-transparent hover:border-black dark:hover:border-neutral-400 transition-all duration-300"
             >
-              <div className="w-12 h-12 bg-black text-white flex items-center justify-center font-bold text-sm mb-8">
+              <div className="w-10 h-10 bg-black dark:bg-white text-white dark:text-black flex items-center justify-center font-bold text-sm mb-6">
                 {project.logo}
               </div>
 
               <div className="text-xs font-mono text-neutral-500 dark:text-neutral-400 uppercase tracking-widest mb-2">{project.type}</div>
               <h3 className="text-xl font-bold text-black dark:text-white mb-4 group-hover:underline decoration-2 underline-offset-4">{project.title}</h3>
-              <p className="text-neutral-600 dark:text-neutral-300 text-sm leading-relaxed mb-8">
+              <p className="text-neutral-600 dark:text-neutral-300 text-sm leading-relaxed mb-6">
                 {project.desc}
               </p>
 

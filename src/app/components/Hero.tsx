@@ -14,7 +14,7 @@ export function Hero({ phase, onLitepaperClick }: HeroProps) {
   const isPrelaunch = phase === 'prelaunch';
 
   return (
-    <section className="relative min-h-[95vh] flex items-center pt-32 pb-20 bg-white dark:bg-neutral-950 overflow-hidden">
+    <section className="relative min-h-[80vh] flex items-center pt-24 pb-16 bg-white dark:bg-neutral-950 overflow-hidden">
       {/* Abstract Background Mesh */}
       <div className="absolute inset-0 pointer-events-none opacity-[0.05] dark:opacity-[0.08]"
         aria-hidden="true"
@@ -29,7 +29,7 @@ export function Hero({ phase, onLitepaperClick }: HeroProps) {
       <div className="absolute -right-[5%] top-[20%] w-[600px] h-[600px] rounded-full border border-neutral-100 dark:border-neutral-800 opacity-50 pointer-events-none" aria-hidden="true" />
 
       <div className="max-w-7xl mx-auto px-6 w-full relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           
           {/* Left Content */}
           <div className="lg:col-span-7 flex flex-col items-start text-left">
@@ -37,7 +37,7 @@ export function Hero({ phase, onLitepaperClick }: HeroProps) {
               key={phase}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="mb-8 flex items-center gap-3"
+              className="mb-6 flex items-center gap-3"
             >
               <span className="flex h-2 w-2 relative">
                 <span className={`relative inline-flex rounded-full h-2 w-2 ${isPrelaunch ? 'bg-neutral-400' : isTestnet ? 'bg-orange-500' : 'bg-emerald-500'}`}></span>
@@ -52,7 +52,7 @@ export function Hero({ phase, onLitepaperClick }: HeroProps) {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 }}
-              className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-black dark:text-white tracking-tighter mb-8 leading-[0.95] uppercase"
+              className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-black dark:text-white tracking-tighter mb-6 leading-[0.95] uppercase"
             >
               Decentralized <br />
               Governance <br />
@@ -64,7 +64,7 @@ export function Hero({ phase, onLitepaperClick }: HeroProps) {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
-              className="text-xl md:text-2xl text-neutral-600 dark:text-neutral-300 max-w-xl mb-12 leading-normal font-light"
+              className="text-xl md:text-2xl text-neutral-600 dark:text-neutral-300 max-w-xl mb-8 leading-normal font-light"
             >
               {isPrelaunch
                 ? "0xdx is a governance framework specification: elected committees decide one-person-one-vote, smart contracts auto-execute, and a built-in DEX funds the treasury. Read the litepaper."

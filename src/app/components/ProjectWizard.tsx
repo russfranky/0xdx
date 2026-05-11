@@ -18,9 +18,9 @@ export function ProjectWizard({ phase }: { phase: Phase }) {
   const handleBack = () => setStep(s => Math.max(s - 1, 1));
 
   return (
-    <section id="start" className="py-28 bg-white dark:bg-neutral-950 border-b border-neutral-100 dark:border-neutral-800">
+    <section id="start" className="py-20 bg-white dark:bg-neutral-950 border-b border-neutral-100 dark:border-neutral-800">
       <div className="max-w-7xl mx-auto px-6">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           
           {/* Left Content */}
           <div>
@@ -32,14 +32,14 @@ export function ProjectWizard({ phase }: { phase: Phase }) {
               {isTestnet ? 'Prototype your Organization' : 'From Idea to Organization'} <br />
               <span className="text-neutral-500 dark:text-neutral-400">{isTestnet ? 'risk-free.' : 'in minutes.'}</span>
             </h2>
-            <p className="text-xl text-neutral-600 dark:text-neutral-300 mb-8 leading-relaxed">
+            <p className="text-xl text-neutral-600 dark:text-neutral-300 mb-6 leading-relaxed">
               {isTestnet 
                 ? "Experiment with governance structures, treasury rules, and tokenomics in our incentivized testnet environment. No real funds required."
                 : "No smart contract knowledge required. Configure your governance structure, treasury rules, and tokenomics through our visual interface."
               }
             </p>
             
-            <div className="space-y-6">
+            <div className="space-y-4">
               {[
                 { 
                   title: "Committee Governance",
@@ -55,8 +55,8 @@ export function ProjectWizard({ phase }: { phase: Phase }) {
                 }
               ].map((item, idx) => (
                 <div key={idx} className="flex gap-4">
-                  <div className="w-6 h-6 rounded-full bg-black flex items-center justify-center shrink-0 mt-1">
-                    <Check className="w-3 h-3 text-white" />
+                  <div className="w-6 h-6 rounded-full bg-black dark:bg-white flex items-center justify-center shrink-0 mt-1">
+                    <Check className="w-3 h-3 text-white dark:text-black" />
                   </div>
                   <div>
                     <h4 className="font-bold text-black dark:text-white">{item.title}</h4>
@@ -70,10 +70,10 @@ export function ProjectWizard({ phase }: { phase: Phase }) {
           {/* Right Content - Interactive Wizard */}
           <div className="relative">
             <div className="absolute inset-0 bg-neutral-100 dark:bg-neutral-800 transform rotate-3 rounded-lg" />
-            <div className="relative bg-white dark:bg-neutral-900 border-2 border-neutral-100 dark:border-neutral-700 rounded-lg shadow-[8px_8px_0px_0px_rgba(0,0,0,0.05)] overflow-hidden p-8">
-              
+            <div className="relative bg-white dark:bg-neutral-900 border-2 border-neutral-100 dark:border-neutral-700 rounded-lg shadow-[8px_8px_0px_0px_rgba(0,0,0,0.05)] overflow-hidden p-6">
+
               {/* Progress */}
-              <div className="flex items-center justify-between mb-8">
+              <div className="flex items-center justify-between mb-6">
                 <div className="flex gap-2">
                   {[1, 2, 3].map((i) => (
                     <div 

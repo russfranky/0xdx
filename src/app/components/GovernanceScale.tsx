@@ -8,7 +8,7 @@ export function GovernanceScale({ phase }: { phase: Phase }) {
   const isPrelaunch = phase === 'prelaunch';
 
   return (
-    <section id="governance" className="py-28 bg-black text-white overflow-hidden relative">
+    <section id="governance" className="py-20 bg-black text-white overflow-hidden relative">
       {/* Background World Map / Network Hint */}
       <div className="absolute inset-0 opacity-20" aria-hidden="true">
          <svg width="100%" height="100%" className="absolute inset-0">
@@ -23,7 +23,7 @@ export function GovernanceScale({ phase }: { phase: Phase }) {
       </div>
 
       <div className="max-w-7xl mx-auto px-6 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-20">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-14">
           
           <div>
             {isTestnet && (
@@ -44,24 +44,24 @@ export function GovernanceScale({ phase }: { phase: Phase }) {
               }
             </p>
 
-            <div className="mt-16 grid grid-cols-2 gap-px bg-neutral-800 border border-neutral-800">
-              <div className="bg-black p-8">
+            <div className="mt-10 grid grid-cols-2 gap-px bg-neutral-800 border border-neutral-800">
+              <div className="bg-black p-6">
                 <div className="text-5xl font-mono font-bold mb-2 tracking-tighter">100%</div>
                 <div className="text-xs text-neutral-500 uppercase tracking-widest font-bold">
                   Initial Liquidity Locked
                 </div>
               </div>
-              <div className="bg-black p-8">
+              <div className="bg-black p-6">
                 <div className="text-5xl font-mono font-bold mb-2 tracking-tighter">0.3%</div>
                 <div className="text-xs text-neutral-500 uppercase tracking-widest font-bold">Protocol Fee to Treasury</div>
               </div>
-              <div className="bg-black p-8">
+              <div className="bg-black p-6">
                 <div className="text-5xl font-mono font-bold mb-2 tracking-tighter">{isPrelaunch ? '1p1v' : isTestnet ? '5k+' : '∞'}</div>
                 <div className="text-xs text-neutral-500 uppercase tracking-widest font-bold">
                   {isPrelaunch ? 'Committee Voting' : isTestnet ? 'Testnet Trades' : 'Sustainable Runrate'}
                 </div>
               </div>
-              <div className="bg-black p-8">
+              <div className="bg-black p-6">
                 <div className="text-5xl font-mono font-bold mb-2 tracking-tighter">{isTestnet ? '24h' : '48h'}</div>
                 <div className="text-xs text-neutral-500 uppercase tracking-widest font-bold">
                   Security Timelock
@@ -70,8 +70,8 @@ export function GovernanceScale({ phase }: { phase: Phase }) {
             </div>
           </div>
 
-          <div className="flex flex-col justify-center space-y-6">
-             <div className="bg-neutral-900/50 backdrop-blur-sm border border-neutral-800 p-8 rounded-lg flex gap-6 items-start">
+          <div className="flex flex-col justify-center space-y-4">
+             <div className="bg-neutral-900/50 backdrop-blur-sm border border-neutral-800 p-6 rounded-lg flex gap-4 items-start">
                <Repeat className="w-8 h-8 text-neutral-500 shrink-0" />
                <div>
                  <h3 className="text-lg font-bold text-white mb-2">
@@ -83,7 +83,7 @@ export function GovernanceScale({ phase }: { phase: Phase }) {
                </div>
              </div>
 
-             <div className="bg-neutral-900/50 backdrop-blur-sm border border-neutral-800 p-8 rounded-lg flex gap-6 items-start">
+             <div className="bg-neutral-900/50 backdrop-blur-sm border border-neutral-800 p-6 rounded-lg flex gap-4 items-start">
                <Lock className="w-8 h-8 text-neutral-500 shrink-0" />
                <div>
                  <h3 className="text-lg font-bold text-white mb-2">
@@ -95,7 +95,7 @@ export function GovernanceScale({ phase }: { phase: Phase }) {
                </div>
              </div>
 
-             <div className="bg-neutral-900/50 backdrop-blur-sm border border-neutral-800 p-8 rounded-lg flex gap-6 items-start">
+             <div className="bg-neutral-900/50 backdrop-blur-sm border border-neutral-800 p-6 rounded-lg flex gap-4 items-start">
                <BarChart3 className="w-8 h-8 text-neutral-500 shrink-0" />
                <div>
                  <h3 className="text-lg font-bold text-white mb-2">

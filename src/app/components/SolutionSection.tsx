@@ -31,9 +31,9 @@ export function SolutionSection() {
   ];
 
   return (
-    <section className="py-28 bg-white dark:bg-neutral-950">
+    <section className="py-20 bg-white dark:bg-neutral-950">
       <div className="max-w-7xl mx-auto px-6">
-        <div className="text-center mb-16">
+        <div className="text-center mb-12">
           <h2 className="text-3xl md:text-5xl font-bold text-black dark:text-white mb-4 uppercase tracking-tighter">
             Fair Governance, <br /> Actually.
           </h2>
@@ -44,19 +44,19 @@ export function SolutionSection() {
           <table className="w-full min-w-[800px] border-collapse text-left">
             <thead>
               <tr className="border-b-2 border-black dark:border-neutral-600">
-                <th className="py-6 px-4 text-black dark:text-white font-bold uppercase tracking-wider w-1/4">Feature</th>
-                <th className="py-6 px-4 text-neutral-500 dark:text-neutral-400 font-bold uppercase tracking-wider w-1/4">Token DAO</th>
-                <th className="py-6 px-4 text-neutral-500 dark:text-neutral-400 font-bold uppercase tracking-wider w-1/4">One-Person-One-Vote</th>
-                <th className="py-6 px-4 text-black dark:text-white font-bold uppercase tracking-wider w-1/4 bg-neutral-50 dark:bg-neutral-800"><span className="normal-case">0xdx</span></th>
+                <th className="py-4 px-4 text-black dark:text-white font-bold uppercase tracking-wider w-1/4">Feature</th>
+                <th className="py-4 px-4 text-neutral-500 dark:text-neutral-400 font-bold uppercase tracking-wider w-1/4">Token DAO</th>
+                <th className="py-4 px-4 text-neutral-500 dark:text-neutral-400 font-bold uppercase tracking-wider w-1/4">One-Person-One-Vote</th>
+                <th className="py-4 px-4 text-black dark:text-white font-bold uppercase tracking-wider w-1/4 bg-neutral-50 dark:bg-neutral-800"><span className="normal-case">0xdx</span></th>
               </tr>
             </thead>
             <tbody>
               {rows.map((row, idx) => (
                 <tr key={idx} className="border-b border-neutral-100 dark:border-neutral-800 last:border-0 hover:bg-neutral-50 dark:hover:bg-neutral-800/50 transition-colors">
-                  <td className="py-6 px-4 font-bold text-black dark:text-white uppercase tracking-wide text-sm">{row.feature}</td>
-                  <td className="py-6 px-4 text-neutral-500 dark:text-neutral-400 font-mono text-sm">{row.token}</td>
-                  <td className="py-6 px-4 text-neutral-500 dark:text-neutral-400 font-mono text-sm">{row.oneVote}</td>
-                  <td className="py-6 px-4 font-bold text-black dark:text-white bg-neutral-50 dark:bg-neutral-800 flex items-center gap-2 uppercase tracking-wide text-sm">
+                  <td className="py-4 px-4 font-bold text-black dark:text-white uppercase tracking-wide text-sm">{row.feature}</td>
+                  <td className="py-4 px-4 text-neutral-500 dark:text-neutral-400 font-mono text-sm">{row.token}</td>
+                  <td className="py-4 px-4 text-neutral-500 dark:text-neutral-400 font-mono text-sm">{row.oneVote}</td>
+                  <td className="py-4 px-4 font-bold text-black dark:text-white bg-neutral-50 dark:bg-neutral-800 flex items-center gap-2 uppercase tracking-wide text-sm">
                     <Check className="w-4 h-4" aria-hidden="true" />
                     {row.dx}
                   </td>
