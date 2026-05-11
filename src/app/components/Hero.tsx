@@ -152,8 +152,8 @@ export function Hero({ phase, onLitepaperClick }: HeroProps) {
               {/* Proposal Header (always visible) */}
               <div className="px-6 pt-5 pb-3">
                 <div className="text-xs font-mono text-neutral-500 dark:text-neutral-400 uppercase tracking-wide mb-1">Proposal #124</div>
-                <div className="text-lg font-bold text-black dark:text-white mb-1">Fund DEX Liquidity Pair</div>
-                <div className="text-xs text-neutral-500 dark:text-neutral-400">Releasing 50,000 USDC from Treasury to Uniswap V3 Pool.</div>
+                <div className="text-lg font-bold text-black dark:text-white mb-1">Award Q3 Contributor Grants</div>
+                <div className="text-xs text-neutral-500 dark:text-neutral-400">Disbursing $50,000 to 8 approved contributors from the treasury.</div>
               </div>
 
               {/* Stage Content */}
@@ -269,7 +269,7 @@ export function Hero({ phase, onLitepaperClick }: HeroProps) {
                         <div className={`w-2 h-2 rounded-full ${accentBg}`} />
                       </div>
                       <div className="bg-neutral-50 dark:bg-neutral-800 border border-neutral-100 dark:border-neutral-700 p-3 rounded text-xs text-neutral-600 dark:text-neutral-300">
-                        <span className="font-bold">50,000 USDC</span> deployed to Uniswap V3 Pool · Fees now accruing to treasury
+                        <span className="font-bold">$50,000</span> disbursed to 8 contributors · Treasury balance updated on-chain
                       </div>
                     </motion.div>
                   )}
