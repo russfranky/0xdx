@@ -38,7 +38,7 @@ export function Hero({ phase, onLitepaperClick }: HeroProps) {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
 
           {/* Left Content */}
-          <div className="lg:col-span-7 flex flex-col items-start text-left">
+          <div className="lg:col-span-7 min-w-0 flex flex-col items-start text-left">
             <motion.div
               key={phase}
               initial={{ opacity: 0, y: 20 }}
@@ -58,7 +58,7 @@ export function Hero({ phase, onLitepaperClick }: HeroProps) {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 }}
-              className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-black dark:text-white tracking-tighter mb-6 leading-[0.95] uppercase"
+              className="text-4xl sm:text-6xl md:text-7xl lg:text-7xl xl:text-8xl font-bold text-black dark:text-white tracking-tighter mb-6 leading-[0.95] uppercase"
             >
               Decentralized <br />
               Governance <br />
@@ -118,7 +118,7 @@ export function Hero({ phase, onLitepaperClick }: HeroProps) {
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.4, duration: 0.8 }}
-            className="lg:col-span-5 relative"
+            className="lg:col-span-5 min-w-0 relative"
           >
             <div className="relative z-10 bg-white dark:bg-neutral-900 rounded-lg border-2 border-black dark:border-neutral-700 shadow-[8px_8px_0px_0px_rgba(0,0,0,0.1)] dark:shadow-[8px_8px_0px_0px_rgba(255,255,255,0.05)] overflow-hidden">
               {/* Header */}
