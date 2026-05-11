@@ -1,5 +1,10 @@
 # 0xdx
 
+[![Spec](https://img.shields.io/badge/spec-v1.0-black)](./0xdx_litepaper.md)
+[![License: MIT](https://img.shields.io/badge/license-MIT-black)](./LICENSE)
+[![Build](https://github.com/russfranky/0xdx/actions/workflows/deploy.yml/badge.svg)](https://github.com/russfranky/0xdx/actions/workflows/deploy.yml)
+[![CITATION.cff](https://img.shields.io/badge/citation-CITATION.cff-black)](./CITATION.cff)
+
 > A self-operating, committee-driven DAO governance framework.
 
 0xdx blends structured human governance with trustless automation: a small
@@ -88,7 +93,11 @@ MIT. See [LICENSE](./LICENSE).
 
 See [ATTRIBUTIONS.md](./ATTRIBUTIONS.md) for third-party credits.
 
+## Contributing
+
+See [CONTRIBUTING.md](./CONTRIBUTING.md). Bug reports and spec amendment proposals are welcome via GitHub Issues using the provided templates.
+
 ## Status
 
-Pre-launch. The framework is published as a v1.0 specification draft. The
-reference contracts, audits, testnet, and mainnet launch are still ahead.
+The framework is published as a v1.0 specification. The reference contracts,
+formal audit, testnet, and mainnet launch are the next milestones.

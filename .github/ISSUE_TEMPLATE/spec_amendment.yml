@@ -1,0 +1,73 @@
+name: Spec amendment
+description: Propose a change to the 0xdx governance framework specification.
+labels: ["spec: amendment"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Amendments to the core specification documents are significant. Open this issue **before** writing a PR so the rationale can be discussed.
+        Amendments that narrow the mission, introduce centralization, or contradict the autonomy principles in CONSTITUTION.md Article 1 will not be accepted.
+
+  - type: dropdown
+    id: document
+    attributes:
+      label: Document
+      options:
+        - 0xdx_litepaper.md
+        - CONSTITUTION.md
+        - IDENTITY.md
+        - LEGAL.md
+        - docs/FLOWS.md
+        - Multiple documents
+    validations:
+      required: true
+
+  - type: input
+    id: section
+    attributes:
+      label: Section(s) affected
+      placeholder: "e.g. §4.2, §7.1"
+    validations:
+      required: true
+
+  - type: textarea
+    id: current_text
+    attributes:
+      label: Current text
+      description: Quote the exact passage(s) you want to change.
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposed_text
+    attributes:
+      label: Proposed replacement
+      description: The exact text you propose instead. Partial replacements are fine — mark context with [...].
+    validations:
+      required: true
+
+  - type: textarea
+    id: rationale
+    attributes:
+      label: Rationale
+      description: What problem does this solve? What gap does it close? Why is the current text insufficient?
+    validations:
+      required: true
+
+  - type: textarea
+    id: tradeoffs
+    attributes:
+      label: Tradeoffs and second-order effects
+      description: What are the downsides or risks of this change? What does it make harder?
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Pre-submission checks
+      options:
+        - label: This amendment is consistent with the mission in CONSTITUTION.md Article 1.
+          required: true
+        - label: This amendment does not introduce a single point of control or override.
+          required: true
+        - label: I have searched existing issues and this is not a duplicate.
+          required: true

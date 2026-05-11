@@ -1,0 +1,5 @@
+Contact: https://github.com/russfranky/0xdx/security/advisories/new
+Expires: 2027-05-09T00:00:00.000Z
+Preferred-Languages: en
+Policy: https://github.com/russfranky/0xdx/blob/main/SECURITY.md
+Canonical: https://0xdx.com/.well-known/security.txt

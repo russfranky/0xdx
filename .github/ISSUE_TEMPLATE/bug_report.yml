@@ -1,0 +1,50 @@
+name: Bug report
+description: Report an error in the specification documents or a bug on the website.
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this template for factual errors in the spec, broken website functionality, or build failures.
+        For security vulnerabilities, use the [private advisory channel](https://github.com/russfranky/0xdx/security/advisories/new) instead.
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - Specification document (litepaper, CONSTITUTION, IDENTITY, LEGAL, FLOWS)
+        - Website (0xdx.com)
+        - Simulations (npm run sim)
+        - Build / CI
+    validations:
+      required: true
+
+  - type: input
+    id: location
+    attributes:
+      label: Location
+      description: File path, section number, or URL where the issue appears.
+      placeholder: "e.g. 0xdx_litepaper.md §4.2, or https://0xdx.com/#litepaper"
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: What is wrong?
+      description: Exact text that is incorrect or the behavior that is broken.
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: What should it be?
+      description: The correct text or expected behavior, if you know it.
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional context
+      description: Browser/OS for website bugs. Error output for build/sim failures.
