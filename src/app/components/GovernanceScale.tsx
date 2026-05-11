@@ -37,10 +37,10 @@ export function GovernanceScale({ phase }: { phase: Phase }) {
             </h2>
             <p className="text-xl text-neutral-500 font-light leading-relaxed max-w-md">
               {isPrelaunch
-                ? "Most DAOs die when the grants run out. 0xdx is designed differently: an integrated DEX routes trading fees to the treasury, so the more the ecosystem is used, the stronger governance becomes."
+                ? "Projects die when grants run out. 0xdx is built for permanence: an integrated DEX captures trading fees and routes them directly to the treasury. Every transaction in the ecosystem funds the next round of development."
                 : isTestnet
-                ? "Most DAOs die when the grants run out. 0xdx is different. Test the automated fee-sharing modules that keep the treasury perpetual."
-                : "The 0xdx protocol includes an integrated DEX where trading fees automatically route to the treasury. The more the ecosystem is used, the stronger the governance becomes."
+                ? "Most projects die when the grants run out. 0xdx is different. Test the automated fee-sharing modules that keep the treasury perpetual."
+                : "The 0xdx protocol includes an integrated DEX where trading fees automatically route to the treasury. The more the ecosystem is used, the more projects it can fund — a self-sustaining loop."
               }
             </p>
 
@@ -102,7 +102,7 @@ export function GovernanceScale({ phase }: { phase: Phase }) {
                    Productive Assets
                  </h3>
                  <p className="text-neutral-500 text-sm leading-relaxed">
-                   The treasury doesn't just sit there. It earns yield and fees, ensuring the DAO has the firepower to build for decades, not months.
+                   The treasury doesn't just sit there. It earns yield and fees, ensuring the organization has the firepower to build for decades, not months.
                  </p>
                </div>
              </div>

@@ -41,9 +41,6 @@ export function HowItWorks() {
 
           <div className="lg:col-span-8">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-12 relative">
-              {/* Connecting Line (Desktop) */}
-              <div className="absolute left-[31px] top-8 bottom-8 w-px bg-neutral-200 dark:bg-neutral-700 hidden md:block" />
-
               {steps.map((step, idx) => (
                 <div key={idx} className="relative pl-20 md:pl-24 group">
                   {/* Step Number/Icon */}
@@ -53,6 +50,7 @@ export function HowItWorks() {
 
                   {/* Content */}
                   <div className="pt-4">
+                    <div className="text-xs font-mono text-neutral-400 dark:text-neutral-500 mb-2">{`0${idx + 1}`}</div>
                     <h3 className="text-xl font-bold text-black dark:text-white mb-3 uppercase tracking-tight">{step.title}</h3>
                     <p className="text-neutral-500 dark:text-neutral-400 leading-relaxed text-sm max-w-xs font-light">
                       {step.desc}
