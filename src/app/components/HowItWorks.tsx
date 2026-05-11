@@ -48,7 +48,7 @@ export function HowItWorks() {
                 <div key={idx} className="relative pl-28 md:pl-32 group">
                   {/* Step Number/Icon */}
                   <div className="absolute left-0 top-0 w-20 h-20 border-2 border-black bg-white flex items-center justify-center rounded-none z-10 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] group-hover:translate-x-[2px] group-hover:translate-y-[2px] group-hover:shadow-none transition-all">
-                     <step.icon className="w-8 h-8 text-black" />
+                     <step.icon className="w-8 h-8 text-black" aria-hidden="true" />
                   </div>
 
                   {/* Content */}

@@ -59,9 +59,15 @@ export function Footer({ onLitepaperClick, onRoadmapClick }: FooterProps) {
           <p className="text-[10px] text-neutral-600 font-mono uppercase tracking-widest">
             © {year} <span className="normal-case">0xdx</span> · MIT License
           </p>
-          <span className="flex items-center gap-2 text-neutral-400" aria-label="GitHub coming soon">
-            <Github className="w-5 h-5" />
-          </span>
+          <a
+            href="https://github.com/russfranky/0xdx"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="0xdx on GitHub"
+            className="flex items-center gap-2 text-neutral-400 hover:text-black transition-colors"
+          >
+            <Github className="w-5 h-5" aria-hidden="true" />
+          </a>
         </div>
       </div>
     </footer>

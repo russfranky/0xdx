@@ -10,7 +10,7 @@ export function GovernanceScale({ phase }: { phase: Phase }) {
   return (
     <section id="governance" className="py-28 bg-black text-white overflow-hidden relative">
       {/* Background World Map / Network Hint */}
-      <div className="absolute inset-0 opacity-20">
+      <div className="absolute inset-0 opacity-20" aria-hidden="true">
          <svg width="100%" height="100%" className="absolute inset-0">
             <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
               <circle cx="1" cy="1" r="1" fill="white" />

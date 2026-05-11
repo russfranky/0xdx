@@ -3,7 +3,12 @@ import { Button } from './ui/Button';
 import { ArrowRight } from 'lucide-react';
 import { Phase } from '../App';
 
-export function CTA({ phase }: { phase: Phase }) {
+interface CTAProps {
+  phase: Phase;
+  onLitepaperClick?: () => void;
+}
+
+export function CTA({ phase, onLitepaperClick }: CTAProps) {
   const isTestnet = phase === 'testnet';
   const isPrelaunch = phase === 'prelaunch';
 
@@ -23,12 +28,23 @@ export function CTA({ phase }: { phase: Phase }) {
           }
         </p>
         <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
-          <Button size="lg" className="bg-white text-black hover:bg-neutral-200 text-sm font-bold uppercase tracking-widest px-10 h-14 rounded-full border-2 border-transparent">
+          <Button size="lg" onClick={onLitepaperClick} className="bg-white text-black hover:bg-neutral-200 text-sm font-bold uppercase tracking-widest px-10 h-14 rounded-full border-2 border-transparent">
             {isPrelaunch ? 'Read the Litepaper' : isTestnet ? 'Join Incentivized Testnet' : 'Launch Organization'}
           </Button>
-          <button className="text-white hover:text-neutral-300 text-sm font-bold uppercase tracking-widest flex items-center gap-2 group">
-            {isPrelaunch ? 'View on GitHub' : isTestnet ? 'Read the Documentation' : 'View Developer Docs'} <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-          </button>
+          {isPrelaunch ? (
+            <a
+              href="https://github.com/russfranky/0xdx"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-white hover:text-neutral-300 text-sm font-bold uppercase tracking-widest flex items-center gap-2 group"
+            >
+              View on GitHub <ArrowRight aria-hidden="true" className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </a>
+          ) : (
+            <button type="button" className="text-white hover:text-neutral-300 text-sm font-bold uppercase tracking-widest flex items-center gap-2 group">
+              {isTestnet ? 'Read the Documentation' : 'View Developer Docs'} <ArrowRight aria-hidden="true" className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </button>
+          )}
         </div>
       </div>
     </section>

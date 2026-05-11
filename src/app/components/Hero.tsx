@@ -16,7 +16,8 @@ export function Hero({ phase, onLitepaperClick }: HeroProps) {
   return (
     <section className="relative min-h-[95vh] flex items-center pt-32 pb-20 bg-white overflow-hidden">
       {/* Abstract Background Mesh */}
-      <div className="absolute inset-0 pointer-events-none opacity-[0.05]" 
+      <div className="absolute inset-0 pointer-events-none opacity-[0.05]"
+        aria-hidden="true"
         style={{
           backgroundImage: `linear-gradient(to right, #000 1px, transparent 1px), linear-gradient(to bottom, #000 1px, transparent 1px)`,
           backgroundSize: '60px 60px'
@@ -24,8 +25,8 @@ export function Hero({ phase, onLitepaperClick }: HeroProps) {
       />
       
       {/* Large decorative circles */}
-      <div className="absolute -right-[10%] top-[10%] w-[800px] h-[800px] rounded-full border border-neutral-100 opacity-50 pointer-events-none" />
-      <div className="absolute -right-[5%] top-[20%] w-[600px] h-[600px] rounded-full border border-neutral-100 opacity-50 pointer-events-none" />
+      <div className="absolute -right-[10%] top-[10%] w-[800px] h-[800px] rounded-full border border-neutral-100 opacity-50 pointer-events-none" aria-hidden="true" />
+      <div className="absolute -right-[5%] top-[20%] w-[600px] h-[600px] rounded-full border border-neutral-100 opacity-50 pointer-events-none" aria-hidden="true" />
 
       <div className="max-w-7xl mx-auto px-6 w-full relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
@@ -86,7 +87,7 @@ export function Hero({ phase, onLitepaperClick }: HeroProps) {
                   className="rounded-full px-10 h-14 text-lg flex items-center gap-2"
                 >
                   Read Litepaper
-                  <ArrowRight className="w-5 h-5" />
+                  <ArrowRight className="w-5 h-5" aria-hidden="true" />
                 </Button>
               ) : (
                 <>
@@ -99,7 +100,7 @@ export function Hero({ phase, onLitepaperClick }: HeroProps) {
                     className="group flex items-center gap-2 text-black font-medium hover:text-neutral-600 transition-colors"
                   >
                     Read Litepaper
-                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
                   </button>
                 </>
               )}

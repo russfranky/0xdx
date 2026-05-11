@@ -7,9 +7,10 @@ interface NavbarProps {
   onDiscoverClick?: () => void;
   onRoadmapClick?: () => void;
   onGovernanceClick?: () => void;
+  onHomeClick?: () => void;
 }
 
-export function Navbar({ onLitepaperClick, onDiscoverClick, onRoadmapClick, onGovernanceClick }: NavbarProps) {
+export function Navbar({ onLitepaperClick, onDiscoverClick, onRoadmapClick, onGovernanceClick, onHomeClick }: NavbarProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   const links = [
@@ -22,12 +23,12 @@ export function Navbar({ onLitepaperClick, onDiscoverClick, onRoadmapClick, onGo
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-md border-b border-neutral-100">
       <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-        <a href="/" className="flex items-center gap-2" aria-label="0xdx home">
+        <button onClick={onHomeClick} className="flex items-center gap-2" aria-label="0xdx home">
           <div className="w-8 h-8 bg-black flex items-center justify-center">
             <span className="text-white font-bold text-sm">0x</span>
           </div>
           <span className="text-xl font-bold text-black tracking-tighter">0xdx</span>
-        </a>
+        </button>
 
         <div className="hidden md:flex items-center gap-8">
           {links.map((link) => (
@@ -44,6 +45,7 @@ export function Navbar({ onLitepaperClick, onDiscoverClick, onRoadmapClick, onGo
         <button
           aria-label={isOpen ? 'Close menu' : 'Open menu'}
           aria-expanded={isOpen}
+          aria-controls="mobile-menu"
           className="md:hidden text-black"
           onClick={() => setIsOpen(!isOpen)}
         >
@@ -54,6 +56,7 @@ export function Navbar({ onLitepaperClick, onDiscoverClick, onRoadmapClick, onGo
       <AnimatePresence>
         {isOpen && (
           <motion.div
+            id="mobile-menu"
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}

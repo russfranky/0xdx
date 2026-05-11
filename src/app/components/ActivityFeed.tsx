@@ -82,7 +82,7 @@ export function ActivityFeed({ phase }: { phase: Phase }) {
         
         <div className="h-4 w-px bg-neutral-800 mx-2" />
 
-        <div className="flex-1 relative h-6 overflow-hidden">
+        <div className="flex-1 relative h-6 overflow-hidden" aria-live="polite" aria-atomic="false">
           <AnimatePresence mode="popLayout">
             {activities.map((activity, idx) => (
               <motion.div
@@ -94,7 +94,7 @@ export function ActivityFeed({ phase }: { phase: Phase }) {
                 className="absolute inset-0 flex items-center gap-6 text-sm font-mono text-neutral-300"
               >
                 <div className="flex items-center gap-2">
-                  <span className="text-neutral-500">{getIcon(activity.type)}</span>
+                  <span className="text-neutral-500" aria-hidden="true">{getIcon(activity.type)}</span>
                   <span className="text-white font-bold uppercase tracking-wide text-xs">{activity.actor}</span>
                   <span className="text-xs uppercase tracking-wide">{activity.action}</span>
                   <span className="text-white border-b border-neutral-700 text-xs uppercase tracking-wide">{activity.target}</span>

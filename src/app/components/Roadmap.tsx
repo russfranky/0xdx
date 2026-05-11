@@ -157,9 +157,10 @@ export function Roadmap({ onBack }: RoadmapProps) {
             <button
               key={cat}
               onClick={() => setSelectedCategory(cat)}
+              aria-pressed={selectedCategory === cat}
               className={`px-4 py-2 text-xs font-bold uppercase tracking-widest transition-all ${
-                selectedCategory === cat 
-                  ? 'bg-black text-white' 
+                selectedCategory === cat
+                  ? 'bg-black text-white'
                   : 'bg-transparent text-neutral-500 hover:text-black'
               }`}
             >

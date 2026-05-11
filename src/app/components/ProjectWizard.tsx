@@ -152,13 +152,14 @@ export function ProjectWizard({ phase }: { phase: Phase }) {
                       <div className="space-y-6">
                         <div>
                           <div className="flex justify-between mb-2">
-                            <label className="text-sm font-medium text-black">Support Threshold</label>
+                            <label htmlFor="support-threshold" className="text-sm font-medium text-black">Support Threshold</label>
                             <span className="text-sm font-bold">{formData.quorum}%</span>
                           </div>
-                          <input 
-                            type="range" 
-                            min="1" 
-                            max="100" 
+                          <input
+                            id="support-threshold"
+                            type="range"
+                            min="1"
+                            max="100"
                             className="w-full accent-black h-2 bg-neutral-100 rounded-lg appearance-none cursor-pointer"
                             value={formData.quorum}
                             onChange={(e) => setFormData({...formData, quorum: parseInt(e.target.value)})}
@@ -168,13 +169,14 @@ export function ProjectWizard({ phase }: { phase: Phase }) {
 
                         <div>
                           <div className="flex justify-between mb-2">
-                            <label className="text-sm font-medium text-black">Voting Period</label>
+                            <label htmlFor="voting-period" className="text-sm font-medium text-black">Voting Period</label>
                             <span className="text-sm font-bold">{formData.votingPeriod} Days</span>
                           </div>
-                          <input 
-                            type="range" 
-                            min="1" 
-                            max="14" 
+                          <input
+                            id="voting-period"
+                            type="range"
+                            min="1"
+                            max="14"
                             className="w-full accent-black h-2 bg-neutral-100 rounded-lg appearance-none cursor-pointer"
                             value={formData.votingPeriod}
                             onChange={(e) => setFormData({...formData, votingPeriod: parseInt(e.target.value)})}

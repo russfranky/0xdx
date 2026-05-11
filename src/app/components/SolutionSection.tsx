@@ -57,7 +57,7 @@ export function SolutionSection() {
                   <td className="py-6 px-4 text-neutral-500 font-mono text-sm">{row.token}</td>
                   <td className="py-6 px-4 text-neutral-500 font-mono text-sm">{row.oneVote}</td>
                   <td className="py-6 px-4 font-bold text-black bg-neutral-50 flex items-center gap-2 uppercase tracking-wide text-sm">
-                    <Check className="w-4 h-4" />
+                    <Check className="w-4 h-4" aria-hidden="true" />
                     {row.dx}
                   </td>
                 </tr>

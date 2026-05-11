@@ -23,7 +23,7 @@ export function GovernanceDashboard({ onBack }: GovernanceDashboardProps) {
             <div className="w-6 h-6 bg-black flex items-center justify-center">
               <span className="text-white font-bold text-xs">0x</span>
             </div>
-            <h1 className="font-bold tracking-tight uppercase">Governance Dashboard</h1>
+            <span className="font-bold tracking-tight uppercase">Governance Dashboard</span>
           </div>
 
           <div className="w-20" />
@@ -36,9 +36,9 @@ export function GovernanceDashboard({ onBack }: GovernanceDashboardProps) {
           animate={{ opacity: 1, y: 0 }}
           className="mb-16 max-w-2xl"
         >
-          <h2 className="text-5xl md:text-7xl font-bold tracking-tighter mb-6 text-black uppercase leading-[0.9]">
+          <h1 className="text-5xl md:text-7xl font-bold tracking-tighter mb-6 text-black uppercase leading-[0.9]">
             Real-time, <br /> on-chain.
-          </h2>
+          </h1>
           <p className="text-xl text-neutral-600 font-light leading-relaxed border-l-2 border-black pl-6">
             Live proposals, committee votes, treasury flows, and sentiment signal will appear here once the framework is deployed. Until then, the dashboard is intentionally empty. There is no production data to show.
           </p>

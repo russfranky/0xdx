@@ -92,6 +92,7 @@ export default function App() {
     <div className="min-h-screen bg-white text-black font-sans selection:bg-black selection:text-white">
       <a href="#main" className="skip-to-content">Skip to content</a>
       <Navbar
+        onHomeClick={() => setView('landing')}
         onLitepaperClick={() => setView('litepaper')}
         onDiscoverClick={() => setView('projects')}
         onRoadmapClick={() => setView('roadmap')}
@@ -110,7 +111,7 @@ export default function App() {
         <SolutionSection />
         <Comparison />
         <Resources onLitepaperClick={() => setView('litepaper')} onRoadmapClick={() => setView('roadmap')} />
-        <CTA phase={phase} />
+        <CTA phase={phase} onLitepaperClick={() => setView('litepaper')} />
       </main>
       <Footer onLitepaperClick={() => setView('litepaper')} onRoadmapClick={() => setView('roadmap')} />
     </div>

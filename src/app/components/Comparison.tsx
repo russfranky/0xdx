@@ -19,7 +19,7 @@ export function Comparison() {
         </div>
 
         <div className="overflow-x-auto">
-          <table className="w-full text-sm text-left">
+          <table className="w-full min-w-[700px] text-sm text-left">
             <thead>
               <tr className="border-b-2 border-black">
                 <th className="py-4 pr-8 font-bold text-black uppercase tracking-wider">Feature</th>
