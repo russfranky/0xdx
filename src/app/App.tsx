@@ -1,4 +1,4 @@
-import { useState, lazy, Suspense } from 'react';
+import { useState, useEffect, lazy, Suspense } from 'react';
 import { Info, FileText } from 'lucide-react';
 import { useTheme } from './hooks/useTheme';
 import { Navbar } from './components/Navbar';
@@ -32,11 +32,34 @@ function ViewFallback() {
   return <div className="min-h-screen bg-white dark:bg-neutral-950" />;
 }
 
+function useAdminMode() {
+  const [isAdmin, setIsAdmin] = useState<boolean>(() => {
+    if (typeof window === 'undefined') return false;
+    return window.localStorage.getItem('0xdx_admin') === '1';
+  });
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const params = new URLSearchParams(window.location.search);
+    const adminParam = params.get('admin');
+    if (adminParam === '1') {
+      window.localStorage.setItem('0xdx_admin', '1');
+      setIsAdmin(true);
+    } else if (adminParam === '0') {
+      window.localStorage.removeItem('0xdx_admin');
+      setIsAdmin(false);
+    }
+  }, []);
+
+  return isAdmin;
+}
+
 export default function App() {
   const [phase, setPhase] = useState<Phase>('testnet');
   const [view, setView] = useState<View>('landing');
   const [selectedProjectId, setSelectedProjectId] = useState<number | null>(null);
   const { theme, toggleTheme } = useTheme();
+  const isAdmin = useAdminMode();
 
   if (view === 'minutes') {
     return (
@@ -124,7 +147,8 @@ export default function App() {
       </main>
       <Footer phase={phase} onLitepaperClick={() => setView('litepaper')} onRoadmapClick={() => setView('roadmap')} />
 
-      {/* Phase switcher dev tool */}
+      {/* Admin-only phase switcher dev tool. Enable with ?admin=1, disable with ?admin=0. */}
+      {isAdmin && (
       <div className="fixed bottom-6 right-6 z-50 flex flex-col gap-2 items-end">
         <button
           onClick={() => setView('minutes')}
@@ -159,6 +183,7 @@ export default function App() {
           </div>
         </div>
       </div>
+      )}
     </div>
   );
 }
