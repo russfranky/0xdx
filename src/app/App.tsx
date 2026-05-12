@@ -55,7 +55,7 @@ function useAdminMode() {
 }
 
 export default function App() {
-  const [phase, setPhase] = useState<Phase>('testnet');
+  const [phase, setPhase] = useState<Phase>('prelaunch');
   const [view, setView] = useState<View>('landing');
   const [selectedProjectId, setSelectedProjectId] = useState<number | null>(null);
   const { theme, toggleTheme } = useTheme();
