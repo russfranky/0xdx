@@ -73,10 +73,10 @@ export function Hero({ phase, onLitepaperClick }: HeroProps) {
               className="text-xl md:text-2xl text-neutral-600 dark:text-neutral-300 max-w-xl mb-8 leading-normal font-light"
             >
               {isPrelaunch
-                ? "Run organizations where whales can't dominate, decisions can't stall, and the treasury doesn't run dry. We're publishing the spec — read it, critique it, help shape it before mainnet."
+                ? "0xdx is a governance framework specification: elected committees decide one-person-one-vote, smart contracts auto-execute, and a built-in DEX funds the treasury. Read the litepaper."
                 : isTestnet
-                ? "Run organizations where whales can't dominate, decisions can't stall, and the treasury doesn't run dry. Stress-test it on testnet with real proposals and real stakes."
-                : "Run organizations where whales can't dominate, decisions can't stall, and the treasury doesn't run dry. Elected committees vote one-person-one-vote, code enforces the outcome, and a built-in exchange keeps the lights on."
+                ? "Test the hybrid model: Committee-driven decisions with automated execution. Help us validate the economic engine before mainnet."
+                : "0xdx is the operating system for decentralized entities. Elected committees make decisions, code executes them, and built-in DEX fees fund the treasury."
               }
             </motion.p>
 
