@@ -142,7 +142,7 @@ export default function App() {
         <SolutionSection />
         <Comparison />
         <Resources onLitepaperClick={() => setView('litepaper')} onRoadmapClick={() => setView('roadmap')} />
-        <Testimonials phase={phase} />
+        {isAdmin && <Testimonials phase={phase} />}
         <CTA phase={phase} onLitepaperClick={() => setView('litepaper')} />
       </main>
       <Footer phase={phase} onLitepaperClick={() => setView('litepaper')} onRoadmapClick={() => setView('roadmap')} />
