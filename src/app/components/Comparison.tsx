@@ -1,6 +1,6 @@
-import React from 'react';
-import { motion } from 'motion/react';
-import { ArrowRight } from 'lucide-react';
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
+import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 
 const FAILURE_MODES = [
   {
@@ -41,11 +41,17 @@ const FAILURE_MODES = [
 ];
 
 export function Comparison() {
+  const [active, setActive] = useState(0);
+  const total = FAILURE_MODES.length;
+
+  const go = (next: number) => setActive(((next % total) + total) % total);
+  const current = FAILURE_MODES[active];
+
   return (
     <section className="py-16 bg-white dark:bg-neutral-950">
       <div className="max-w-7xl mx-auto px-6">
 
-        <div className="mb-14 max-w-2xl">
+        <div className="mb-10 max-w-2xl">
           <div className="text-xs font-mono text-neutral-500 dark:text-neutral-400 uppercase tracking-widest mb-4">05 / Versus Alternatives</div>
           <h2 className="text-4xl md:text-5xl font-bold text-black dark:text-white mb-4 uppercase tracking-tighter leading-[0.9]">
             Every model<br />has a known flaw.
@@ -55,45 +61,83 @@ export function Comparison() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-neutral-200 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-800">
-          {FAILURE_MODES.map((item, idx) => (
-            <motion.div
-              key={idx}
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: idx * 0.05 }}
-              className={`bg-white dark:bg-neutral-950 p-6 flex flex-col gap-4${idx === FAILURE_MODES.length - 1 && FAILURE_MODES.length % 2 !== 0 ? ' md:col-span-2' : ''}`}
-            >
-              {/* Model name + index */}
-              <div className="flex items-center gap-3">
-                <span className="text-[10px] font-mono text-neutral-400 dark:text-neutral-600 tabular-nums">
-                  {String(idx + 1).padStart(2, '0')}
-                </span>
-                <span className="text-xs font-bold uppercase tracking-widest text-neutral-400 dark:text-neutral-500">
-                  {item.model}
-                </span>
-              </div>
-
-              {/* Failure */}
-              <p className="text-sm text-neutral-500 dark:text-neutral-400 leading-relaxed">
-                {item.failure}
-              </p>
-
-              {/* Resolution */}
-              <div className="border-l-2 border-black dark:border-white pl-4 mt-auto">
-                <div className="flex items-center gap-1.5 mb-1">
-                  <ArrowRight className="w-3 h-3 text-black dark:text-white shrink-0" aria-hidden="true" />
-                  <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-black dark:text-white">
-                    0xdx
-                  </span>
+        {/* Carousel */}
+        <div className="relative">
+          <div className="bg-white dark:bg-neutral-950 border border-neutral-200 dark:border-neutral-800 min-h-[280px] md:min-h-[240px] overflow-hidden">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={active}
+                initial={{ opacity: 0, x: 16 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -16 }}
+                transition={{ duration: 0.2 }}
+                className="grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-neutral-200 dark:divide-neutral-800"
+              >
+                {/* Failure */}
+                <div className="p-6 md:p-8 flex flex-col gap-3">
+                  <div className="flex items-center gap-3">
+                    <span className="text-[10px] font-mono text-neutral-400 dark:text-neutral-600 tabular-nums">
+                      {String(active + 1).padStart(2, '0')} / {String(total).padStart(2, '0')}
+                    </span>
+                    <span className="text-xs font-bold uppercase tracking-widest text-neutral-400 dark:text-neutral-500">
+                      {current.model}
+                    </span>
+                  </div>
+                  <p className="text-sm text-neutral-500 dark:text-neutral-400 leading-relaxed">
+                    {current.failure}
+                  </p>
                 </div>
-                <p className="text-sm text-black dark:text-white font-medium leading-relaxed">
-                  {item.resolution}
-                </p>
-              </div>
-            </motion.div>
-          ))}
+
+                {/* Resolution */}
+                <div className="p-6 md:p-8 flex flex-col gap-3 bg-neutral-50 dark:bg-neutral-900">
+                  <div className="flex items-center gap-1.5">
+                    <ArrowRight className="w-3 h-3 text-black dark:text-white shrink-0" aria-hidden="true" />
+                    <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-black dark:text-white">
+                      0xdx
+                    </span>
+                  </div>
+                  <p className="text-sm text-black dark:text-white font-medium leading-relaxed">
+                    {current.resolution}
+                  </p>
+                </div>
+              </motion.div>
+            </AnimatePresence>
+          </div>
+
+          {/* Controls */}
+          <div className="mt-6 flex items-center justify-between gap-4">
+            <div className="flex items-center gap-1.5">
+              {FAILURE_MODES.map((_, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => setActive(idx)}
+                  aria-label={`Show model ${idx + 1}`}
+                  className={`h-1.5 rounded-full transition-all ${
+                    idx === active
+                      ? 'w-6 bg-black dark:bg-white'
+                      : 'w-1.5 bg-neutral-300 dark:bg-neutral-700 hover:bg-neutral-400 dark:hover:bg-neutral-500'
+                  }`}
+                />
+              ))}
+            </div>
+
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => go(active - 1)}
+                aria-label="Previous model"
+                className="w-9 h-9 flex items-center justify-center border border-neutral-200 dark:border-neutral-700 text-neutral-700 dark:text-neutral-300 hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-colors"
+              >
+                <ChevronLeft className="w-4 h-4" />
+              </button>
+              <button
+                onClick={() => go(active + 1)}
+                aria-label="Next model"
+                className="w-9 h-9 flex items-center justify-center border border-neutral-200 dark:border-neutral-700 text-neutral-700 dark:text-neutral-300 hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-colors"
+              >
+                <ChevronRight className="w-4 h-4" />
+              </button>
+            </div>
+          </div>
         </div>
 
       </div>

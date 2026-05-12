@@ -92,7 +92,14 @@ export function GovernanceDashboard({ onBack, theme, onThemeToggle }: Governance
                 <div className="text-[10px] font-mono font-bold uppercase tracking-wider">0x71...8a4</div>
                 <div className="text-[10px] text-neutral-500 uppercase tracking-wider">Connected</div>
               </div>
-              <div className="w-8 h-8 bg-black dark:bg-white" />
+              <div
+                className="w-7 h-7 shrink-0 border border-neutral-200 dark:border-neutral-700"
+                aria-hidden="true"
+                style={{
+                  backgroundImage:
+                    'conic-gradient(from 220deg at 35% 40%, #f59e0b 0deg, #ef4444 90deg, #6366f1 180deg, #10b981 270deg, #f59e0b 360deg)',
+                }}
+              />
             </div>
           </>
         }
@@ -171,8 +178,8 @@ export function GovernanceDashboard({ onBack, theme, onThemeToggle }: Governance
                 className="w-full pl-10 pr-4 py-2 bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-700 text-sm text-black dark:text-white placeholder-neutral-400 dark:placeholder-neutral-500 focus:outline-none focus:ring-2 focus:ring-black/5 dark:focus:ring-white/10"
               />
             </div>
-            <Button className="flex items-center gap-2 shrink-0">
-              <Plus className="w-4 h-4" /> New Proposal
+            <Button size="sm" className="shrink-0 font-bold uppercase tracking-wider">
+              <Plus className="w-3.5 h-3.5" /> New Proposal
             </Button>
           </div>
         </div>
