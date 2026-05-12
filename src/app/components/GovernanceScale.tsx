@@ -8,7 +8,7 @@ export function GovernanceScale({ phase }: { phase: Phase }) {
   const isPrelaunch = phase === 'prelaunch';
 
   return (
-    <section id="governance" className="py-20 bg-black dark:bg-neutral-900 text-white overflow-hidden relative border-y border-transparent dark:border-neutral-800">
+    <section id="governance" className="py-16 bg-black dark:bg-neutral-900 text-white overflow-hidden relative border-y border-transparent dark:border-neutral-800">
       {/* Background World Map / Network Hint */}
       <div className="absolute inset-0 opacity-20" aria-hidden="true">
          <svg width="100%" height="100%" className="absolute inset-0">

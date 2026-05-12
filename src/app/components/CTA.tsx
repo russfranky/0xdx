@@ -13,9 +13,9 @@ export function CTA({ phase, onLitepaperClick }: CTAProps) {
   const isPrelaunch = phase === 'prelaunch';
 
   return (
-    <section className="py-20 bg-black dark:bg-neutral-900 text-white text-center border-y border-transparent dark:border-neutral-800">
+    <section className="py-16 bg-black dark:bg-neutral-900 text-white text-center border-y border-transparent dark:border-neutral-800">
       <div className="max-w-4xl mx-auto px-6">
-        <h2 className="text-5xl md:text-7xl font-bold tracking-tighter mb-6 uppercase leading-[0.9]">
+        <h2 className="text-4xl md:text-5xl font-bold tracking-tighter mb-6 uppercase leading-[0.9]">
           Governance that <br />
           doesn't bend.
         </h2>

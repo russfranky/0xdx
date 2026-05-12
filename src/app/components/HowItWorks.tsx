@@ -27,7 +27,7 @@ export function HowItWorks() {
   ];
 
   return (
-    <section className="py-20 bg-white dark:bg-neutral-950">
+    <section className="py-16 bg-white dark:bg-neutral-950">
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
           <div className="lg:col-span-4">
@@ -42,9 +42,9 @@ export function HowItWorks() {
           <div className="lg:col-span-8">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-12 relative">
               {steps.map((step, idx) => (
-                <div key={idx} className="relative pl-20 md:pl-24 group">
+                <div key={idx} className="relative pl-20 md:pl-24">
                   {/* Step Number/Icon */}
-                  <div className="absolute left-0 top-0 w-16 h-16 border-2 border-black dark:border-neutral-500 bg-white dark:bg-neutral-900 flex items-center justify-center rounded-none z-10 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,0.15)] group-hover:translate-x-[2px] group-hover:translate-y-[2px] group-hover:shadow-none transition-all">
+                  <div className="absolute left-0 top-0 w-16 h-16 border-2 border-black dark:border-neutral-500 bg-white dark:bg-neutral-900 flex items-center justify-center rounded-none z-10 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,0.15)]">
                      <span className="absolute top-1 left-1.5 text-[10px] font-mono text-neutral-400 dark:text-neutral-500 tracking-wider">{`0${idx + 1}`}</span>
                      <step.icon className="w-7 h-7 text-black dark:text-white" aria-hidden="true" />
                   </div>

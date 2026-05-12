@@ -20,7 +20,7 @@ export function Hero({ phase, onLitepaperClick }: HeroProps) {
   const accentBg = isTestnet ? 'bg-orange-500' : 'bg-emerald-500';
 
   return (
-    <section className="relative min-h-[80vh] flex items-center pt-24 pb-16 bg-white dark:bg-neutral-950 overflow-hidden">
+    <section className="relative flex items-center pt-24 pb-16 bg-white dark:bg-neutral-950 overflow-hidden">
       {/* Abstract Background Mesh */}
       <div className="absolute inset-0 pointer-events-none opacity-[0.05] dark:opacity-[0.08]"
         aria-hidden="true"
@@ -58,7 +58,7 @@ export function Hero({ phase, onLitepaperClick }: HeroProps) {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 }}
-              className="text-4xl sm:text-6xl md:text-7xl lg:text-7xl xl:text-8xl font-bold text-black dark:text-white tracking-tighter mb-6 leading-[0.95] uppercase"
+              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-black dark:text-white tracking-tighter mb-6 leading-[0.95] uppercase"
             >
               Decentralized <br />
               Governance <br />

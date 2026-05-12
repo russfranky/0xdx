@@ -18,7 +18,7 @@ export function ProjectWizard({ phase }: { phase: Phase }) {
   const handleBack = () => setStep(s => Math.max(s - 1, 1));
 
   return (
-    <section id="start" className="py-20 bg-white dark:bg-neutral-950 border-b border-neutral-100 dark:border-neutral-800">
+    <section id="start" className="py-16 bg-white dark:bg-neutral-950 border-b border-neutral-100 dark:border-neutral-800">
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           

@@ -42,7 +42,7 @@ const FAILURE_MODES = [
 
 export function Comparison() {
   return (
-    <section className="py-20 bg-white dark:bg-neutral-950">
+    <section className="py-16 bg-white dark:bg-neutral-950">
       <div className="max-w-7xl mx-auto px-6">
 
         <div className="mb-14 max-w-2xl">

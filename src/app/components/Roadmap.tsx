@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'motion/react';
-import { ArrowLeft, CheckCircle2, Circle, Clock, Loader2, Calendar } from 'lucide-react';
+import { CheckCircle2, Circle, Clock, Loader2, Calendar } from 'lucide-react';
 import { Button } from './ui/Button';
 import { PageHeader } from './ui/PageHeader';
 
@@ -160,7 +160,7 @@ export function Roadmap({ onBack, theme, onThemeToggle }: RoadmapProps) {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: idx * 0.1 }}
-              className={`group relative p-8 border-t-2 transition-all hover:bg-neutral-50 dark:hover:bg-neutral-900 ${
+              className={`relative p-8 border-t-2 ${
                 milestone.status === 'done'
                   ? 'border-emerald-500 bg-emerald-50/10 dark:bg-emerald-950/10'
                   : milestone.status === 'in-progress'
@@ -186,19 +186,13 @@ export function Roadmap({ onBack, theme, onThemeToggle }: RoadmapProps) {
                 </div>
               </div>
 
-              <h3 className="text-xl font-bold mb-3 text-black dark:text-white group-hover:underline decoration-2 underline-offset-4 transition-colors">
+              <h3 className="text-xl font-bold mb-3 text-black dark:text-white">
                 {milestone.title}
               </h3>
 
               <p className="text-neutral-600 dark:text-neutral-400 text-sm leading-relaxed mb-6">
                 {milestone.description}
               </p>
-
-              <div className="absolute bottom-8 right-8 opacity-0 group-hover:opacity-100 transition-opacity">
-                <div className="w-8 h-8 bg-black dark:bg-white text-white dark:text-black flex items-center justify-center">
-                   <ArrowLeft className="w-4 h-4 rotate-180" />
-                </div>
-              </div>
 
               <div className="mt-auto">
                  <span className="inline-block px-2 py-1 bg-black dark:bg-white text-white dark:text-black text-[10px] font-bold uppercase tracking-wider">

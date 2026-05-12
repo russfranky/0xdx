@@ -185,7 +185,7 @@ export function GovernanceDashboard({ onBack, theme, onThemeToggle }: Governance
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: idx * 0.05 }}
-              className="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-700 p-6 hover:border-black dark:hover:border-white transition-colors"
+              className="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-700 p-6"
             >
               <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
 

@@ -148,7 +148,7 @@ export function UseCases({ phase }: { phase: Phase }) {
   const [selected, setSelected] = useState<number | null>(null);
 
   return (
-    <section className="py-20 bg-neutral-50 dark:bg-neutral-900 border-y border-neutral-200 dark:border-neutral-700">
+    <section className="py-16 bg-neutral-50 dark:bg-neutral-900 border-y border-neutral-200 dark:border-neutral-700">
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex items-end justify-between mb-14">
           <h2 className="text-4xl md:text-5xl font-bold tracking-tighter text-black dark:text-white max-w-xl uppercase leading-[0.9]">

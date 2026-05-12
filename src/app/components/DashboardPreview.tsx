@@ -7,7 +7,7 @@ import { Phase } from '../App';
 export function DashboardPreview({ phase }: { phase: Phase }) {
   if (phase === 'prelaunch') return null;
   return (
-    <section className="py-20 bg-neutral-50 dark:bg-neutral-900 border-b border-neutral-200 dark:border-neutral-700">
+    <section className="py-16 bg-neutral-50 dark:bg-neutral-900 border-b border-neutral-200 dark:border-neutral-700">
       <div className="max-w-7xl mx-auto px-6">
         <div className="text-center mb-12">
           <h2 className="text-4xl md:text-5xl font-bold text-black dark:text-white mb-4 uppercase tracking-tighter leading-[0.9]">Transparency First</h2>
