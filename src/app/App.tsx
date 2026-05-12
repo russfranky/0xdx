@@ -130,17 +130,18 @@ export default function App() {
         onThemeToggle={toggleTheme}
       />
       <main id="main">
+        {/* Narrative arc: Hook → Problem → Mechanism → Economics → Proof → Pivot → CTA */}
         <Hero phase={phase} onLitepaperClick={() => setView('litepaper')} />
-        <ActivityFeed phase={phase} />
-        <UseCases phase={phase} />
-        <GovernanceScale phase={phase} />
-        <HowItWorks />
-        <DashboardPreview phase={phase} />
-        <ProjectWizard phase={phase} />
-        <Features />
+        {isAdmin && <ActivityFeed phase={phase} />}
         <ProblemSection />
-        <SolutionSection />
+        <HowItWorks />
+        <GovernanceScale phase={phase} />
+        <UseCases phase={phase} />
+        {isAdmin && <DashboardPreview phase={phase} />}
         <Comparison />
+        {isAdmin && <SolutionSection />}
+        {isAdmin && <Features />}
+        <ProjectWizard phase={phase} />
         <Resources onLitepaperClick={() => setView('litepaper')} onRoadmapClick={() => setView('roadmap')} />
         {isAdmin && <Testimonials phase={phase} />}
         <CTA phase={phase} onLitepaperClick={() => setView('litepaper')} />
