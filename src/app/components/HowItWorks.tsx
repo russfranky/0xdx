@@ -45,12 +45,12 @@ export function HowItWorks() {
                 <div key={idx} className="relative pl-20 md:pl-24 group">
                   {/* Step Number/Icon */}
                   <div className="absolute left-0 top-0 w-16 h-16 border-2 border-black dark:border-neutral-500 bg-white dark:bg-neutral-900 flex items-center justify-center rounded-none z-10 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,0.15)] group-hover:translate-x-[2px] group-hover:translate-y-[2px] group-hover:shadow-none transition-all">
+                     <span className="absolute top-1 left-1.5 text-[10px] font-mono text-neutral-400 dark:text-neutral-500 tracking-wider">{`0${idx + 1}`}</span>
                      <step.icon className="w-7 h-7 text-black dark:text-white" aria-hidden="true" />
                   </div>
 
                   {/* Content */}
                   <div className="pt-4">
-                    <div className="text-xs font-mono text-neutral-400 dark:text-neutral-500 mb-2">{`0${idx + 1}`}</div>
                     <h3 className="text-xl font-bold text-black dark:text-white mb-3 uppercase tracking-tight">{step.title}</h3>
                     <p className="text-neutral-500 dark:text-neutral-400 leading-relaxed text-sm max-w-xs font-light">
                       {step.desc}
