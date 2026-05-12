@@ -13,13 +13,13 @@ export function CTA({ phase, onLitepaperClick }: CTAProps) {
   const isPrelaunch = phase === 'prelaunch';
 
   return (
-    <section className="py-20 bg-black text-white text-center">
+    <section className="py-20 bg-black dark:bg-neutral-900 text-white text-center border-y border-transparent dark:border-neutral-800">
       <div className="max-w-4xl mx-auto px-6">
         <h2 className="text-5xl md:text-7xl font-bold tracking-tighter mb-6 uppercase leading-[0.9]">
           Build the future <br />
           of coordination
         </h2>
-        <p className="text-xl text-neutral-500 mb-8 max-w-2xl mx-auto font-light leading-relaxed">
+        <p className="text-xl text-neutral-400 mb-8 max-w-2xl mx-auto font-light leading-relaxed">
           {isPrelaunch
             ? "0xdx is a governance framework spec, not yet deployed. Read the litepaper, follow along on GitHub, and help shape it before launch."
             : isTestnet

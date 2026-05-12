@@ -24,11 +24,11 @@ export function ProjectWizard({ phase }: { phase: Phase }) {
           
           {/* Left Content */}
           <div>
-            <div className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider mb-6 border ${isTestnet ? 'bg-orange-50 text-orange-600 border-orange-100' : 'bg-neutral-100 dark:bg-neutral-800 text-neutral-600 dark:text-neutral-300 border-neutral-200 dark:border-neutral-700'}`}>
+            <div className={`inline-flex items-center gap-2 px-3 py-1 text-xs font-bold uppercase tracking-wider mb-6 border ${isTestnet ? 'bg-orange-50 dark:bg-orange-950/30 text-orange-600 dark:text-orange-400 border-orange-100 dark:border-orange-900' : 'bg-neutral-100 dark:bg-neutral-800 text-neutral-600 dark:text-neutral-300 border-neutral-200 dark:border-neutral-700'}`}>
               <Rocket className="w-4 h-4" />
               {isTestnet ? 'Testnet Sandbox' : 'Easy Deployment'}
             </div>
-            <h2 className="text-4xl font-bold text-black dark:text-white mb-6">
+            <h2 className="text-4xl md:text-5xl font-bold tracking-tighter uppercase leading-[0.9] text-black dark:text-white mb-6">
               {isTestnet ? 'Prototype your Organization' : 'From Idea to Organization'} <br />
               <span className="text-neutral-500 dark:text-neutral-400">{isTestnet ? 'risk-free.' : 'in minutes.'}</span>
             </h2>
@@ -69,8 +69,8 @@ export function ProjectWizard({ phase }: { phase: Phase }) {
 
           {/* Right Content - Interactive Wizard */}
           <div className="relative">
-            <div className="absolute inset-0 bg-neutral-100 dark:bg-neutral-800 transform rotate-3 rounded-lg" />
-            <div className="relative bg-white dark:bg-neutral-900 border-2 border-neutral-100 dark:border-neutral-700 rounded-lg shadow-[8px_8px_0px_0px_rgba(0,0,0,0.05)] overflow-hidden p-6">
+            <div className="absolute inset-0 bg-neutral-100 dark:bg-neutral-800 transform rotate-3" />
+            <div className="relative bg-white dark:bg-neutral-900 border-2 border-black dark:border-neutral-600 shadow-[8px_8px_0px_0px_rgba(0,0,0,0.1)] dark:shadow-[8px_8px_0px_0px_rgba(255,255,255,0.05)] overflow-hidden p-6">
 
               {/* Progress */}
               <div className="flex items-center justify-between mb-6">
@@ -97,7 +97,7 @@ export function ProjectWizard({ phase }: { phase: Phase }) {
                       className="space-y-6"
                     >
                       <div className="flex items-center gap-3 mb-2">
-                        <div className="p-3 bg-neutral-100 dark:bg-neutral-800 rounded-lg">
+                        <div className="p-3 bg-neutral-100 dark:bg-neutral-800">
                            <Shield className="w-6 h-6 text-black dark:text-white" />
                         </div>
                         <div>
@@ -111,7 +111,7 @@ export function ProjectWizard({ phase }: { phase: Phase }) {
                           <label className="block text-sm font-medium text-black dark:text-white mb-1">Organization Name</label>
                           <input
                             type="text"
-                            className="w-full px-4 py-3 rounded-lg border border-neutral-200 dark:border-neutral-600 bg-white dark:bg-neutral-800 text-black dark:text-white placeholder:text-neutral-400 dark:placeholder:text-neutral-500 focus:outline-none focus:ring-2 focus:ring-black dark:focus:ring-white focus:border-transparent transition-all"
+                            className="w-full px-4 py-3 border border-neutral-200 dark:border-neutral-600 bg-white dark:bg-neutral-800 text-black dark:text-white placeholder:text-neutral-400 dark:placeholder:text-neutral-500 focus:outline-none focus:ring-2 focus:ring-black dark:focus:ring-white focus:border-transparent transition-all"
                             placeholder={isTestnet ? "e.g. My Test DAO" : "e.g. Ocean Cleanup DAO"}
                             defaultValue={formData.name}
                             onChange={(e) => setFormData({...formData, name: e.target.value})}
@@ -121,7 +121,7 @@ export function ProjectWizard({ phase }: { phase: Phase }) {
                           <label className="block text-sm font-medium text-black dark:text-white mb-1">Ticker Symbol</label>
                           <input
                             type="text"
-                            className="w-full px-4 py-3 rounded-lg border border-neutral-200 dark:border-neutral-600 bg-white dark:bg-neutral-800 text-black dark:text-white placeholder:text-neutral-400 dark:placeholder:text-neutral-500 focus:outline-none focus:ring-2 focus:ring-black dark:focus:ring-white focus:border-transparent transition-all uppercase"
+                            className="w-full px-4 py-3 border border-neutral-200 dark:border-neutral-600 bg-white dark:bg-neutral-800 text-black dark:text-white placeholder:text-neutral-400 dark:placeholder:text-neutral-500 focus:outline-none focus:ring-2 focus:ring-black dark:focus:ring-white focus:border-transparent transition-all uppercase"
                             placeholder={isTestnet ? "e.g. TEST" : "e.g. OCEAN"}
                             defaultValue={formData.ticker}
                             onChange={(e) => setFormData({...formData, ticker: e.target.value})}
@@ -140,7 +140,7 @@ export function ProjectWizard({ phase }: { phase: Phase }) {
                       className="space-y-6"
                     >
                       <div className="flex items-center gap-3 mb-2">
-                        <div className="p-3 bg-neutral-100 dark:bg-neutral-800 rounded-lg">
+                        <div className="p-3 bg-neutral-100 dark:bg-neutral-800">
                            <Settings className="w-6 h-6 text-black dark:text-white" />
                         </div>
                         <div>
@@ -160,7 +160,7 @@ export function ProjectWizard({ phase }: { phase: Phase }) {
                             type="range"
                             min="1"
                             max="100"
-                            className="w-full accent-black h-2 bg-neutral-100 dark:bg-neutral-700 rounded-lg appearance-none cursor-pointer"
+                            className="w-full accent-black h-2 bg-neutral-100 dark:bg-neutral-700 appearance-none cursor-pointer"
                             value={formData.quorum}
                             onChange={(e) => setFormData({...formData, quorum: parseInt(e.target.value)})}
                           />
@@ -177,7 +177,7 @@ export function ProjectWizard({ phase }: { phase: Phase }) {
                             type="range"
                             min="1"
                             max="14"
-                            className="w-full accent-black h-2 bg-neutral-100 dark:bg-neutral-700 rounded-lg appearance-none cursor-pointer"
+                            className="w-full accent-black h-2 bg-neutral-100 dark:bg-neutral-700 appearance-none cursor-pointer"
                             value={formData.votingPeriod}
                             onChange={(e) => setFormData({...formData, votingPeriod: parseInt(e.target.value)})}
                           />
@@ -197,7 +197,7 @@ export function ProjectWizard({ phase }: { phase: Phase }) {
                       exit={{ opacity: 0, x: -20 }}
                       className="space-y-6 text-center pt-8"
                     >
-                      <div className={`w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg ${isTestnet ? 'bg-orange-500 shadow-orange-200' : 'bg-emerald-500 shadow-emerald-200'}`}>
+                      <div className={`w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 ${isTestnet ? 'bg-orange-500' : 'bg-emerald-500'}`}>
                         <Check className="w-10 h-10 text-white" />
                       </div>
                       
@@ -207,13 +207,13 @@ export function ProjectWizard({ phase }: { phase: Phase }) {
                       </p>
                       
                       {isTestnet && (
-                        <div className="bg-orange-50 border border-orange-100 p-3 rounded text-xs text-orange-800 flex items-start gap-2 text-left mb-6">
+                        <div className="bg-orange-50 dark:bg-orange-950/30 border border-orange-100 dark:border-orange-900 p-3 text-xs text-orange-800 dark:text-orange-300 flex items-start gap-2 text-left mb-6">
                           <Info className="w-4 h-4 shrink-0 mt-0.5" />
                           <span>This is a testnet deployment. No real assets will be used or transferred.</span>
                         </div>
                       )}
 
-                      <div className="bg-neutral-50 dark:bg-neutral-800 p-4 rounded-lg text-left text-sm space-y-2 border border-neutral-100 dark:border-neutral-700">
+                      <div className="bg-neutral-50 dark:bg-neutral-800 p-4 text-left text-sm space-y-2 border border-neutral-100 dark:border-neutral-700">
                         <div className="flex justify-between">
                           <span className="text-neutral-500 dark:text-neutral-400">Network Fee</span>
                           <span className="font-bold dark:text-white">{isTestnet ? '0.02 tETH (Free)' : '0.02 ETH'}</span>

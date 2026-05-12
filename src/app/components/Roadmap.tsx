@@ -2,9 +2,12 @@ import React, { useState } from 'react';
 import { motion } from 'motion/react';
 import { ArrowLeft, CheckCircle2, Circle, Clock, Loader2, Calendar } from 'lucide-react';
 import { Button } from './ui/Button';
+import { PageHeader } from './ui/PageHeader';
 
 interface RoadmapProps {
   onBack: () => void;
+  theme?: 'light' | 'dark';
+  onThemeToggle?: () => void;
 }
 
 type Status = 'done' | 'in-progress' | 'planned';
@@ -19,7 +22,7 @@ interface Milestone {
   quarter: string;
 }
 
-export function Roadmap({ onBack }: RoadmapProps) {
+export function Roadmap({ onBack, theme, onThemeToggle }: RoadmapProps) {
   const [selectedCategory, setSelectedCategory] = useState<Category | 'All'>('All');
 
   const milestones: Milestone[] = [
@@ -91,15 +94,15 @@ export function Roadmap({ onBack }: RoadmapProps) {
 
   const categories: (Category | 'All')[] = ['All', 'Protocol', 'Governance', 'Ecosystem'];
 
-  const filteredMilestones = selectedCategory === 'All' 
-    ? milestones 
+  const filteredMilestones = selectedCategory === 'All'
+    ? milestones
     : milestones.filter(m => m.category === selectedCategory);
 
   const getStatusIcon = (status: Status) => {
     switch (status) {
       case 'done': return <CheckCircle2 className="w-5 h-5 text-emerald-500" />;
       case 'in-progress': return <Loader2 className="w-5 h-5 text-orange-500 animate-spin" />;
-      case 'planned': return <Circle className="w-5 h-5 text-neutral-300" />;
+      case 'planned': return <Circle className="w-5 h-5 text-neutral-300 dark:text-neutral-600" />;
     }
   };
 
@@ -112,28 +115,8 @@ export function Roadmap({ onBack }: RoadmapProps) {
   };
 
   return (
-    <div className="min-h-screen bg-white text-black font-sans selection:bg-black selection:text-white">
-      {/* Header */}
-      <header className="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-md border-b border-neutral-100">
-        <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-          <button 
-            onClick={onBack}
-            className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-neutral-600 hover:text-black transition-colors"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            Back to Home
-          </button>
-          
-          <div className="flex items-center gap-2">
-            <div className="w-6 h-6 bg-black flex items-center justify-center">
-              <span className="text-white font-bold text-xs">0x</span>
-            </div>
-            <span className="font-bold tracking-tight uppercase">Roadmap</span>
-          </div>
-
-          <div className="w-20" /> {/* Spacer for centering */}
-        </div>
-      </header>
+    <div className="min-h-screen bg-white dark:bg-neutral-950 text-black dark:text-white font-sans selection:bg-black selection:text-white dark:selection:bg-white dark:selection:text-black">
+      <PageHeader onBack={onBack} title="Roadmap" theme={theme} onThemeToggle={onThemeToggle} />
 
       <main className="pt-32 pb-24 px-6 max-w-7xl mx-auto">
         {/* Intro */}
@@ -142,17 +125,17 @@ export function Roadmap({ onBack }: RoadmapProps) {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
           >
-            <h1 className="text-5xl md:text-7xl font-bold tracking-tighter mb-6 text-black uppercase leading-[0.9]">
+            <h1 className="text-5xl md:text-7xl font-bold tracking-tighter mb-6 text-black dark:text-white uppercase leading-[0.9]">
               Building the <br /> Republic
             </h1>
-            <p className="text-xl text-neutral-600 font-light leading-relaxed border-l-2 border-black pl-6">
+            <p className="text-xl text-neutral-600 dark:text-neutral-300 font-light leading-relaxed border-l-2 border-black dark:border-neutral-500 pl-6">
               We are building a governance system that lasts. Our roadmap prioritizes stability, security, and gradual decentralization over speed.
             </p>
           </motion.div>
         </div>
 
         {/* Filters */}
-        <div className="flex flex-wrap gap-2 mb-12 border-b border-black pb-4">
+        <div className="flex flex-wrap gap-2 mb-12 border-b border-black dark:border-neutral-700 pb-4">
           {categories.map((cat) => (
             <button
               key={cat}
@@ -160,8 +143,8 @@ export function Roadmap({ onBack }: RoadmapProps) {
               aria-pressed={selectedCategory === cat}
               className={`px-4 py-2 text-xs font-bold uppercase tracking-widest transition-all ${
                 selectedCategory === cat
-                  ? 'bg-black text-white'
-                  : 'bg-transparent text-neutral-500 hover:text-black'
+                  ? 'bg-black dark:bg-white text-white dark:text-black'
+                  : 'bg-transparent text-neutral-500 dark:text-neutral-400 hover:text-black dark:hover:text-white'
               }`}
             >
               {cat}
@@ -177,48 +160,48 @@ export function Roadmap({ onBack }: RoadmapProps) {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: idx * 0.1 }}
-              className={`group relative p-8 border-t-2 transition-all hover:bg-neutral-50 ${
-                milestone.status === 'done' 
-                  ? 'border-emerald-500 bg-emerald-50/10' 
+              className={`group relative p-8 border-t-2 transition-all hover:bg-neutral-50 dark:hover:bg-neutral-900 ${
+                milestone.status === 'done'
+                  ? 'border-emerald-500 bg-emerald-50/10 dark:bg-emerald-950/10'
                   : milestone.status === 'in-progress'
-                  ? 'border-orange-500 bg-orange-50/10'
-                  : 'border-neutral-200'
+                  ? 'border-orange-500 bg-orange-50/10 dark:bg-orange-950/10'
+                  : 'border-neutral-200 dark:border-neutral-700'
               }`}
             >
               <div className="flex items-center justify-between mb-6">
                 <span className={`text-xs font-mono font-bold uppercase tracking-widest ${
-                  milestone.status === 'done' ? 'text-emerald-600' : 
-                  milestone.status === 'in-progress' ? 'text-orange-600' : 'text-neutral-500'
+                  milestone.status === 'done' ? 'text-emerald-600 dark:text-emerald-400' :
+                  milestone.status === 'in-progress' ? 'text-orange-600 dark:text-orange-400' : 'text-neutral-500 dark:text-neutral-400'
                 }`}>
                   {milestone.quarter}
                 </span>
                 <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider">
                   {getStatusIcon(milestone.status)}
                   <span className={
-                    milestone.status === 'done' ? 'text-emerald-700' : 
-                    milestone.status === 'in-progress' ? 'text-orange-700' : 'text-neutral-500'
+                    milestone.status === 'done' ? 'text-emerald-700 dark:text-emerald-400' :
+                    milestone.status === 'in-progress' ? 'text-orange-700 dark:text-orange-400' : 'text-neutral-500 dark:text-neutral-400'
                   }>
                     {getStatusLabel(milestone.status)}
                   </span>
                 </div>
               </div>
 
-              <h3 className="text-xl font-bold mb-3 group-hover:underline decoration-2 underline-offset-4 transition-colors">
+              <h3 className="text-xl font-bold mb-3 text-black dark:text-white group-hover:underline decoration-2 underline-offset-4 transition-colors">
                 {milestone.title}
               </h3>
-              
-              <p className="text-neutral-600 text-sm leading-relaxed mb-6">
+
+              <p className="text-neutral-600 dark:text-neutral-400 text-sm leading-relaxed mb-6">
                 {milestone.description}
               </p>
 
               <div className="absolute bottom-8 right-8 opacity-0 group-hover:opacity-100 transition-opacity">
-                <div className="w-8 h-8 bg-black text-white flex items-center justify-center">
+                <div className="w-8 h-8 bg-black dark:bg-white text-white dark:text-black flex items-center justify-center">
                    <ArrowLeft className="w-4 h-4 rotate-180" />
                 </div>
               </div>
-              
+
               <div className="mt-auto">
-                 <span className="inline-block px-2 py-1 bg-black text-white text-[10px] font-bold uppercase tracking-wider">
+                 <span className="inline-block px-2 py-1 bg-black dark:bg-white text-white dark:text-black text-[10px] font-bold uppercase tracking-wider">
                     {milestone.category}
                  </span>
               </div>

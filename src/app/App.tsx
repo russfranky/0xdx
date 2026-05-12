@@ -1,4 +1,5 @@
 import { useState, lazy, Suspense } from 'react';
+import { Info, FileText } from 'lucide-react';
 import { useTheme } from './hooks/useTheme';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
@@ -13,6 +14,7 @@ import { GovernanceScale } from './components/GovernanceScale';
 import { DashboardPreview } from './components/DashboardPreview';
 import { Comparison } from './components/Comparison';
 import { Resources } from './components/Resources';
+import { Testimonials } from './components/Testimonials';
 import { CTA } from './components/CTA';
 import { Footer } from './components/Footer';
 
@@ -31,7 +33,7 @@ function ViewFallback() {
 }
 
 export default function App() {
-  const [phase] = useState<Phase>('prelaunch');
+  const [phase, setPhase] = useState<Phase>('testnet');
   const [view, setView] = useState<View>('landing');
   const [selectedProjectId, setSelectedProjectId] = useState<number | null>(null);
   const { theme, toggleTheme } = useTheme();
@@ -39,7 +41,7 @@ export default function App() {
   if (view === 'minutes') {
     return (
       <Suspense fallback={<ViewFallback />}>
-        <MeetingMinutes onBack={() => setView('landing')} />
+        <MeetingMinutes onBack={() => setView('landing')} theme={theme} onThemeToggle={toggleTheme} />
       </Suspense>
     );
   }
@@ -47,7 +49,7 @@ export default function App() {
   if (view === 'litepaper') {
     return (
       <Suspense fallback={<ViewFallback />}>
-        <Litepaper onBack={() => setView('landing')} />
+        <Litepaper onBack={() => setView('landing')} theme={theme} onThemeToggle={toggleTheme} />
       </Suspense>
     );
   }
@@ -55,7 +57,7 @@ export default function App() {
   if (view === 'roadmap') {
     return (
       <Suspense fallback={<ViewFallback />}>
-        <Roadmap onBack={() => setView('landing')} />
+        <Roadmap onBack={() => setView('landing')} theme={theme} onThemeToggle={toggleTheme} />
       </Suspense>
     );
   }
@@ -69,6 +71,8 @@ export default function App() {
             setSelectedProjectId(id);
             setView('project-detail');
           }}
+          theme={theme}
+          onThemeToggle={toggleTheme}
         />
       </Suspense>
     );
@@ -77,7 +81,7 @@ export default function App() {
   if (view === 'project-detail' && selectedProjectId) {
     return (
       <Suspense fallback={<ViewFallback />}>
-        <ProjectDetail projectId={selectedProjectId} onBack={() => setView('projects')} />
+        <ProjectDetail projectId={selectedProjectId} onBack={() => setView('projects')} theme={theme} onThemeToggle={toggleTheme} />
       </Suspense>
     );
   }
@@ -104,20 +108,57 @@ export default function App() {
       />
       <main id="main">
         <Hero phase={phase} onLitepaperClick={() => setView('litepaper')} />
-        {phase !== 'prelaunch' && <ActivityFeed phase={phase} />}
+        <ActivityFeed phase={phase} />
         <UseCases phase={phase} />
         <GovernanceScale phase={phase} />
         <HowItWorks />
         <DashboardPreview phase={phase} />
-        {phase !== 'prelaunch' && <ProjectWizard phase={phase} />}
+        <ProjectWizard phase={phase} />
         <Features />
         <ProblemSection />
         <SolutionSection />
         <Comparison />
         <Resources onLitepaperClick={() => setView('litepaper')} onRoadmapClick={() => setView('roadmap')} />
+        <Testimonials phase={phase} />
         <CTA phase={phase} onLitepaperClick={() => setView('litepaper')} />
       </main>
-      <Footer onLitepaperClick={() => setView('litepaper')} onRoadmapClick={() => setView('roadmap')} />
+      <Footer phase={phase} onLitepaperClick={() => setView('litepaper')} onRoadmapClick={() => setView('roadmap')} />
+
+      {/* Phase switcher dev tool */}
+      <div className="fixed bottom-6 right-6 z-50 flex flex-col gap-2 items-end">
+        <button
+          onClick={() => setView('minutes')}
+          className="bg-white dark:bg-neutral-900 text-black dark:text-white px-4 py-3 shadow-xl border border-neutral-200 dark:border-neutral-700 font-bold text-[10px] uppercase tracking-widest flex items-center gap-2 hover:bg-neutral-50 dark:hover:bg-neutral-800 transition-colors"
+        >
+          <FileText className="w-4 h-4" />
+          View Live Minutes Demo
+        </button>
+        <div className="flex items-center gap-3 bg-black text-white px-4 py-3 border border-neutral-800">
+          <div className="text-[10px] font-bold uppercase tracking-widest flex items-center gap-2">
+            <Info className="w-4 h-4" />
+            <span>Phase:</span>
+          </div>
+          <div className="flex items-center gap-1">
+            {(['prelaunch', 'testnet', 'mainnet'] as const).map((p) => (
+              <button
+                key={p}
+                onClick={() => setPhase(p)}
+                className={`text-[10px] font-bold uppercase tracking-widest px-2 py-1 transition-colors ${
+                  phase === p
+                    ? p === 'prelaunch'
+                      ? 'bg-neutral-300 text-black'
+                      : p === 'testnet'
+                      ? 'bg-orange-400 text-black'
+                      : 'bg-emerald-400 text-black'
+                    : 'text-neutral-500 hover:text-white'
+                }`}
+              >
+                {p}
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

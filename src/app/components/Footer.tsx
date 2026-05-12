@@ -1,12 +1,20 @@
 import React from 'react';
 import { Github } from 'lucide-react';
+import { Phase } from '../App';
 
 interface FooterProps {
   onLitepaperClick?: () => void;
   onRoadmapClick?: () => void;
+  phase?: Phase;
 }
 
-export function Footer({ onLitepaperClick, onRoadmapClick }: FooterProps) {
+const STATUS_BY_PHASE: Record<Phase, string> = {
+  prelaunch: 'Pre-launch · Specification draft v1.0',
+  testnet: 'Incentivized Testnet · v0.9',
+  mainnet: 'Mainnet · v1.0',
+};
+
+export function Footer({ onLitepaperClick, onRoadmapClick, phase = 'testnet' }: FooterProps) {
   const year = new Date().getFullYear();
 
   return (
@@ -50,7 +58,7 @@ export function Footer({ onLitepaperClick, onRoadmapClick }: FooterProps) {
           <div>
             <h4 className="font-bold text-black dark:text-white mb-6 text-xs uppercase tracking-widest">Status</h4>
             <p className="text-neutral-600 dark:text-neutral-400 text-sm font-mono uppercase tracking-wide">
-              Pre-launch · Specification draft v1.0
+              {STATUS_BY_PHASE[phase]}
             </p>
           </div>
         </div>

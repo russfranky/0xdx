@@ -1,0 +1,54 @@
+import React from 'react';
+import { ArrowLeft, Sun, Moon } from 'lucide-react';
+
+interface PageHeaderProps {
+  onBack: () => void;
+  title: string;
+  backLabel?: string;
+  theme?: 'light' | 'dark';
+  onThemeToggle?: () => void;
+  rightSlot?: React.ReactNode;
+}
+
+export function PageHeader({
+  onBack,
+  title,
+  backLabel = 'Back to Home',
+  theme,
+  onThemeToggle,
+  rightSlot,
+}: PageHeaderProps) {
+  return (
+    <header className="fixed top-0 left-0 right-0 z-50 bg-white/90 dark:bg-neutral-950/90 backdrop-blur-md border-b border-neutral-100 dark:border-neutral-800">
+      <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between gap-4">
+        <button
+          onClick={onBack}
+          className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-neutral-600 dark:text-neutral-400 hover:text-black dark:hover:text-white transition-colors shrink-0"
+        >
+          <ArrowLeft className="w-4 h-4" />
+          {backLabel}
+        </button>
+
+        <div className="flex items-center gap-2 min-w-0">
+          <div className="w-6 h-6 bg-black dark:bg-white flex items-center justify-center shrink-0">
+            <span className="text-white dark:text-black font-bold text-xs">0x</span>
+          </div>
+          <span className="font-bold tracking-tight uppercase text-black dark:text-white truncate">{title}</span>
+        </div>
+
+        <div className="flex items-center gap-2 shrink-0">
+          {rightSlot}
+          {onThemeToggle && (
+            <button
+              onClick={onThemeToggle}
+              aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+              className="p-2 rounded-full text-neutral-500 hover:text-black dark:hover:text-white transition-colors"
+            >
+              {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+            </button>
+          )}
+        </div>
+      </div>
+    </header>
+  );
+}

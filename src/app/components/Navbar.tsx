@@ -26,9 +26,6 @@ export function Navbar({ onLitepaperClick, onDiscoverClick, onRoadmapClick, onGo
     <nav className="fixed top-0 left-0 right-0 z-50 bg-white/90 dark:bg-neutral-950/90 backdrop-blur-md border-b border-neutral-100 dark:border-neutral-800">
       <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
         <button onClick={onHomeClick} className="flex items-center gap-2" aria-label="0xdx home">
-          <div className="w-8 h-8 bg-black dark:bg-white flex items-center justify-center">
-            <span className="text-white dark:text-black font-bold text-sm">0x</span>
-          </div>
           <span className="text-xl font-bold text-black dark:text-white tracking-tighter">0xdx</span>
         </button>
 

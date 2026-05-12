@@ -8,7 +8,7 @@ export function GovernanceScale({ phase }: { phase: Phase }) {
   const isPrelaunch = phase === 'prelaunch';
 
   return (
-    <section id="governance" className="py-20 bg-black text-white overflow-hidden relative">
+    <section id="governance" className="py-20 bg-black dark:bg-neutral-900 text-white overflow-hidden relative border-y border-transparent dark:border-neutral-800">
       {/* Background World Map / Network Hint */}
       <div className="absolute inset-0 opacity-20" aria-hidden="true">
          <svg width="100%" height="100%" className="absolute inset-0">
@@ -32,8 +32,8 @@ export function GovernanceScale({ phase }: { phase: Phase }) {
                 Incentivized Testnet
               </div>
             )}
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-medium tracking-tight mb-8">
-              A self-funding economic engine.
+            <h2 className="text-4xl md:text-5xl font-bold tracking-tighter uppercase leading-[0.9] mb-8">
+              A self-funding <br /> economic engine.
             </h2>
             <p className="text-xl text-neutral-500 font-light leading-relaxed max-w-md">
               {isPrelaunch

@@ -34,7 +34,7 @@ export function SolutionSection() {
     <section className="py-20 bg-white dark:bg-neutral-950">
       <div className="max-w-7xl mx-auto px-6">
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-5xl font-bold text-black dark:text-white mb-4 uppercase tracking-tighter">
+          <h2 className="text-4xl md:text-5xl font-bold text-black dark:text-white mb-4 uppercase tracking-tighter leading-[0.9]">
             Fair Governance, <br /> Actually.
           </h2>
           <p className="text-neutral-500 dark:text-neutral-400 font-mono text-sm uppercase tracking-widest">How <span className="normal-case">0xdx</span> compares to traditional models.</p>
