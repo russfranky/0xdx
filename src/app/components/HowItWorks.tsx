@@ -31,6 +31,7 @@ export function HowItWorks() {
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
           <div className="lg:col-span-4">
+            <div className="text-xs font-mono text-neutral-500 dark:text-neutral-400 uppercase tracking-widest mb-4">02 / How It Works</div>
             <h2 className="text-4xl md:text-5xl font-bold tracking-tighter text-black dark:text-white mb-6 uppercase leading-[0.9]">
               From signal <br /> to execution.
             </h2>
@@ -50,7 +51,7 @@ export function HowItWorks() {
                   </div>
 
                   {/* Content */}
-                  <div className="pt-4">
+                  <div>
                     <h3 className="text-xl font-bold text-black dark:text-white mb-3 uppercase tracking-tight">{step.title}</h3>
                     <p className="text-neutral-500 dark:text-neutral-400 leading-relaxed text-sm max-w-xs font-light">
                       {step.desc}

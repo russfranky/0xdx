@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Button } from './ui/Button';
-import { Check, ChevronRight, Settings, Shield, Rocket, Info } from 'lucide-react';
+import { Check, ChevronRight, Settings, Shield, Info } from 'lucide-react';
 import { Phase } from '../App';
 
 export function ProjectWizard({ phase }: { phase: Phase }) {
@@ -24,9 +24,8 @@ export function ProjectWizard({ phase }: { phase: Phase }) {
           
           {/* Left Content */}
           <div>
-            <div className={`inline-flex items-center gap-2 px-3 py-1 text-xs font-bold uppercase tracking-wider mb-6 border ${isTestnet ? 'bg-orange-50 dark:bg-orange-950/30 text-orange-600 dark:text-orange-400 border-orange-100 dark:border-orange-900' : 'bg-neutral-100 dark:bg-neutral-800 text-neutral-600 dark:text-neutral-300 border-neutral-200 dark:border-neutral-700'}`}>
-              <Rocket className="w-4 h-4" />
-              {isTestnet ? 'Testnet Sandbox' : 'Easy Deployment'}
+            <div className={`font-mono text-xs uppercase tracking-widest mb-4 ${isTestnet ? 'text-orange-500 dark:text-orange-400' : 'text-neutral-500 dark:text-neutral-400'}`}>
+              06 / Try It{isTestnet ? ' — Testnet Sandbox' : ''}
             </div>
             <h2 className="text-4xl md:text-5xl font-bold tracking-tighter uppercase leading-[0.9] text-black dark:text-white mb-6">
               {isTestnet ? 'Prototype your Organization' : 'From Idea to Organization'} <br />

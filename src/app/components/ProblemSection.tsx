@@ -32,6 +32,7 @@ export function ProblemSection() {
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-14">
           <div>
+            <div className="text-xs font-mono text-neutral-500 dark:text-neutral-400 uppercase tracking-widest mb-4">01 / The Problem</div>
             <h2 className="text-4xl md:text-5xl font-bold text-black dark:text-white mb-6 tracking-tighter uppercase leading-[0.9]">Why DAOs <br/> Are Broken</h2>
             <p className="text-xl text-neutral-600 dark:text-neutral-300 leading-relaxed font-light">
               Every governance model forces you to choose: plutocracy OR privacy, efficiency OR fairness, automation OR community.

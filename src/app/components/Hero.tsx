@@ -20,7 +20,7 @@ export function Hero({ phase, onLitepaperClick }: HeroProps) {
   const accentBg = isTestnet ? 'bg-orange-500' : 'bg-emerald-500';
 
   return (
-    <section className="relative flex items-center pt-24 pb-16 bg-white dark:bg-neutral-950 overflow-hidden">
+    <section className="relative flex items-center min-h-[600px] pt-32 pb-20 bg-white dark:bg-neutral-950 overflow-hidden">
       {/* Abstract Background Mesh */}
       <div className="absolute inset-0 pointer-events-none opacity-[0.05] dark:opacity-[0.08]"
         aria-hidden="true"

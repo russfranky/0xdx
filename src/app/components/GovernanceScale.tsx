@@ -26,12 +26,13 @@ export function GovernanceScale({ phase }: { phase: Phase }) {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-14">
           
           <div>
-            {isTestnet && (
-              <div className="flex items-center gap-2 mb-6 text-orange-400 font-mono text-xs uppercase tracking-widest">
-                <Activity className="w-4 h-4" />
-                Incentivized Testnet
-              </div>
-            )}
+            <div className="flex items-center gap-2 mb-4 font-mono text-xs uppercase tracking-widest">
+              {isTestnet ? (
+                <span className="text-orange-400 flex items-center gap-2"><Activity className="w-4 h-4" /> Incentivized Testnet</span>
+              ) : (
+                <span className="text-neutral-400">03 / Built to Last</span>
+              )}
+            </div>
             <h2 className="text-4xl md:text-5xl font-bold tracking-tighter uppercase leading-[0.9] mb-8">
               A self-funding <br /> economic engine.
             </h2>

@@ -46,6 +46,7 @@ export function Comparison() {
       <div className="max-w-7xl mx-auto px-6">
 
         <div className="mb-14 max-w-2xl">
+          <div className="text-xs font-mono text-neutral-500 dark:text-neutral-400 uppercase tracking-widest mb-4">05 / Versus Alternatives</div>
           <h2 className="text-4xl md:text-5xl font-bold text-black dark:text-white mb-4 uppercase tracking-tighter leading-[0.9]">
             Every model<br />has a known flaw.
           </h2>
