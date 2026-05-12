@@ -92,7 +92,7 @@ function UseCaseModal({ useCase, onClose }: ModalProps) {
               {useCase.logo}
             </div>
             <div>
-              <div className="text-xs font-mono text-neutral-500 dark:text-neutral-400 uppercase tracking-widest mb-0.5">Live Example</div>
+              <div className="text-xs font-mono text-neutral-500 dark:text-neutral-400 uppercase tracking-widest mb-0.5">DGE in Practice</div>
               <h3 className="text-xl font-bold text-black dark:text-white uppercase tracking-tight leading-none">{useCase.title}</h3>
             </div>
           </div>
@@ -151,14 +151,9 @@ export function UseCases({ phase }: { phase: Phase }) {
     <section className="py-20 bg-neutral-50 dark:bg-neutral-900 border-y border-neutral-200 dark:border-neutral-700">
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex items-end justify-between mb-14">
-          <div className="max-w-xl">
-            <h2 className="text-4xl md:text-5xl font-bold tracking-tighter text-black dark:text-white uppercase leading-[0.9]">
-              Who runs on 0xdx
-            </h2>
-            <p className="mt-4 text-lg text-neutral-500 dark:text-neutral-400 font-light leading-relaxed">
-              Three real organizational shapes — research collectives, impact orgs, and grant programs — that the model is built for.
-            </p>
-          </div>
+          <h2 className="text-4xl md:text-5xl font-bold tracking-tighter text-black dark:text-white max-w-xl uppercase leading-[0.9]">
+            DGE in Practice
+          </h2>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">

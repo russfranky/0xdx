@@ -29,10 +29,9 @@ export function PageHeader({
           {backLabel}
         </button>
 
-        <div className="flex items-center gap-2 min-w-0">
-          <div className="w-6 h-6 bg-black dark:bg-white flex items-center justify-center shrink-0">
-            <span className="text-white dark:text-black font-bold text-xs">0x</span>
-          </div>
+        <div className="flex items-baseline gap-2 min-w-0">
+          <span className="text-lg font-bold text-black dark:text-white tracking-tighter shrink-0">0xdx</span>
+          <span className="text-neutral-300 dark:text-neutral-700 shrink-0" aria-hidden="true">/</span>
           <span className="font-bold tracking-tight uppercase text-black dark:text-white truncate">{title}</span>
         </div>
 

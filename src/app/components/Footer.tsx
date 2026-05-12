@@ -22,10 +22,7 @@ export function Footer({ onLitepaperClick, onRoadmapClick, phase = 'testnet' }: 
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-16">
           <div>
-            <div className="flex items-center gap-2 mb-6">
-              <div className="w-6 h-6 bg-black dark:bg-white flex items-center justify-center">
-                <span className="text-white dark:text-black font-bold text-xs">0x</span>
-              </div>
+            <div className="mb-6">
               <span className="text-xl font-bold text-black dark:text-white tracking-tighter">0xdx</span>
             </div>
             <p className="text-xs text-neutral-600 dark:text-neutral-400 font-mono uppercase tracking-wide leading-relaxed">

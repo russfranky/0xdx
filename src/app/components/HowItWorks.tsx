@@ -7,22 +7,22 @@ export function HowItWorks() {
     {
       icon: FileText,
       title: "Idea & Deposit",
-      desc: "Anyone submits a proposal with a refundable deposit. The deposit deters spam and is returned if the proposal passes.",
+      desc: "Anyone can submit a proposal. A refundable deposit deters spam.",
     },
     {
       icon: Activity,
       title: "Community Signal",
-      desc: "Token holders stake support or opposition — a non-binding temperature check that surfaces sentiment before the committee votes.",
+      desc: "Token holders stake to signal sentiment. Non-binding — it guides the committee.",
     },
     {
       icon: Users,
       title: "Committee Vote",
-      desc: "Elected stewards cast the binding vote — one person, one vote. Stake size never buys influence here.",
+      desc: "Elected stewards cast the binding vote (1-person-1-vote). No whales.",
     },
     {
       icon: Zap,
       title: "Auto-Execution",
-      desc: "Passing proposals execute on-chain after a timelock — a delay window that lets the community veto a bad outcome before code runs.",
+      desc: "Passing proposals execute on-chain after a timelock — a window for community veto.",
     }
   ];
 
