@@ -6,8 +6,14 @@ import { Phase } from '../App';
 
 const TOTAL_STEPS = 4;
 
-export function ProjectWizard({ phase }: { phase: Phase }) {
+interface ProjectWizardProps {
+  phase: Phase;
+  onLitepaperClick?: () => void;
+}
+
+export function ProjectWizard({ phase, onLitepaperClick }: ProjectWizardProps) {
   const isTestnet = phase === 'testnet';
+  const isPrelaunch = phase === 'prelaunch';
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
     name: '',
@@ -29,14 +35,18 @@ export function ProjectWizard({ phase }: { phase: Phase }) {
           {/* Left Content */}
           <div>
             <div className={`font-mono text-xs uppercase tracking-widest mb-4 ${isTestnet ? 'text-orange-500 dark:text-orange-400' : 'text-neutral-500 dark:text-neutral-400'}`}>
-              06 / Try It{isTestnet ? ' — Testnet Sandbox' : ''}
+              {isPrelaunch ? '06 / Preview — Setup Flow' : isTestnet ? '06 / Try It — Testnet Sandbox' : '06 / Try It'}
             </div>
             <h2 className="text-4xl md:text-5xl font-bold tracking-tighter uppercase leading-[0.9] text-black dark:text-white mb-6">
-              {isTestnet ? 'Prototype your Organization' : 'From Idea to Organization'} <br />
-              <span className="text-neutral-500 dark:text-neutral-400">{isTestnet ? 'risk-free.' : 'in minutes.'}</span>
+              {isPrelaunch ? 'Preview the' : isTestnet ? 'Prototype your Organization' : 'From Idea to Organization'} <br />
+              <span className="text-neutral-500 dark:text-neutral-400">
+                {isPrelaunch ? 'setup flow.' : isTestnet ? 'risk-free.' : 'in minutes.'}
+              </span>
             </h2>
             <p className="text-xl text-neutral-600 dark:text-neutral-300 mb-6 leading-relaxed">
-              {isTestnet 
+              {isPrelaunch
+                ? "This is a preview of how organizations will configure their governance once the testnet ships. Walk through the four steps to see what the launch experience looks like — nothing is deployed."
+                : isTestnet
                 ? "Experiment with governance structures, treasury rules, and tokenomics in our incentivized testnet environment. No real funds required."
                 : "No smart contract knowledge required. Configure your governance structure, treasury rules, and tokenomics through our visual interface."
               }
@@ -74,6 +84,13 @@ export function ProjectWizard({ phase }: { phase: Phase }) {
           <div className="relative">
             <div className="absolute inset-0 bg-neutral-100 dark:bg-neutral-800 transform rotate-3" />
             <div className="relative bg-white dark:bg-neutral-900 border-2 border-black dark:border-neutral-600 shadow-[8px_8px_0px_0px_rgba(0,0,0,0.1)] dark:shadow-[8px_8px_0px_0px_rgba(255,255,255,0.05)] overflow-hidden p-6">
+
+              {isPrelaunch && (
+                <div className="mb-4 -mx-6 -mt-6 px-6 py-2 bg-neutral-100 dark:bg-neutral-800 border-b border-neutral-200 dark:border-neutral-700 text-[10px] font-mono font-bold uppercase tracking-widest text-neutral-600 dark:text-neutral-400 flex items-center gap-2">
+                  <Info className="w-3 h-3" />
+                  <span>Preview · No deployment will occur</span>
+                </div>
+              )}
 
               {/* Progress */}
               <div className="flex items-center justify-between mb-6">
@@ -261,13 +278,16 @@ export function ProjectWizard({ phase }: { phase: Phase }) {
                       className="space-y-3"
                     >
                       <div className="flex items-center gap-3">
-                        <div className={`w-10 h-10 rounded-full flex items-center justify-center shrink-0 ${isTestnet ? 'bg-orange-500' : 'bg-emerald-500'}`}>
-                          <Check className="w-5 h-5 text-white" />
+                        <div className={`w-10 h-10 rounded-full flex items-center justify-center shrink-0 ${isPrelaunch ? 'bg-neutral-700 dark:bg-neutral-300' : isTestnet ? 'bg-orange-500' : 'bg-emerald-500'}`}>
+                          <Check className={`w-5 h-5 ${isPrelaunch ? 'text-white dark:text-black' : 'text-white'}`} />
                         </div>
                         <div>
-                          <h3 className="text-lg font-bold text-black dark:text-white leading-tight">{isTestnet ? 'Ready to Deploy' : 'Ready to Launch'}</h3>
+                          <h3 className="text-lg font-bold text-black dark:text-white leading-tight">
+                            {isPrelaunch ? 'End of Preview' : isTestnet ? 'Ready to Deploy' : 'Ready to Launch'}
+                          </h3>
                           <p className="text-xs text-neutral-500 dark:text-neutral-400">
-                            <strong className="text-black dark:text-white">{formData.name || 'Your Organization'}</strong> {isTestnet ? '· testnet' : '· mainnet'}
+                            <strong className="text-black dark:text-white">{formData.name || 'Your Organization'}</strong>
+                            {' '}{isPrelaunch ? '· preview' : isTestnet ? '· testnet' : '· mainnet'}
                           </p>
                         </div>
                       </div>
@@ -295,12 +315,17 @@ export function ProjectWizard({ phase }: { phase: Phase }) {
                         </div>
                       </div>
 
-                      {isTestnet && (
+                      {isPrelaunch ? (
+                        <div className="bg-neutral-100 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 px-3 py-2 text-[11px] text-neutral-700 dark:text-neutral-300 flex items-start gap-2">
+                          <Info className="w-3.5 h-3.5 shrink-0 mt-0.5" />
+                          <span>End of preview. Read the litepaper for the full spec, or check back when testnet ships.</span>
+                        </div>
+                      ) : isTestnet ? (
                         <div className="bg-orange-50 dark:bg-orange-950/30 border border-orange-100 dark:border-orange-900 px-3 py-2 text-[11px] text-orange-800 dark:text-orange-300 flex items-start gap-2">
                           <Info className="w-3.5 h-3.5 shrink-0 mt-0.5" />
                           <span>Testnet deployment. No real assets used or transferred.</span>
                         </div>
-                      )}
+                      ) : null}
                     </motion.div>
                   )}
                 </AnimatePresence>
@@ -316,10 +341,22 @@ export function ProjectWizard({ phase }: { phase: Phase }) {
                   Back
                 </button>
                 <Button
-                  onClick={step === TOTAL_STEPS ? () => alert(isTestnet ? 'Demo only - Check console for mocked deployment' : 'Demo only!') : handleNext}
+                  onClick={
+                    step === TOTAL_STEPS
+                      ? isPrelaunch
+                        ? () => onLitepaperClick?.()
+                        : () => alert(isTestnet ? 'Demo only - Check console for mocked deployment' : 'Demo only!')
+                      : handleNext
+                  }
                   className="flex items-center gap-2"
                 >
-                  {step === TOTAL_STEPS ? (isTestnet ? 'Deploy to Testnet' : 'Deploy Organization') : 'Continue'}
+                  {step === TOTAL_STEPS
+                    ? isPrelaunch
+                      ? 'Read the Litepaper'
+                      : isTestnet
+                      ? 'Deploy to Testnet'
+                      : 'Deploy Organization'
+                    : 'Continue'}
                   {step !== TOTAL_STEPS && <ChevronRight className="w-4 h-4" />}
                 </Button>
               </div>

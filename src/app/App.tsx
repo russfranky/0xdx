@@ -112,7 +112,7 @@ export default function App() {
   if (view === 'governance') {
     return (
       <Suspense fallback={<ViewFallback />}>
-        <GovernanceDashboard onBack={() => setView('landing')} theme={theme} onThemeToggle={toggleTheme} />
+        <GovernanceDashboard phase={phase} onBack={() => setView('landing')} theme={theme} onThemeToggle={toggleTheme} />
       </Suspense>
     );
   }
@@ -121,6 +121,7 @@ export default function App() {
     <div className="min-h-screen bg-white dark:bg-neutral-950 text-black dark:text-white font-sans selection:bg-black selection:text-white dark:selection:bg-white dark:selection:text-black">
       <a href="#main" className="skip-to-content">Skip to content</a>
       <Navbar
+        phase={phase}
         onHomeClick={() => setView('landing')}
         onLitepaperClick={() => setView('litepaper')}
         onDiscoverClick={() => setView('projects')}
@@ -141,7 +142,7 @@ export default function App() {
         <Comparison />
         {isAdmin && <SolutionSection />}
         {isAdmin && <Features />}
-        <ProjectWizard phase={phase} />
+        <ProjectWizard phase={phase} onLitepaperClick={() => setView('litepaper')} />
         <Resources onLitepaperClick={() => setView('litepaper')} onRoadmapClick={() => setView('roadmap')} />
         {isAdmin && <Testimonials phase={phase} />}
         <CTA phase={phase} onLitepaperClick={() => setView('litepaper')} />

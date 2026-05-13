@@ -1,14 +1,37 @@
 import React, { useState } from 'react';
 import { motion } from 'motion/react';
-import { Clock, TrendingUp, PieChart, Users, ChevronDown, Search, Plus } from 'lucide-react';
+import { Clock, TrendingUp, PieChart, Users, ChevronDown, Search, Plus, Eye } from 'lucide-react';
 import { Button } from './ui/Button';
 import { PageHeader } from './ui/PageHeader';
+import { Phase } from '../App';
 
 interface GovernanceDashboardProps {
+  phase: Phase;
   onBack: () => void;
   theme?: 'light' | 'dark';
   onThemeToggle?: () => void;
 }
+
+const STATUS_BADGE: Record<Phase, { label: string; dotClass: string; textClass: string; bgClass: string }> = {
+  prelaunch: {
+    label: 'Preview · Mock Data',
+    dotClass: 'bg-neutral-500',
+    textClass: 'text-neutral-700 dark:text-neutral-300',
+    bgClass: 'bg-neutral-100 dark:bg-neutral-800',
+  },
+  testnet: {
+    label: 'Testnet Active',
+    dotClass: 'bg-orange-500 animate-pulse',
+    textClass: 'text-neutral-700 dark:text-neutral-300',
+    bgClass: 'bg-neutral-100 dark:bg-neutral-800',
+  },
+  mainnet: {
+    label: 'Mainnet Active',
+    dotClass: 'bg-emerald-500 animate-pulse',
+    textClass: 'text-neutral-700 dark:text-neutral-300',
+    bgClass: 'bg-neutral-100 dark:bg-neutral-800',
+  },
+};
 
 interface Proposal {
   id: number;
@@ -64,8 +87,10 @@ const MOCK_PROPOSALS: Proposal[] = [
   }
 ];
 
-export function GovernanceDashboard({ onBack, theme, onThemeToggle }: GovernanceDashboardProps) {
+export function GovernanceDashboard({ phase, onBack, theme, onThemeToggle }: GovernanceDashboardProps) {
   const [filter, setFilter] = useState<'all' | 'active' | 'passed'>('all');
+  const isPreview = phase === 'prelaunch';
+  const status = STATUS_BADGE[phase];
 
   const filteredProposals = MOCK_PROPOSALS.filter(p => {
     if (filter === 'all') return true;
@@ -82,23 +107,31 @@ export function GovernanceDashboard({ onBack, theme, onThemeToggle }: Governance
         onThemeToggle={onThemeToggle}
         rightSlot={
           <>
-            <div className="hidden md:flex items-center gap-2 px-3 py-1.5 bg-neutral-100 dark:bg-neutral-800 text-xs font-mono uppercase tracking-wider">
-              <span className="w-2 h-2 bg-emerald-500 animate-pulse" />
-              <span className="text-neutral-700 dark:text-neutral-300">Mainnet Active</span>
+            <div className={`hidden md:flex items-center gap-2 px-3 py-1.5 ${status.bgClass} text-xs font-mono uppercase tracking-wider`}>
+              <span className={`w-2 h-2 ${status.dotClass}`} />
+              <span className={status.textClass}>{status.label}</span>
             </div>
             <div className="h-8 w-px bg-neutral-200 dark:bg-neutral-700 hidden md:block" />
             <div className="flex items-center gap-2 pl-1">
               <div className="text-right hidden md:block">
-                <div className="text-[10px] font-mono font-bold uppercase tracking-wider">0x71...8a4</div>
-                <div className="text-[10px] text-neutral-500 uppercase tracking-wider">Connected</div>
+                <div className="text-[10px] font-mono font-bold uppercase tracking-wider">
+                  {isPreview ? 'No wallet' : '0x71...8a4'}
+                </div>
+                <div className="text-[10px] text-neutral-500 uppercase tracking-wider">
+                  {isPreview ? 'Preview' : 'Connected'}
+                </div>
               </div>
               <div
                 className="w-7 h-7 shrink-0 border border-neutral-200 dark:border-neutral-700"
                 aria-hidden="true"
-                style={{
-                  backgroundImage:
-                    'conic-gradient(from 220deg at 35% 40%, #f59e0b 0deg, #ef4444 90deg, #6366f1 180deg, #10b981 270deg, #f59e0b 360deg)',
-                }}
+                style={
+                  isPreview
+                    ? { background: 'repeating-linear-gradient(45deg, #e5e5e5 0, #e5e5e5 3px, #f5f5f5 3px, #f5f5f5 6px)' }
+                    : {
+                        backgroundImage:
+                          'conic-gradient(from 220deg at 35% 40%, #f59e0b 0deg, #ef4444 90deg, #6366f1 180deg, #10b981 270deg, #f59e0b 360deg)',
+                      }
+                }
               />
             </div>
           </>
@@ -106,6 +139,18 @@ export function GovernanceDashboard({ onBack, theme, onThemeToggle }: Governance
       />
 
       <main className="pt-32 pb-24 px-6 max-w-7xl mx-auto">
+
+        {isPreview && (
+          <div className="mb-8 border border-neutral-300 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-900 px-5 py-4 flex items-start gap-3">
+            <Eye className="w-4 h-4 mt-0.5 shrink-0 text-neutral-600 dark:text-neutral-400" aria-hidden="true" />
+            <div className="text-sm leading-relaxed">
+              <span className="font-bold text-black dark:text-white uppercase tracking-wider text-xs">Preview · No live data.</span>
+              <span className="ml-2 text-neutral-600 dark:text-neutral-400">
+                Everything below is mock data showing what the live governance dashboard will look like once the testnet ships. No real proposals, no real treasury, no wallet required.
+              </span>
+            </div>
+          </div>
+        )}
 
         {/* KPI Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
@@ -178,8 +223,14 @@ export function GovernanceDashboard({ onBack, theme, onThemeToggle }: Governance
                 className="w-full pl-10 pr-4 py-2 bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-700 text-sm text-black dark:text-white placeholder-neutral-400 dark:placeholder-neutral-500 focus:outline-none focus:ring-2 focus:ring-black/5 dark:focus:ring-white/10"
               />
             </div>
-            <Button size="sm" className="shrink-0 font-bold uppercase tracking-wider">
-              <Plus className="w-3.5 h-3.5" /> New Proposal
+            <Button
+              size="sm"
+              className="shrink-0 font-bold uppercase tracking-wider"
+              disabled={isPreview}
+              title={isPreview ? 'Available at testnet launch' : undefined}
+            >
+              <Plus className="w-3.5 h-3.5" />
+              {isPreview ? 'Preview only' : 'New Proposal'}
             </Button>
           </div>
         </div>

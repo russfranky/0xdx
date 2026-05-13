@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { Menu, X, Sun, Moon } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
+import { Phase } from '../App';
 
 interface NavbarProps {
+  phase: Phase;
   onLitepaperClick?: () => void;
   onDiscoverClick?: () => void;
   onRoadmapClick?: () => void;
@@ -12,8 +14,15 @@ interface NavbarProps {
   onThemeToggle?: () => void;
 }
 
-export function Navbar({ onLitepaperClick, onDiscoverClick, onRoadmapClick, onGovernanceClick, onHomeClick, theme, onThemeToggle }: NavbarProps) {
+const PHASE_LABEL: Record<Phase, { label: string; dotClass: string }> = {
+  prelaunch: { label: 'Prelaunch · Testnet coming soon', dotClass: 'bg-neutral-400' },
+  testnet: { label: 'Incentivized Testnet · Live', dotClass: 'bg-orange-500' },
+  mainnet: { label: 'Mainnet · Live', dotClass: 'bg-emerald-500' },
+};
+
+export function Navbar({ phase, onLitepaperClick, onDiscoverClick, onRoadmapClick, onGovernanceClick, onHomeClick, theme, onThemeToggle }: NavbarProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const phaseMeta = PHASE_LABEL[phase];
 
   const links = [
     { name: 'Litepaper', onClick: onLitepaperClick },
@@ -25,9 +34,18 @@ export function Navbar({ onLitepaperClick, onDiscoverClick, onRoadmapClick, onGo
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-white/90 dark:bg-neutral-950/90 backdrop-blur-md border-b border-neutral-100 dark:border-neutral-800">
       <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-        <button onClick={onHomeClick} className="flex items-center gap-2" aria-label="0xdx home">
-          <span className="text-xl font-bold text-black dark:text-white tracking-tighter">0xdx</span>
-        </button>
+        <div className="flex items-center gap-3 min-w-0">
+          <button onClick={onHomeClick} className="flex items-center gap-2 shrink-0" aria-label="0xdx home">
+            <span className="text-xl font-bold text-black dark:text-white tracking-tighter">0xdx</span>
+          </button>
+          <span
+            className="hidden sm:inline-flex items-center gap-1.5 px-2 py-1 border border-neutral-200 dark:border-neutral-700 text-[10px] font-mono font-bold uppercase tracking-wider text-neutral-600 dark:text-neutral-400"
+            title={phaseMeta.label}
+          >
+            <span className={`w-1.5 h-1.5 rounded-full ${phaseMeta.dotClass}`} />
+            <span className="truncate max-w-[200px]">{phaseMeta.label}</span>
+          </span>
+        </div>
 
         <div className="hidden md:flex items-center gap-8">
           {links.map((link) => (
