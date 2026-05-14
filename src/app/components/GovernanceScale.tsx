@@ -34,11 +34,15 @@ export function GovernanceScale({ phase }: { phase: Phase }) {
               )}
             </div>
             <h2 className="text-4xl md:text-5xl font-bold tracking-tighter uppercase leading-[0.9] mb-8">
-              A self-funding <br /> economic engine.
+              {isPrelaunch ? (
+                <>A self-funding <br /> economic engine, <br /> <span className="text-neutral-500">by design.</span></>
+              ) : (
+                <>A self-funding <br /> economic engine.</>
+              )}
             </h2>
             <p className="text-xl text-neutral-500 font-light leading-relaxed max-w-md">
               {isPrelaunch
-                ? "Projects die when grants run out. 0xdx is built for permanence: an integrated DEX captures trading fees and routes them directly to the treasury. Every transaction in the ecosystem funds the next round of development."
+                ? "Projects die when grants run out. The 0xdx specification is designed for permanence: an integrated DEX routes trading fees directly to the treasury, so every ecosystem transaction funds the next round of development. The numbers below are framework parameters, not live metrics."
                 : isTestnet
                 ? "Most projects die when the grants run out. 0xdx is different. Test the automated fee-sharing modules that keep the treasury perpetual."
                 : "The 0xdx protocol includes an integrated DEX where trading fees automatically route to the treasury. The more the ecosystem is used, the more projects it can fund — a self-sustaining loop."
@@ -79,7 +83,9 @@ export function GovernanceScale({ phase }: { phase: Phase }) {
                    {isTestnet ? 'Test Revenue Loop' : 'The Revenue Loop'}
                  </h3>
                  <p className="text-neutral-500 text-sm leading-relaxed">
-                   Users trade on the integrated DEX. Fees are captured. The Treasury grows. Governance funds new growth. A closed loop of value.
+                   {isPrelaunch
+                     ? "Specified loop: users trade on the integrated DEX → fees route to the treasury → governance funds new growth → growth drives more trades. Closed by construction, not by promise."
+                     : "Users trade on the integrated DEX. Fees are captured. The Treasury grows. Governance funds new growth. A closed loop of value."}
                  </p>
                </div>
              </div>
@@ -91,7 +97,9 @@ export function GovernanceScale({ phase }: { phase: Phase }) {
                    Immovable Liquidity
                  </h3>
                  <p className="text-neutral-500 text-sm leading-relaxed">
-                   Committee members must lock initial liquidity permanently. No rug pulls. No sudden withdrawals. Just deep, reliable markets.
+                   {isPrelaunch
+                     ? "By spec, founding committee members must lock initial liquidity permanently — the LP tokens are held by the treasury contract with no withdraw path. No rug pulls, no sudden withdrawals."
+                     : "Committee members must lock initial liquidity permanently. No rug pulls. No sudden withdrawals. Just deep, reliable markets."}
                  </p>
                </div>
              </div>
@@ -103,7 +111,9 @@ export function GovernanceScale({ phase }: { phase: Phase }) {
                    Productive Assets
                  </h3>
                  <p className="text-neutral-500 text-sm leading-relaxed">
-                   The treasury doesn't just sit there. It earns yield and fees, ensuring the organization has the firepower to build for decades, not months.
+                   {isPrelaunch
+                     ? "Spec target: the treasury isn't a static reserve — DEX fees plus optional yield strategies (gated by governance) compound over time, with the goal of giving the organization decades of runway instead of months."
+                     : "The treasury doesn't just sit there. It earns yield and fees, ensuring the organization has the firepower to build for decades, not months."}
                  </p>
                </div>
              </div>
