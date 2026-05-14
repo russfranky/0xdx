@@ -13,6 +13,7 @@ import { UseCases } from './components/UseCases';
 import { GovernanceScale } from './components/GovernanceScale';
 import { DashboardPreview } from './components/DashboardPreview';
 import { Comparison } from './components/Comparison';
+import { BuiltInPublic } from './components/BuiltInPublic';
 import { Resources } from './components/Resources';
 import { Testimonials } from './components/Testimonials';
 import { CTA } from './components/CTA';
@@ -131,18 +132,22 @@ export default function App() {
         onThemeToggle={toggleTheme}
       />
       <main id="main">
-        {/* Narrative arc: Hook → Problem → Mechanism → Economics → Proof → Pivot → CTA */}
+        {/* Narrative arc:
+              Hero → 01 Problem → 02 Versus Alternatives → 03 How It Works →
+              04 In Practice → 05 Built to Last → 06 Preview → 07 Built in Public →
+              Resources → CTA */}
         <Hero phase={phase} onLitepaperClick={() => setView('litepaper')} />
         {isAdmin && <ActivityFeed phase={phase} />}
         <ProblemSection />
-        <HowItWorks />
-        <GovernanceScale phase={phase} />
-        <UseCases phase={phase} />
-        {isAdmin && <DashboardPreview phase={phase} />}
         <Comparison />
+        <HowItWorks />
+        <UseCases phase={phase} />
+        <GovernanceScale phase={phase} />
+        <ProjectWizard phase={phase} onLitepaperClick={() => setView('litepaper')} />
+        <BuiltInPublic onLitepaperClick={() => setView('litepaper')} />
+        {isAdmin && <DashboardPreview phase={phase} />}
         {isAdmin && <SolutionSection />}
         {isAdmin && <Features />}
-        <ProjectWizard phase={phase} onLitepaperClick={() => setView('litepaper')} />
         <Resources onLitepaperClick={() => setView('litepaper')} onRoadmapClick={() => setView('roadmap')} />
         {isAdmin && <Testimonials phase={phase} />}
         <CTA phase={phase} onLitepaperClick={() => setView('litepaper')} />

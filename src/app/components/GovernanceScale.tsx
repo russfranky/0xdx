@@ -30,7 +30,7 @@ export function GovernanceScale({ phase }: { phase: Phase }) {
               {isTestnet ? (
                 <span className="text-orange-400 flex items-center gap-2"><Activity className="w-4 h-4" /> Incentivized Testnet</span>
               ) : (
-                <span className="text-neutral-400">03 / Built to Last</span>
+                <span className="text-neutral-400">05 / Built to Last</span>
               )}
             </div>
             <h2 className="text-4xl md:text-5xl font-bold tracking-tighter uppercase leading-[0.9] mb-8">
