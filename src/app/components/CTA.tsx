@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button } from './ui/Button';
+import { EmailCapture } from './EmailCapture';
 import { ArrowRight } from 'lucide-react';
 import { Phase } from '../App';
 
@@ -21,31 +22,45 @@ export function CTA({ phase, onLitepaperClick }: CTAProps) {
         </h2>
         <p className="text-xl text-neutral-400 mb-8 max-w-2xl mx-auto font-light leading-relaxed">
           {isPrelaunch
-            ? "You've seen the failure modes. You've seen the model. Now help us harden it — read the spec, file issues, contribute on GitHub before we ship to mainnet."
+            ? "You've seen the failure modes. You've seen the model. Get on the list — we'll write when testnet ships, and not before."
             : isTestnet
             ? "You've seen the failure modes. You've seen the model. Now stress-test it on testnet — deploy a sandbox org, run real proposals, break things before mainnet."
             : "You've seen the failure modes. You've seen the model. Now deploy an organization that can't be bought, can't stall, and funds itself."
           }
         </p>
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
-          <Button size="lg" onClick={onLitepaperClick} className="bg-white text-black hover:bg-neutral-200 text-sm font-bold uppercase tracking-widest px-10 h-14 rounded-full border-2 border-transparent">
-            {isPrelaunch ? 'Read the Litepaper' : isTestnet ? 'Join Incentivized Testnet' : 'Launch Organization'}
-          </Button>
-          {isPrelaunch ? (
-            <a
-              href="https://github.com/russfranky/0xdx"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-white hover:text-neutral-300 text-sm font-bold uppercase tracking-widest flex items-center gap-2 group"
-            >
-              View on GitHub <ArrowRight aria-hidden="true" className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </a>
-          ) : (
+        {isPrelaunch ? (
+          <div className="flex flex-col items-center gap-6">
+            <div className="w-full max-w-md">
+              <EmailCapture tone="light" submitLabel="Notify me" />
+            </div>
+            <div className="flex flex-col sm:flex-row items-center gap-5">
+              <button
+                type="button"
+                onClick={onLitepaperClick}
+                className="text-white hover:text-neutral-300 text-sm font-bold uppercase tracking-widest flex items-center gap-2 group"
+              >
+                Read the Litepaper <ArrowRight aria-hidden="true" className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </button>
+              <a
+                href="https://github.com/russfranky/0xdx"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-neutral-400 hover:text-white text-sm font-bold uppercase tracking-widest flex items-center gap-2 group"
+              >
+                View on GitHub <ArrowRight aria-hidden="true" className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </a>
+            </div>
+          </div>
+        ) : (
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
+            <Button size="lg" onClick={onLitepaperClick} className="bg-white text-black hover:bg-neutral-200 text-sm font-bold uppercase tracking-widest px-10 h-14 rounded-full border-2 border-transparent">
+              {isTestnet ? 'Join Incentivized Testnet' : 'Launch Organization'}
+            </Button>
             <button type="button" className="text-white hover:text-neutral-300 text-sm font-bold uppercase tracking-widest flex items-center gap-2 group">
               {isTestnet ? 'Read the Documentation' : 'View Developer Docs'} <ArrowRight aria-hidden="true" className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </button>
-          )}
-        </div>
+          </div>
+        )}
       </div>
     </section>
   );

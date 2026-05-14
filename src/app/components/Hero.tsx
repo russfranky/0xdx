@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Button } from './ui/Button';
+import { EmailCapture } from './EmailCapture';
 import { ArrowRight, Beaker, Globe, Zap, ShieldCheck, Activity, Users } from 'lucide-react';
 import { Phase } from '../App';
 
@@ -87,14 +88,20 @@ export function Hero({ phase, onLitepaperClick }: HeroProps) {
               className="flex flex-col sm:flex-row items-start sm:items-center gap-6"
             >
               {isPrelaunch ? (
-                <Button
-                  size="lg"
-                  onClick={onLitepaperClick}
-                  className="rounded-full px-10 h-14 text-lg flex items-center gap-2"
-                >
-                  Read Litepaper
-                  <ArrowRight className="w-5 h-5" aria-hidden="true" />
-                </Button>
+                <div className="w-full flex flex-col gap-4">
+                  <EmailCapture
+                    tone="dark"
+                    label="Get early access"
+                    submitLabel="Notify me"
+                  />
+                  <button
+                    onClick={onLitepaperClick}
+                    className="group self-start flex items-center gap-2 text-sm font-bold uppercase tracking-wider text-black dark:text-white hover:text-neutral-500 dark:hover:text-neutral-400 transition-colors"
+                  >
+                    Read the Litepaper
+                    <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
+                  </button>
+                </div>
               ) : (
                 <>
                   <Button size="lg" className="rounded-full px-10 h-14 text-lg flex items-center gap-2">
