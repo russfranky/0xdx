@@ -391,7 +391,7 @@ This is the section the litepaper waves at. Every flow above has degenerate inpu
 | Committee member resigns mid-term | Seat opens; either filled by next-runner-up from last election, or held vacant until next election (set in genesis). | ❌ Gap, pick **next-runner-up** as default. |
 | Committee member dies / disappears | After N consecutive missed votes (default 3), seat treated as resigned and filled per resignation rule. | ❌ Gap, define inactivity threshold. |
 | Smart-wallet committee member (multisig / contract address) | Allowed iff EIP-1271 signature validation supported. Registered at election time. | ❌ Gap, pin EIP-1271 support in v1. |
-| All members abstain | Counts as quorum but no majority → proposal fails. Recorded as committee-level abstention (potential signal of mis-scoped proposal). | 🟡 Inferred. |
+| All members abstain | Counts as quorum but no majority → proposal fails. Recorded as committee-level abstention (potential signal of mis-scoped proposal). Canonical acceptance rule (see §11.2): `votesFor + votesAbstain ≥ quorum AND votesFor > votesAgainst`. Abstain counts toward quorum, not toward support. | ✅ Specified. |
 | Committee votes against an audit finding (i.e. ships known-bad) | Voting record is public. No on-chain block; this is a reputational and recall mechanism. | 🟡 Inferred. |
 
 ### 9.4 Resolution & execution edge cases
@@ -401,7 +401,7 @@ This is the section the litepaper waves at. Every flow above has degenerate inpu
 | Two passing proposals are mutually exclusive | Both queue; first to execute wins. Second fails atomically and is marked **Executed-Failed**. Recommended: add optional `dependsOn` field at submission to detect at queue time. | 🧪 Simulated [09]: atomic revert verified. |
 | Treasury insufficient at execution time | Execution reverts; proposal **Executed-Failed**; can be resubmitted next cycle. | ✅ Specified (covered by atomic execution). |
 | Recipient is now invalid (contract paused / address blacklisted) | Execution reverts; same handling. | ✅ Specified. |
-| Network reorg invalidates execution | Execution Contract re-emits intent; replay protection ensures idempotency. | ❌ Gap, pin replay-protection rules in v1. |
+| Network reorg invalidates execution | Execution Contract keys queued proposals by `executionPayloadHash = keccak256(encodedTransactions)` and stores `proposalExecutionTime[hash]`. Re-execution against the same hash after a reorg finds `executionTime == 0` (cleared on first execute or veto) and reverts with `ProposalNotQueued`. Idempotent by construction (see §11.1). | ✅ Specified. |
 | Execution gas estimate too low | Sender (Execution Contract) auto-retries with bumped gas up to a configurable cap. Beyond cap: marked failed. | ❌ Gap. |
 | Proposal modifies governance parameters mid-cycle | Constitutional changes use **extended timelock** (default 7 days) and apply only to the **next** cycle, never the current one. | 🟡 Inferred, pin in v1. |
 
@@ -440,7 +440,7 @@ This is the section the litepaper waves at. Every flow above has degenerate inpu
 | Treasury asset depegs / collapses | Loss is realized. Treasury composition is configurable per proposal. | ✅ Specified. |
 | Locked LP tokens become worthless | LP remains locked. The DAO does not get its initial capital back, that is the **point** of the permanent lock. | ✅ Specified. |
 | Bridge failure (treasury holds wrapped assets) | Wrapped assets are at the bridge's mercy. Treasury policy should bias toward native assets. | 🟡 Inferred. |
-| Reentrancy attack on Treasury during execution | Treasury MUST use checks-effects-interactions + reentrancy guards. Audited. | ❌ Gap, explicit in contract spec. |
+| Reentrancy attack on Treasury during execution | Execution Contract clears `proposalExecutionTime[hash] = 0` **before** any external call (see §11.1). A reentrant `executeQueuedProposal(payload)` finds zero and reverts. Treasury inherits the guarantee — every disbursement path goes through this state-zero gate. Checks-effects-interactions is enforced at the state-machine level, not as a coding convention. | ✅ Specified. |
 | Token price crash makes proposal-deposit trivially cheap (spam vector) | Deposit denominated in **base asset** (e.g. ETH/USDC), not the DAO's own token. Stable cost regardless of governance-token price. | 🧪 Simulated [05]: `proposalDepositAsset='base'`. |
 
 ### 9.8 Election edge cases
@@ -506,7 +506,121 @@ Open gaps marked ❌ above are the **v1 contract specification work-list**, item
 
 ---
 
-## 10. Read paths (no wallet required)
+## 11. Contract invariants (v1 reference targets)
+
+These four invariants are the **minimum** the v1 reference contracts must encode. They are stated here as algorithmic shapes, not as Solidity. The patterns are influenced by `sx-evm`'s `TimelockExecutionStrategy.sol` and `SimpleQuorumExecutionStrategy.sol`, which solved the same problems we have and whose state machine is identical to what §3 / §4 / §6 already describe. We adopt the shape; we are not adopting the surrounding `Space` / `MetaTransaction` machinery, which couples to their multi-Space product model and is out of scope for us. See [`ATTRIBUTIONS.md`](../ATTRIBUTIONS.md).
+
+### 11.1 Executor invariants
+
+```
+storage:
+  proposalExecutionTime : map<bytes32, uint256>     // hash → unix seconds when execution becomes legal
+  vetoGuardian          : address                   // or zero if Guardian role disabled
+
+execute(payload):
+  hash = keccak256(payload)
+  require proposalExecutionTime[hash] == 0          // no double-queue
+  proposalExecutionTime[hash] = now + timelockDelay
+  emit ProposalQueued(hash)
+
+executeQueued(payload):
+  hash = keccak256(payload)
+  t    = proposalExecutionTime[hash]
+  require t != 0                                    // ProposalNotQueued
+  require now >= t                                  // TimelockDelayNotMet
+  proposalExecutionTime[hash] = 0                   // STATE-ZERO BEFORE EXTERNAL CALL
+  for each tx in decode(payload):
+    require call(tx.to, tx.value, tx.data)          // atomic revert on any failure
+  emit ProposalExecuted(hash)
+
+veto(hash):
+  require msg.sender == vetoGuardian
+  require proposalExecutionTime[hash] != 0
+  proposalExecutionTime[hash] = 0
+  emit ProposalVetoed(hash)
+```
+
+Four invariants follow from this state machine:
+
+1. **One-payload-one-queue.** A given `keccak256(payload)` cannot be queued twice. Forces semantically identical proposals to differ in payload (e.g. include a unique nonce).
+2. **Reentrancy guard via state-zero.** `proposalExecutionTime[hash] = 0` is set *before* any external call. A reentrant call into `executeQueued` finds zero and reverts. This closes the §9.7 reentrancy attack class without depending on a separate `ReentrancyGuard` modifier.
+3. **Reorg idempotency.** After execution the entry is zero, so a reorg-induced replay of `executeQueued` reverts the second time. Combined with `keccak256(payload)` keying, this gives replay protection without nonces or per-proposal sequence numbers.
+4. **Veto is permanent and idempotent.** A veto sets the entry to zero, indistinguishable from "executed". Re-vetoing reverts; re-executing reverts. The Guardian path (§6, §7.4) and the petition path (§8.3) both call this same state-zero operation; whichever fires first wins.
+
+### 11.2 Acceptance rule
+
+The committee vote and any community referendum use a single canonical rule, written once here and applied everywhere quorum + majority is computed:
+
+```
+accepted = (votesFor + votesAbstain) ≥ quorum
+           AND
+           votesFor > votesAgainst                 // strict-greater; tie ⇒ fails
+```
+
+Three properties this rule pins:
+
+- **Abstain counts for quorum, not for support.** A member who shows up but declines to take a side still satisfies the attendance requirement; they do not move the needle on the substantive question.
+- **Status-quo bias on tie.** `>` not `≥`. A 4-4 split fails. Closes §9.3 tie ambiguity and matches the existing simulator scenario [03].
+- **Quorum is on participation, not on `for` alone.** This is the rule that distinguishes "failed by quorum" from "failed by majority" in the state machine — both reach `Rejected` but the on-chain event encodes which.
+
+### 11.3 Canonical write-path validation order
+
+Every off-chain signed message (signal vote, committee vote, petition stake, election ballot) is verified in the same six-step order before any state is written. Implementations must reject in this exact sequence so that error messages are stable and debuggable:
+
+```
+1. Schema valid                      // EIP-712 envelope conforms to declared type
+2. Referenced proposal exists        // proposalId resolves
+3. Within window                     // proposal.start ≤ now ≤ proposal.end
+4. Choice is valid                   // enum bounds for committee; YES/NO for signal/petition
+5. Validation passes                 // membership rule (e.g. is committee member, holds token)
+6. Voting power > 0                  // computed against proposal.snapshotBlock
+```
+
+After verify(), the dedup check at write time:
+
+```
+7. Latest-by-timestamp wins          // a re-vote at later timestamp overwrites earlier
+   tie-break: lexicographic id        // deterministic ordering when timestamps collide
+```
+
+Pattern lifted from `sx-monorepo/apps/sequencer/src/writer/vote.ts`. The ordering is load-bearing: schema before existence (cheap reject), window before choice (cheap reject), validation before VP (validation is a contract call, VP is multiple), dedup last (only after we know the vote is otherwise valid).
+
+### 11.4 Signed-message envelope shape
+
+EIP-712 typed-data shapes for the three off-chain message kinds. Field names match `snapshot.js`'s `Vote` where the semantics are identical, so toolchains (signers, wallet UIs, indexers) can be reused without re-implementing primitives.
+
+```
+SignalVote (token-weighted, non-binding, §3 Signaling stage):
+  from           : string   // signer address as 0x string
+  dge            : string   // deployment id
+  timestamp      : uint64
+  proposal       : string
+  direction      : uint8    // 0 = NO, 1 = YES
+  stake          : uint256  // tokens locked for the signal window (§9.2)
+  reason         : string
+
+CommitteeVote (1-person-1-vote, binding, §3 Voting stage):
+  from           : string   // committee member address
+  dge            : string
+  timestamp      : uint64
+  proposal       : string
+  choice         : uint8    // 0 = Reject, 1 = Approve, 2 = Abstain
+  reason         : string
+  conflictNote   : string   // free-form, §8.2
+
+PetitionStake (token-weighted, binds referendum, §8.3):
+  from           : string
+  dge            : string
+  timestamp      : uint64
+  proposal       : string   // the queued proposal being opposed
+  stake          : uint256  // counts toward the 10%-of-supply threshold
+```
+
+The `snapshotBlock` field that anchors voting power lives on the **proposal**, not on each vote message — same shape as `proposal.snapshot` in `snapshot.js`. This way, voting power calculation is deterministic for all voters on a given proposal, regardless of when their individual vote message lands within the window.
+
+---
+
+## 12. Read paths (no wallet required)
 
 Everything in 0xdx is auditable without participating:
 
