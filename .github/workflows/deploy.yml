@@ -41,6 +41,12 @@ jobs:
       - run: npm ci
 
       - run: npm run build
+        env:
+          # Endpoint for the email-capture Cloudflare Worker.
+          # Set under Repo settings -> Secrets and variables -> Actions -> Variables tab
+          # as VITE_EMAIL_ENDPOINT (e.g. https://0xdx-email-capture.<sub>.workers.dev/subscribe).
+          # If unset, the EmailCapture component will render its "not configured yet" guard.
+          VITE_EMAIL_ENDPOINT: ${{ vars.VITE_EMAIL_ENDPOINT }}
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
