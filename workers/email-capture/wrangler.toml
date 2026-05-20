@@ -8,13 +8,20 @@ compatibility_date = "2025-05-01"
 ALLOWED_ORIGINS = "https://0xdx.com,https://www.0xdx.com,https://russfranky.github.io"
 
 # Secrets set via `wrangler secret put`:
-#   RESEND_API_KEY       — your new Resend API key (NOT the leaked one)
-#   RESEND_AUDIENCE_ID   — UUID of the audience to add subscribers to
-#   RESEND_FROM_ADDRESS  — e.g. "0xdx <hello@0xdx.com>" (verified domain)
+#   RESEND_API_KEY       — Resend send-only key (v0) or full-access key (later)
+#   RESEND_FROM_ADDRESS  — e.g. "0xdx signups <onboarding@resend.dev>"
+#                          (resend.dev sender is restricted to mailing the
+#                          Resend account owner; verify a real domain to send
+#                          confirmations to subscribers)
+#   NOTIFY_TO            — operator address; receives one email per signup
 #
-# Rate-limit storage (optional but recommended). Create with:
-#   wrangler kv namespace create EMAIL_RL
-# then paste the id below and re-deploy.
-# [[kv_namespaces]]
-# binding = "EMAIL_RL"
-# id = "REPLACE_WITH_KV_NAMESPACE_ID"
+# Subscriber list + rate-limit storage live in the same KV namespace,
+# distinguished by key prefix:
+#   sub:<email>  → JSON metadata (the recoverable list)
+#   rl:<ip>      → request counter, TTL 10m
+# Create the namespace with:
+#   npx wrangler kv namespace create EMAIL_RL
+# then paste the returned id into the binding below.
+[[kv_namespaces]]
+binding = "EMAIL_RL"
+id = "REPLACE_WITH_KV_NAMESPACE_ID"

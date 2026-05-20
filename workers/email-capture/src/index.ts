@@ -3,28 +3,28 @@
  *
  * POST /subscribe
  *   body: { "email": "user@example.com" }
- *   → adds the address to a Resend Audience and sends a confirmation email.
+ *   → stashes the address in KV (the recoverable list) and notifies the
+ *     operator via Resend.
  *
- * The Resend API key, audience ID, and sender address are runtime secrets and
- * never appear in source. Set them with:
- *
- *   wrangler secret put RESEND_API_KEY
- *   wrangler secret put RESEND_AUDIENCE_ID
- *   wrangler secret put RESEND_FROM_ADDRESS
+ * This is the v0 design that works with a send-only Resend API key. There is
+ * no Audience write and no confirmation mail to the subscriber (Resend's
+ * default `onboarding@resend.dev` sender can only mail the account owner
+ * until a domain is verified). When you create a full-access Resend key and
+ * verify a domain, swap in `addToAudience` + `sendConfirmation`.
  */
 
 export interface Env {
   RESEND_API_KEY: string;
-  RESEND_AUDIENCE_ID: string;
-  RESEND_FROM_ADDRESS: string;
+  RESEND_FROM_ADDRESS: string;   // e.g. "0xdx signups <onboarding@resend.dev>"
+  NOTIFY_TO: string;             // operator address (Resend account owner)
   ALLOWED_ORIGINS: string;
-  EMAIL_RL?: KVNamespace;
+  EMAIL_RL?: KVNamespace;        // dual-use: rate limit + subscriber list
 }
 
 // RFC 5322-ish; deliberately conservative.
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-const RATE_LIMIT_MAX = 5; // submissions per IP per window
+const RATE_LIMIT_MAX = 5;            // submissions per IP per window
 const RATE_LIMIT_WINDOW_S = 60 * 10; // 10 minutes
 
 function corsHeaders(origin: string | null, allowedOrigins: string): Record<string, string> {
@@ -55,29 +55,18 @@ async function checkRateLimit(env: Env, ip: string): Promise<boolean> {
   return true;
 }
 
-async function addToAudience(env: Env, email: string): Promise<{ ok: boolean; status: number; error?: string }> {
-  const res = await fetch(
-    `https://api.resend.com/audiences/${env.RESEND_AUDIENCE_ID}/contacts`,
-    {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${env.RESEND_API_KEY}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ email, unsubscribed: false }),
-    },
-  );
-  if (res.ok) return { ok: true, status: res.status };
-  // Resend returns 409-style errors as 400 with a JSON body; treat dup as success.
-  const text = await res.text();
-  if (text.includes('already exists') || text.includes('Contact already exists')) {
-    return { ok: true, status: 200 };
-  }
-  return { ok: false, status: res.status, error: text };
+/** Store the subscriber. Returns true if newly added, false if already present. */
+async function recordSubscriber(env: Env, email: string, ip: string, ua: string): Promise<boolean> {
+  if (!env.EMAIL_RL) return true; // can't dedup without KV
+  const key = `sub:${email}`;
+  const existing = await env.EMAIL_RL.get(key);
+  if (existing) return false;
+  const value = JSON.stringify({ at: new Date().toISOString(), ip, ua });
+  await env.EMAIL_RL.put(key, value);
+  return true;
 }
 
-async function sendConfirmation(env: Env, email: string): Promise<void> {
-  // Fire-and-forget. We don't want a Resend email failure to block the 200 to the user.
+async function notifyOperator(env: Env, email: string, ip: string, ua: string, isNew: boolean): Promise<void> {
   try {
     await fetch('https://api.resend.com/emails', {
       method: 'POST',
@@ -87,20 +76,20 @@ async function sendConfirmation(env: Env, email: string): Promise<void> {
       },
       body: JSON.stringify({
         from: env.RESEND_FROM_ADDRESS,
-        to: [email],
-        subject: "You're on the 0xdx list",
+        to: [env.NOTIFY_TO],
+        subject: `[0xdx] ${isNew ? 'new signup' : 'repeat signup'}: ${email}`,
         text:
-          "Thanks for the interest in 0xdx.\n\n" +
-          "You've been added to the pre-launch list. We'll write when testnet is ready, and not before — no newsletters, no drip campaigns.\n\n" +
-          "In the meantime, the litepaper is the most useful thing to read:\n" +
-          "https://0xdx.com/#litepaper\n\n" +
-          "Source, issues, and discussion live on GitHub:\n" +
-          "https://github.com/russfranky/0xdx\n\n" +
-          "— 0xdx",
+          `Email:  ${email}\n` +
+          `IP:     ${ip}\n` +
+          `UA:     ${ua}\n` +
+          `When:   ${new Date().toISOString()}\n` +
+          `Status: ${isNew ? 'first time' : 'already on the list'}\n` +
+          `\n` +
+          `List is in Workers KV (namespace EMAIL_RL, key prefix "sub:").\n`,
       }),
     });
   } catch {
-    /* swallow */
+    /* swallow — never let a notify failure block the 200 */
   }
 }
 
@@ -135,17 +124,16 @@ export default {
     }
 
     const ip = request.headers.get('CF-Connecting-IP') ?? 'unknown';
+    const ua = request.headers.get('User-Agent') ?? 'unknown';
+
     if (!(await checkRateLimit(env, ip))) {
       return json(429, { error: 'rate_limited' }, cors);
     }
 
-    const audienceResult = await addToAudience(env, email);
-    if (!audienceResult.ok) {
-      return json(502, { error: 'audience_failed', detail: audienceResult.error }, cors);
-    }
+    const isNew = await recordSubscriber(env, email, ip, ua);
 
-    // Confirmation email is fire-and-forget so it doesn't delay the response.
-    ctx.waitUntil(sendConfirmation(env, email));
+    // Notify is fire-and-forget so it doesn't delay the response.
+    ctx.waitUntil(notifyOperator(env, email, ip, ua, isNew));
 
     return json(200, { ok: true }, cors);
   },
