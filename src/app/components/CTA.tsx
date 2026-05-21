@@ -33,23 +33,6 @@ export function CTA({ phase, onLitepaperClick }: CTAProps) {
             <div className="w-full max-w-md">
               <EmailCapture tone="light" submitLabel="Notify me" />
             </div>
-            <div className="flex flex-col sm:flex-row items-center gap-5">
-              <button
-                type="button"
-                onClick={onLitepaperClick}
-                className="text-white hover:text-neutral-300 text-sm font-bold uppercase tracking-widest flex items-center gap-2 group"
-              >
-                Read the Litepaper <ArrowRight aria-hidden="true" className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </button>
-              <a
-                href="https://github.com/russfranky/0xdx"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-neutral-400 hover:text-white text-sm font-bold uppercase tracking-widest flex items-center gap-2 group"
-              >
-                View on GitHub <ArrowRight aria-hidden="true" className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </a>
-            </div>
           </div>
         ) : (
           <div className="flex flex-col sm:flex-row items-center justify-center gap-6">

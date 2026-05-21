@@ -1,12 +1,8 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { Github, FileText, Scale, GitBranch, ArrowRight } from 'lucide-react';
+import { FileText, Scale, GitBranch, ArrowUpRight } from 'lucide-react';
 
-interface BuiltInPublicProps {
-  onLitepaperClick?: () => void;
-}
-
-export function BuiltInPublic({ onLitepaperClick }: BuiltInPublicProps) {
+export function BuiltInPublic() {
   return (
     <section className="py-16 bg-white dark:bg-neutral-950 border-b border-neutral-100 dark:border-neutral-800">
       <div className="max-w-7xl mx-auto px-6">
@@ -45,51 +41,55 @@ export function BuiltInPublic({ onLitepaperClick }: BuiltInPublicProps) {
               label: 'Repository',
               value: 'github.com/russfranky/0xdx',
               meta: 'Issues open · PRs welcome',
+              href: 'https://github.com/russfranky/0xdx',
             },
-          ].map((item, idx) => (
-            <motion.div
-              key={idx}
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: idx * 0.05 }}
-              className="bg-white dark:bg-neutral-950 p-6 flex flex-col gap-3"
-            >
-              <div className="flex items-center gap-3">
-                <item.icon className="w-4 h-4 text-neutral-500 dark:text-neutral-400" aria-hidden="true" />
-                <span className="text-xs font-bold uppercase tracking-widest text-neutral-400 dark:text-neutral-500">
-                  {item.label}
-                </span>
-              </div>
-              <div className="text-2xl font-mono font-bold text-black dark:text-white tracking-tight break-all">
-                {item.value}
-              </div>
-              <div className="text-xs text-neutral-500 dark:text-neutral-400 font-medium">
-                {item.meta}
-              </div>
-            </motion.div>
-          ))}
-        </div>
-
-        <div className="mt-10 flex flex-col sm:flex-row items-start sm:items-center gap-4">
-          <a
-            href="https://github.com/russfranky/0xdx"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group flex items-center gap-2 px-5 py-2.5 text-sm font-bold uppercase tracking-wider bg-black text-white dark:bg-white dark:text-black hover:bg-neutral-800 dark:hover:bg-neutral-200 transition-colors"
-          >
-            <Github className="w-4 h-4" aria-hidden="true" />
-            View on GitHub
-            <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" aria-hidden="true" />
-          </a>
-          <button
-            type="button"
-            onClick={onLitepaperClick}
-            className="group flex items-center gap-2 text-sm font-bold uppercase tracking-wider text-black dark:text-white hover:text-neutral-500 dark:hover:text-neutral-400 transition-colors"
-          >
-            Read the Litepaper
-            <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" aria-hidden="true" />
-          </button>
+          ].map((item, idx) => {
+            const body = (
+              <>
+                <div className="flex items-center justify-between gap-3">
+                  <div className="flex items-center gap-3">
+                    <item.icon className="w-4 h-4 text-neutral-500 dark:text-neutral-400" aria-hidden="true" />
+                    <span className="text-xs font-bold uppercase tracking-widest text-neutral-400 dark:text-neutral-500">
+                      {item.label}
+                    </span>
+                  </div>
+                  {item.href && (
+                    <ArrowUpRight className="w-4 h-4 text-neutral-400 dark:text-neutral-500 group-hover:text-black dark:group-hover:text-white transition-colors" aria-hidden="true" />
+                  )}
+                </div>
+                <div className="text-2xl font-mono font-bold text-black dark:text-white tracking-tight break-all">
+                  {item.value}
+                </div>
+                <div className="text-xs text-neutral-500 dark:text-neutral-400 font-medium">
+                  {item.meta}
+                </div>
+              </>
+            );
+            const inner = (
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: idx * 0.05 }}
+                className="bg-white dark:bg-neutral-950 p-6 flex flex-col gap-3 h-full"
+              >
+                {body}
+              </motion.div>
+            );
+            return item.href ? (
+              <a
+                key={idx}
+                href={item.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group block"
+              >
+                {inner}
+              </a>
+            ) : (
+              <div key={idx}>{inner}</div>
+            );
+          })}
         </div>
       </div>
     </section>
