@@ -16,7 +16,7 @@ export function ProblemSection() {
       stat: "Privacy",
       statDesc: "vs. one-person-one-vote",
       title: "The identity paradox",
-      problem: "Most one-person-one-vote schemes demand centralized KYC. You either reveal your identity or accept plutocracy.",
+      problem: "One-person-one-vote usually requires centralized KYC, so most DAOs default to token weight and re-import plutocracy. Proof of personhood (encrypted biometrics, attested uniqueness) escapes the binary — but few have adopted it.",
     },
     {
       icon: HandHelping,
