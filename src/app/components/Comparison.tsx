@@ -73,7 +73,7 @@ export function Comparison() {
 
         {/* Carousel */}
         <div className="relative">
-          <div className="bg-white dark:bg-neutral-950 border border-neutral-200 dark:border-neutral-800 min-h-[380px] md:min-h-[320px] overflow-hidden">
+          <div className="bg-white dark:bg-neutral-950 border border-neutral-200 dark:border-neutral-800 min-h-[380px] md:min-h-[320px] overflow-hidden flex flex-col">
             <AnimatePresence mode="wait">
               <motion.div
                 key={active}
@@ -81,10 +81,10 @@ export function Comparison() {
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -16 }}
                 transition={{ duration: 0.2 }}
-                className="grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-neutral-200 dark:divide-neutral-800"
+                className="grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-neutral-200 dark:divide-neutral-800 flex-1"
               >
                 {/* Failure */}
-                <div className="p-6 md:p-8 flex flex-col gap-3">
+                <div className="p-6 md:p-8 flex flex-col gap-3 justify-center">
                   <div className="flex items-center gap-3">
                     <span className="text-[10px] font-mono text-neutral-400 dark:text-neutral-600 tabular-nums">
                       {String(active + 1).padStart(2, '0')} / {String(total).padStart(2, '0')}
@@ -99,7 +99,7 @@ export function Comparison() {
                 </div>
 
                 {/* Resolution */}
-                <div className="p-6 md:p-8 flex flex-col gap-3 bg-neutral-50 dark:bg-neutral-900">
+                <div className="p-6 md:p-8 flex flex-col gap-3 justify-center bg-neutral-50 dark:bg-neutral-900">
                   <div className="flex items-center gap-1.5">
                     <ArrowRight className="w-3 h-3 text-black dark:text-white shrink-0" aria-hidden="true" />
                     <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-black dark:text-white">
