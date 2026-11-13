@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import { EASE_OUT } from '../motion';
@@ -51,11 +51,22 @@ const FAILURE_MODES: FailureMode[] = [
   },
 ];
 
+const slideVariants = {
+  enter: (d: number) => ({ opacity: 0, x: 16 * d }),
+  center: { opacity: 1, x: 0 },
+  exit: (d: number) => ({ opacity: 0, x: -16 * d, transition: { duration: 0.15, ease: EASE_OUT } }),
+};
+
 export function Comparison() {
   const [active, setActive] = useState(0);
   const total = FAILURE_MODES.length;
 
-  const go = (next: number) => setActive(((next % total) + total) % total);
+  const [direction, setDirection] = useState(1);
+  const touchX = useRef<number | null>(null);
+  const go = (next: number, dir?: number) => {
+    setDirection(dir ?? (next > active ? 1 : -1));
+    setActive(((next % total) + total) % total);
+  };
   const current = FAILURE_MODES[active];
 
   return (
@@ -73,14 +84,25 @@ export function Comparison() {
         </div>
 
         {/* Carousel */}
-        <div className="relative">
+        <div
+            className="relative [touch-action:pan-y]"
+            onTouchStart={(e) => { touchX.current = e.touches[0].clientX; }}
+            onTouchEnd={(e) => {
+              if (touchX.current === null) return;
+              const dx = e.changedTouches[0].clientX - touchX.current;
+              if (Math.abs(dx) > 48) { if (dx < 0) go(active + 1, 1); else go(active - 1, -1); }
+              touchX.current = null;
+            }}
+          >
           <div className="bg-white dark:bg-neutral-950 border border-neutral-200 dark:border-neutral-800 min-h-[380px] md:min-h-[320px] overflow-hidden flex flex-col">
-            <AnimatePresence mode="wait">
+            <AnimatePresence mode="wait" custom={direction}>
               <motion.div
                 key={active}
-                initial={{ opacity: 0, x: 16 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -16, transition: { duration: 0.15, ease: EASE_OUT } }}
+                variants={slideVariants}
+                custom={direction}
+                initial="enter"
+                animate="center"
+                exit="exit"
                 transition={{ duration: 0.2, ease: EASE_OUT }}
                 className="grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-neutral-200 dark:divide-neutral-800 flex-1"
               >
@@ -142,14 +164,14 @@ export function Comparison() {
 
             <div className="flex items-center gap-2">
               <button
-                onClick={() => go(active - 1)}
+                onClick={() => go(active - 1, -1)}
                 aria-label="Previous model"
                 className="w-11 h-11 flex items-center justify-center border border-neutral-200 dark:border-neutral-700 text-neutral-700 dark:text-neutral-300 hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-colors"
               >
                 <ChevronLeft className="w-4 h-4" />
               </button>
               <button
-                onClick={() => go(active + 1)}
+                onClick={() => go(active + 1, 1)}
                 aria-label="Next model"
                 className="w-11 h-11 flex items-center justify-center border border-neutral-200 dark:border-neutral-700 text-neutral-700 dark:text-neutral-300 hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-colors"
               >
