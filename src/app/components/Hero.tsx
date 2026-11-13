@@ -65,8 +65,8 @@ export function Hero({ phase, onLitepaperClick }: HeroProps) {
 
             <motion.h1
               key={`h1-${phase}`}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, transform: "translateY(20px)" }}
+              animate={{ opacity: 1, transform: "translateY(0px)" }}
               transition={{ delay: 0.1, duration: 0.25, ease: EASE_OUT }}
               className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-black dark:text-white tracking-tighter mb-6 leading-[0.95] uppercase"
             >
@@ -77,8 +77,8 @@ export function Hero({ phase, onLitepaperClick }: HeroProps) {
 
             <motion.p
               key={`p-${phase}`}
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, transform: "translateY(12px)" }}
+              animate={{ opacity: 1, transform: "translateY(0px)" }}
               transition={{ delay: 0.2, duration: 0.25, ease: EASE_OUT }}
               className="text-xl md:text-2xl text-neutral-600 dark:text-neutral-300 max-w-xl mb-8 leading-normal font-light"
             >
@@ -91,8 +91,8 @@ export function Hero({ phase, onLitepaperClick }: HeroProps) {
             </motion.p>
 
             <motion.div
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, transform: "translateY(8px)" }}
+              animate={{ opacity: 1, transform: "translateY(0px)" }}
               transition={{ delay: 0.3, duration: 0.25, ease: EASE_OUT }}
               className="flex flex-col sm:flex-row items-start sm:items-center gap-6"
             >
@@ -131,9 +131,9 @@ export function Hero({ phase, onLitepaperClick }: HeroProps) {
 
           {/* Right Content - Proposal Stage Walkthrough */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.35, duration: 0.45, ease: EASE_OUT }}
+            initial={{ opacity: 0, transform: "scale(0.95)" }}
+            animate={{ opacity: 1, transform: "scale(1)" }}
+            transition={{ delay: 0.25, duration: 0.3, ease: EASE_OUT }}
             className="lg:col-span-5 min-w-0 relative"
           >
             <div className="relative z-10 bg-white dark:bg-neutral-900 rounded-lg border-2 border-black dark:border-neutral-700 shadow-[8px_8px_0px_0px_rgba(0,0,0,0.1)] dark:shadow-[8px_8px_0px_0px_rgba(255,255,255,0.05)] overflow-hidden">
