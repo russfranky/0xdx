@@ -21,13 +21,13 @@ const STATUS_BADGE: Record<Phase, { label: string; dotClass: string; textClass: 
   },
   testnet: {
     label: 'Testnet Active',
-    dotClass: 'bg-orange-500 animate-pulse',
+    dotClass: 'bg-orange-500',
     textClass: 'text-neutral-700 dark:text-neutral-300',
     bgClass: 'bg-neutral-100 dark:bg-neutral-800',
   },
   mainnet: {
     label: 'Mainnet Active',
-    dotClass: 'bg-emerald-500 animate-pulse',
+    dotClass: 'bg-emerald-500',
     textClass: 'text-neutral-700 dark:text-neutral-300',
     bgClass: 'bg-neutral-100 dark:bg-neutral-800',
   },
@@ -220,7 +220,7 @@ export function GovernanceDashboard({ phase, onBack, theme, onThemeToggle }: Gov
               <input
                 type="text"
                 placeholder="Search proposals..."
-                className="w-full pl-10 pr-4 py-2 bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-700 text-sm text-black dark:text-white placeholder-neutral-400 dark:placeholder-neutral-500 focus:outline-none focus:ring-2 focus:ring-black/5 dark:focus:ring-white/10"
+                className="w-full pl-10 pr-4 py-2 bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-700 text-base sm:text-sm text-black dark:text-white placeholder-neutral-400 dark:placeholder-neutral-500 focus:outline-none focus:ring-2 focus:ring-black/5 dark:focus:ring-white/10"
               />
             </div>
             <Button
@@ -238,11 +238,8 @@ export function GovernanceDashboard({ phase, onBack, theme, onThemeToggle }: Gov
         {/* Proposals List */}
         <div className="space-y-4">
           {filteredProposals.map((proposal, idx) => (
-            <motion.div
+            <div
               key={proposal.id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: idx * 0.05, duration: 0.25, ease: [0.23, 1, 0.32, 1] }}
               className="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-700 p-6"
             >
               <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
@@ -319,7 +316,7 @@ export function GovernanceDashboard({ phase, onBack, theme, onThemeToggle }: Gov
                 </div>
 
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
 
