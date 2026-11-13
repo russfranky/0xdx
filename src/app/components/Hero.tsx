@@ -12,12 +12,19 @@ interface HeroProps {
 }
 
 const STAGE_LABELS = ['01 Signal', '02 Vote', '03 Timelock', '04 Execute'];
+
+const stageVariants = {
+  enter: (d: number) => ({ opacity: 0, x: 12 * d }),
+  center: { opacity: 1, x: 0 },
+  exit: (d: number) => ({ opacity: 0, x: -12 * d }),
+};
 const STAGE_KEYS = ['SIGNAL', 'COMMITTEE_VOTE', 'TIMELOCK', 'EXECUTING'];
 
 export function Hero({ phase, onLitepaperClick }: HeroProps) {
   const isTestnet = phase === 'testnet';
   const isPrelaunch = phase === 'prelaunch';
   const [stage, setStage] = useState(0);
+  const [stageDir, setStageDir] = useState(1);
 
   const accentBg = isTestnet ? 'bg-orange-500' : 'bg-emerald-500';
 
@@ -43,8 +50,8 @@ export function Hero({ phase, onLitepaperClick }: HeroProps) {
           <div className="lg:col-span-7 min-w-0 flex flex-col items-start text-left">
             <motion.div
               key={phase}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
               transition={{ duration: 0.25, ease: EASE_OUT }}
               className="mb-6 flex items-center gap-3"
             >
@@ -70,7 +77,7 @@ export function Hero({ phase, onLitepaperClick }: HeroProps) {
 
             <motion.p
               key={`p-${phase}`}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2, duration: 0.25, ease: EASE_OUT }}
               className="text-xl md:text-2xl text-neutral-600 dark:text-neutral-300 max-w-xl mb-8 leading-normal font-light"
@@ -84,7 +91,7 @@ export function Hero({ phase, onLitepaperClick }: HeroProps) {
             </motion.p>
 
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3, duration: 0.25, ease: EASE_OUT }}
               className="flex flex-col sm:flex-row items-start sm:items-center gap-6"
@@ -137,7 +144,7 @@ export function Hero({ phase, onLitepaperClick }: HeroProps) {
                   <div className={`w-3 h-3 rounded-full border border-black ${isTestnet ? 'bg-orange-400' : 'bg-neutral-200'}`} />
                 </div>
                 <div className={`text-xs font-mono font-bold uppercase tracking-wider ${isTestnet ? 'text-orange-600' : 'text-neutral-500 dark:text-neutral-400'}`}>
-                  {isPrelaunch ? 'Illustrative · Sample Flow' : isTestnet ? 'Testnet Consensus' : 'Live Consensus'}
+                  {isPrelaunch ? 'Example Launch Flow' : isTestnet ? 'Testnet Consensus' : 'Live Consensus'}
                 </div>
               </div>
 
@@ -146,8 +153,8 @@ export function Hero({ phase, onLitepaperClick }: HeroProps) {
                 {STAGE_LABELS.map((label, i) => (
                   <button
                     key={i}
-                    onClick={() => setStage(i)}
-                    className={`flex-1 px-2 py-2.5 text-[10px] font-mono font-bold uppercase tracking-wider transition-colors border-r last:border-r-0 border-neutral-100 dark:border-neutral-800 ${
+                    onClick={() => { setStageDir(i > stage ? 1 : -1); setStage(i); }}
+                    className={`flex-1 min-w-0 px-1 sm:px-2 py-2.5 text-[9px] sm:text-[10px] font-mono font-bold uppercase tracking-wide sm:tracking-wider whitespace-nowrap text-center transition-colors border-r last:border-r-0 border-neutral-100 dark:border-neutral-800 ${
                       stage === i
                         ? 'bg-black dark:bg-white text-white dark:text-black'
                         : 'text-neutral-400 dark:text-neutral-500 hover:text-black dark:hover:text-white hover:bg-neutral-50 dark:hover:bg-neutral-800'
@@ -167,13 +174,15 @@ export function Hero({ phase, onLitepaperClick }: HeroProps) {
 
               {/* Stage Content */}
               <div className="px-6 pb-6 min-h-[180px]">
-                <AnimatePresence mode="wait">
+                <AnimatePresence mode="wait" custom={stageDir}>
                   {stage === 0 && (
                     <motion.div
                       key="stage0"
-                      initial={{ opacity: 0, x: 10 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      exit={{ opacity: 0, x: -10 }}
+                      variants={stageVariants}
+                      custom={stageDir}
+                      initial="enter"
+                      animate="center"
+                      exit="exit"
                       transition={{ duration: 0.15, ease: EASE_OUT }}
                       className="space-y-4"
                     >
@@ -196,9 +205,11 @@ export function Hero({ phase, onLitepaperClick }: HeroProps) {
                   {stage === 1 && (
                     <motion.div
                       key="stage1"
-                      initial={{ opacity: 0, x: 10 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      exit={{ opacity: 0, x: -10 }}
+                      variants={stageVariants}
+                      custom={stageDir}
+                      initial="enter"
+                      animate="center"
+                      exit="exit"
                       transition={{ duration: 0.15, ease: EASE_OUT }}
                       className="space-y-4"
                     >
@@ -226,9 +237,11 @@ export function Hero({ phase, onLitepaperClick }: HeroProps) {
                   {stage === 2 && (
                     <motion.div
                       key="stage2"
-                      initial={{ opacity: 0, x: 10 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      exit={{ opacity: 0, x: -10 }}
+                      variants={stageVariants}
+                      custom={stageDir}
+                      initial="enter"
+                      animate="center"
+                      exit="exit"
                       transition={{ duration: 0.15, ease: EASE_OUT }}
                       className="space-y-4"
                     >
@@ -251,9 +264,11 @@ export function Hero({ phase, onLitepaperClick }: HeroProps) {
                   {stage === 3 && (
                     <motion.div
                       key="stage3"
-                      initial={{ opacity: 0, x: 10 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      exit={{ opacity: 0, x: -10 }}
+                      variants={stageVariants}
+                      custom={stageDir}
+                      initial="enter"
+                      animate="center"
+                      exit="exit"
                       transition={{ duration: 0.15, ease: EASE_OUT }}
                       className="space-y-3"
                     >
