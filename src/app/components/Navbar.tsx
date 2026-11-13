@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Menu, X, Sun, Moon } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Phase } from '../App';
 import { EASE_OUT } from '../motion';
@@ -11,8 +11,6 @@ interface NavbarProps {
   onRoadmapClick?: () => void;
   onGovernanceClick?: () => void;
   onHomeClick?: () => void;
-  theme?: 'light' | 'dark';
-  onThemeToggle?: () => void;
 }
 
 const PHASE_LABEL: Record<Phase, { label: string; dotClass: string }> = {
@@ -21,7 +19,7 @@ const PHASE_LABEL: Record<Phase, { label: string; dotClass: string }> = {
   mainnet: { label: 'Mainnet · Live', dotClass: 'bg-emerald-500' },
 };
 
-export function Navbar({ phase, onLitepaperClick, onDiscoverClick, onRoadmapClick, onGovernanceClick, onHomeClick, theme, onThemeToggle }: NavbarProps) {
+export function Navbar({ phase, onLitepaperClick, onDiscoverClick, onRoadmapClick, onGovernanceClick, onHomeClick }: NavbarProps) {
   const [isOpen, setIsOpen] = useState(false);
   const phaseMeta = PHASE_LABEL[phase];
 
@@ -58,27 +56,9 @@ export function Navbar({ phase, onLitepaperClick, onDiscoverClick, onRoadmapClic
               {link.name}
             </button>
           ))}
-          {onThemeToggle && (
-            <button
-              onClick={onThemeToggle}
-              aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
-              className="w-11 h-11 flex items-center justify-center rounded-full text-neutral-500 hover:text-black dark:hover:text-white transition-colors"
-            >
-              {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
-            </button>
-          )}
         </div>
 
         <div className="flex md:hidden items-center gap-2">
-          {onThemeToggle && (
-            <button
-              onClick={onThemeToggle}
-              aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
-              className="w-11 h-11 flex items-center justify-center rounded-full text-neutral-500 hover:text-black dark:hover:text-white transition-colors"
-            >
-              {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
-            </button>
-          )}
           <button
             aria-label={isOpen ? 'Close menu' : 'Open menu'}
             aria-expanded={isOpen}

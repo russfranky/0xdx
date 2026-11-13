@@ -5,8 +5,6 @@ import { PageHeader } from './ui/PageHeader';
 
 interface RoadmapProps {
   onBack: () => void;
-  theme?: 'light' | 'dark';
-  onThemeToggle?: () => void;
 }
 
 type Status = 'done' | 'in-progress' | 'planned';
@@ -21,7 +19,7 @@ interface Milestone {
   quarter: string;
 }
 
-export function Roadmap({ onBack, theme, onThemeToggle }: RoadmapProps) {
+export function Roadmap({ onBack }: RoadmapProps) {
   const [selectedCategory, setSelectedCategory] = useState<Category | 'All'>('All');
 
   const milestones: Milestone[] = [
@@ -115,7 +113,7 @@ export function Roadmap({ onBack, theme, onThemeToggle }: RoadmapProps) {
 
   return (
     <div className="min-h-screen bg-white dark:bg-neutral-950 text-black dark:text-white font-sans selection:bg-black selection:text-white dark:selection:bg-white dark:selection:text-black">
-      <PageHeader onBack={onBack} title="Roadmap" theme={theme} onThemeToggle={onThemeToggle} />
+      <PageHeader onBack={onBack} title="Roadmap" />
 
       <main className="pt-32 pb-24 px-6 max-w-7xl mx-auto">
         {/* Intro */}

@@ -7,8 +7,6 @@ import litepaperSource from '../../../0xdx_litepaper.md?raw';
 
 interface LitepaperProps {
   onBack: () => void;
-  theme?: 'light' | 'dark';
-  onThemeToggle?: () => void;
 }
 
 interface Chapter {
@@ -43,7 +41,7 @@ function extractChapters(md: string): Chapter[] {
   return chapters;
 }
 
-export function Litepaper({ onBack, theme, onThemeToggle }: LitepaperProps) {
+export function Litepaper({ onBack }: LitepaperProps) {
   const chapters = useMemo(() => extractChapters(litepaperSource), []);
   const [activeId, setActiveId] = useState<string | null>(chapters[0]?.id ?? null);
 
@@ -102,8 +100,6 @@ export function Litepaper({ onBack, theme, onThemeToggle }: LitepaperProps) {
         <PageHeader
           onBack={onBack}
           title="Litepaper"
-          theme={theme}
-          onThemeToggle={onThemeToggle}
           rightSlot={
             <button
               onClick={() => window.print()}

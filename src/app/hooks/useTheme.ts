@@ -2,42 +2,36 @@ import { useState, useEffect } from 'react';
 
 type Theme = 'light' | 'dark';
 
+function systemTheme(): Theme {
+  return typeof window !== 'undefined' &&
+    window.matchMedia('(prefers-color-scheme: dark)').matches
+    ? 'dark'
+    : 'light';
+}
+
+/**
+ * The site always follows the visitor's system preference.
+ * There is no manual toggle and no stored override.
+ */
 export function useTheme() {
-  const [theme, setThemeState] = useState<Theme>(() => {
-    try {
-      const stored = localStorage.getItem('theme');
-      if (stored === 'light' || stored === 'dark') return stored;
-    } catch {}
-    return typeof window !== 'undefined' && window.matchMedia('(prefers-color-scheme: dark)').matches
-      ? 'dark'
-      : 'light';
-  });
+  const [theme, setTheme] = useState<Theme>(systemTheme);
 
-  // Apply class and persist on every theme change
   useEffect(() => {
-    document.documentElement.classList.toggle('dark', theme === 'dark');
+    // Clear any override an older version stored, so it cannot stick.
     try {
-      localStorage.setItem('theme', theme);
+      localStorage.removeItem('theme');
     } catch {}
-  }, [theme]);
 
-  // Follow system preference when no manual override is stored
-  useEffect(() => {
     const mq = window.matchMedia('(prefers-color-scheme: dark)');
-    const handler = (e: MediaQueryListEvent) => {
-      try {
-        if (!localStorage.getItem('theme')) {
-          setThemeState(e.matches ? 'dark' : 'light');
-        }
-      } catch {}
+    const apply = () => {
+      const t: Theme = mq.matches ? 'dark' : 'light';
+      setTheme(t);
+      document.documentElement.classList.toggle('dark', t === 'dark');
     };
-    mq.addEventListener('change', handler);
-    return () => mq.removeEventListener('change', handler);
+    apply();
+    mq.addEventListener('change', apply);
+    return () => mq.removeEventListener('change', apply);
   }, []);
 
-  function toggleTheme() {
-    setThemeState(prev => (prev === 'dark' ? 'light' : 'dark'));
-  }
-
-  return { theme, setTheme: setThemeState, toggleTheme };
+  return { theme };
 }

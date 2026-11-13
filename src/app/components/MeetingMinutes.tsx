@@ -5,14 +5,12 @@ import { PageHeader } from './ui/PageHeader';
 
 interface MeetingMinutesProps {
   onBack: () => void;
-  theme?: 'light' | 'dark';
-  onThemeToggle?: () => void;
 }
 
-export function MeetingMinutes({ onBack, theme, onThemeToggle }: MeetingMinutesProps) {
+export function MeetingMinutes({ onBack }: MeetingMinutesProps) {
   return (
     <div className="min-h-screen bg-white dark:bg-neutral-950 text-black dark:text-white font-sans selection:bg-black selection:text-white dark:selection:bg-white dark:selection:text-black">
-      <PageHeader onBack={onBack} title="Meeting Minutes" theme={theme} onThemeToggle={onThemeToggle} />
+      <PageHeader onBack={onBack} title="Meeting Minutes" />
 
       <main className="pt-32 pb-24 px-6 max-w-7xl mx-auto">
         <motion.div

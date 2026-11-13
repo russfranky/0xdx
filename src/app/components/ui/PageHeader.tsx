@@ -1,12 +1,10 @@
 import React from 'react';
-import { ArrowLeft, Sun, Moon } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 
 interface PageHeaderProps {
   onBack: () => void;
   title: string;
   backLabel?: string;
-  theme?: 'light' | 'dark';
-  onThemeToggle?: () => void;
   rightSlot?: React.ReactNode;
 }
 
@@ -14,8 +12,6 @@ export function PageHeader({
   onBack,
   title,
   backLabel = 'Back to Home',
-  theme,
-  onThemeToggle,
   rightSlot,
 }: PageHeaderProps) {
   return (
@@ -37,15 +33,6 @@ export function PageHeader({
 
         <div className="flex items-center gap-2 shrink-0">
           {rightSlot}
-          {onThemeToggle && (
-            <button
-              onClick={onThemeToggle}
-              aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
-              className="min-w-11 min-h-11 flex items-center justify-center rounded-full text-neutral-500 hover:text-black dark:hover:text-white transition-colors"
-            >
-              {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
-            </button>
-          )}
         </div>
       </div>
     </header>

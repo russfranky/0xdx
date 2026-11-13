@@ -8,8 +8,6 @@ import { Phase } from '../App';
 interface GovernanceDashboardProps {
   phase: Phase;
   onBack: () => void;
-  theme?: 'light' | 'dark';
-  onThemeToggle?: () => void;
 }
 
 const STATUS_BADGE: Record<Phase, { label: string; dotClass: string; textClass: string; bgClass: string }> = {
@@ -87,7 +85,7 @@ const MOCK_PROPOSALS: Proposal[] = [
   }
 ];
 
-export function GovernanceDashboard({ phase, onBack, theme, onThemeToggle }: GovernanceDashboardProps) {
+export function GovernanceDashboard({ phase, onBack }: GovernanceDashboardProps) {
   const [filter, setFilter] = useState<'all' | 'active' | 'passed'>('all');
   const isPreview = phase === 'prelaunch';
   const status = STATUS_BADGE[phase];
@@ -103,8 +101,6 @@ export function GovernanceDashboard({ phase, onBack, theme, onThemeToggle }: Gov
         onBack={onBack}
         title="Governance Dashboard"
         backLabel="Back"
-        theme={theme}
-        onThemeToggle={onThemeToggle}
         rightSlot={
           <>
             <div className={`hidden md:flex items-center gap-2 px-3 py-1.5 ${status.bgClass} text-xs font-mono uppercase tracking-wider`}>

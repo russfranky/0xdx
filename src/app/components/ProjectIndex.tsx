@@ -6,14 +6,12 @@ import { PageHeader } from './ui/PageHeader';
 interface ProjectIndexProps {
   onBack: () => void;
   onProjectClick: (id: number) => void;
-  theme?: 'light' | 'dark';
-  onThemeToggle?: () => void;
 }
 
-export function ProjectIndex({ onBack, theme, onThemeToggle }: ProjectIndexProps) {
+export function ProjectIndex({ onBack }: ProjectIndexProps) {
   return (
     <div className="min-h-screen bg-white dark:bg-neutral-950 text-black dark:text-white font-sans selection:bg-black selection:text-white dark:selection:bg-white dark:selection:text-black">
-      <PageHeader onBack={onBack} title="Ecosystem" theme={theme} onThemeToggle={onThemeToggle} />
+      <PageHeader onBack={onBack} title="Ecosystem" />
 
       <main className="pt-32 pb-24 px-6 max-w-7xl mx-auto">
         <motion.div

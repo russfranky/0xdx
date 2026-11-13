@@ -59,13 +59,13 @@ export default function App() {
   const [phase, setPhase] = useState<Phase>('prelaunch');
   const [view, setView] = useState<View>('landing');
   const [selectedProjectId, setSelectedProjectId] = useState<number | null>(null);
-  const { theme, toggleTheme } = useTheme();
+  useTheme();
   const isAdmin = useAdminMode();
 
   if (view === 'minutes') {
     return (
       <Suspense fallback={<ViewFallback />}>
-        <MeetingMinutes onBack={() => setView('landing')} theme={theme} onThemeToggle={toggleTheme} />
+        <MeetingMinutes onBack={() => setView('landing')} />
       </Suspense>
     );
   }
@@ -73,7 +73,7 @@ export default function App() {
   if (view === 'litepaper') {
     return (
       <Suspense fallback={<ViewFallback />}>
-        <Litepaper onBack={() => setView('landing')} theme={theme} onThemeToggle={toggleTheme} />
+        <Litepaper onBack={() => setView('landing')} />
       </Suspense>
     );
   }
@@ -81,7 +81,7 @@ export default function App() {
   if (view === 'roadmap') {
     return (
       <Suspense fallback={<ViewFallback />}>
-        <Roadmap onBack={() => setView('landing')} theme={theme} onThemeToggle={toggleTheme} />
+        <Roadmap onBack={() => setView('landing')} />
       </Suspense>
     );
   }
@@ -95,8 +95,6 @@ export default function App() {
             setSelectedProjectId(id);
             setView('project-detail');
           }}
-          theme={theme}
-          onThemeToggle={toggleTheme}
         />
       </Suspense>
     );
@@ -105,7 +103,7 @@ export default function App() {
   if (view === 'project-detail' && selectedProjectId) {
     return (
       <Suspense fallback={<ViewFallback />}>
-        <ProjectDetail projectId={selectedProjectId} onBack={() => setView('projects')} theme={theme} onThemeToggle={toggleTheme} />
+        <ProjectDetail projectId={selectedProjectId} onBack={() => setView('projects')} />
       </Suspense>
     );
   }
@@ -113,7 +111,7 @@ export default function App() {
   if (view === 'governance') {
     return (
       <Suspense fallback={<ViewFallback />}>
-        <GovernanceDashboard phase={phase} onBack={() => setView('landing')} theme={theme} onThemeToggle={toggleTheme} />
+        <GovernanceDashboard phase={phase} onBack={() => setView('landing')} />
       </Suspense>
     );
   }
@@ -128,8 +126,6 @@ export default function App() {
         onDiscoverClick={() => setView('projects')}
         onRoadmapClick={() => setView('roadmap')}
         onGovernanceClick={() => setView('governance')}
-        theme={theme}
-        onThemeToggle={toggleTheme}
       />
       <main id="main">
         {/* Narrative arc:
