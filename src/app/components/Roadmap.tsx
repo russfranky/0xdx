@@ -124,6 +124,7 @@ export function Roadmap({ onBack, theme, onThemeToggle }: RoadmapProps) {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.25, ease: [0.23, 1, 0.32, 1] }}
           >
             <h1 className="text-5xl md:text-7xl font-bold tracking-tighter mb-6 text-black dark:text-white uppercase leading-[0.9]">
               Building the <br /> Republic
@@ -154,12 +155,9 @@ export function Roadmap({ onBack, theme, onThemeToggle }: RoadmapProps) {
 
         {/* Roadmap Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filteredMilestones.map((milestone, idx) => (
-            <motion.div
+          {filteredMilestones.map((milestone) => (
+            <div
               key={milestone.id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: idx * 0.06, duration: 0.25, ease: [0.23, 1, 0.32, 1] }}
               className={`relative p-8 border-t-2 ${
                 milestone.status === 'done'
                   ? 'border-emerald-500 bg-emerald-50/10 dark:bg-emerald-950/10'
@@ -199,7 +197,7 @@ export function Roadmap({ onBack, theme, onThemeToggle }: RoadmapProps) {
                     {milestone.category}
                  </span>
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
       </main>
