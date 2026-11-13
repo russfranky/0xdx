@@ -1,5 +1,4 @@
 import React from 'react';
-import { motion } from 'motion/react';
 import { Globe, Server, Zap, Lock, Activity, Coins, BarChart3, Repeat } from 'lucide-react';
 import { Phase } from '../App';
 
