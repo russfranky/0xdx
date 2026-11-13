@@ -1,5 +1,4 @@
 import React from 'react';
-import { motion } from 'motion/react';
 import { Triangle, UserX, HandHelping } from 'lucide-react';
 
 export function ProblemSection() {
@@ -47,12 +46,8 @@ export function ProblemSection() {
 
         <div className="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-neutral-200 dark:divide-neutral-700 border-t-2 border-b-2 border-black dark:border-neutral-600">
           {cards.map((card, idx) => (
-            <motion.div
+            <div
               key={idx}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: idx * 0.06, duration: 0.25, ease: [0.23, 1, 0.32, 1] }}
               className="py-10 md:px-10 first:pl-0 last:pr-0"
             >
               <div className="mb-6">
@@ -62,7 +57,7 @@ export function ProblemSection() {
 
               <h3 className="text-xl font-bold text-black dark:text-white mb-3 uppercase tracking-tight">{card.title}</h3>
               <p className="text-neutral-600 dark:text-neutral-300 leading-relaxed text-sm font-light">{card.problem}</p>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>
