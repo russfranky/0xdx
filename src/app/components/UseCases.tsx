@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { ArrowRight, X } from 'lucide-react';
 import { Phase } from '../App';
@@ -68,11 +68,17 @@ interface ModalProps {
 }
 
 function UseCaseModal({ useCase, onClose }: ModalProps) {
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [onClose]);
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
+      exit={{ opacity: 0, transition: { duration: 0.15, ease: [0.23, 1, 0.32, 1] } }}
       transition={{ duration: 0.2, ease: [0.23, 1, 0.32, 1] }}
       className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70"
       onClick={onClose}
@@ -80,9 +86,9 @@ function UseCaseModal({ useCase, onClose }: ModalProps) {
       <motion.div
         initial={{ opacity: 0, scale: 0.96, y: 12 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
-        exit={{ opacity: 0, scale: 0.96, y: 12 }}
+        exit={{ opacity: 0, scale: 0.96, y: 12, transition: { duration: 0.15, ease: [0.23, 1, 0.32, 1] } }}
         transition={{ duration: 0.2, ease: [0.23, 1, 0.32, 1] }}
-        className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto bg-white dark:bg-neutral-950 border-2 border-black dark:border-neutral-600 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] dark:shadow-[8px_8px_0px_0px_rgba(255,255,255,0.08)]"
+        className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto overscroll-contain bg-white dark:bg-neutral-950 border-2 border-black dark:border-neutral-600 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] dark:shadow-[8px_8px_0px_0px_rgba(255,255,255,0.08)]"
         onClick={e => e.stopPropagation()}
       >
         {/* Sticky header */}
@@ -161,12 +167,8 @@ export function UseCases({ phase }: { phase: Phase }) {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {USE_CASES.map((useCase, idx) => (
-            <motion.button
+            <button
               key={idx}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: idx * 0.06, duration: 0.25, ease: [0.23, 1, 0.32, 1] }}
               onClick={() => setSelected(idx)}
               className="group text-left bg-white dark:bg-neutral-950 p-6 border-2 border-transparent hover:border-black dark:hover:border-neutral-400 transition-colors duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] cursor-pointer"
             >
@@ -183,7 +185,7 @@ export function UseCases({ phase }: { phase: Phase }) {
                 Explore use case
                 <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform duration-200 ease-[cubic-bezier(0.23,1,0.32,1)]" aria-hidden="true" />
               </div>
-            </motion.button>
+            </button>
           ))}
         </div>
       </div>
