@@ -1,5 +1,4 @@
 import React from 'react';
-import { motion } from 'motion/react';
 import { Button } from './ui/Button';
 import { Check, Clock, TrendingUp, PieChart } from 'lucide-react';
 import { Phase } from '../App';
