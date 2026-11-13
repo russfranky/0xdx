@@ -1,5 +1,4 @@
 import React from 'react';
-import { motion } from 'motion/react';
 import { Users, Filter, VenetianMask, Heart, Coins, Lock } from 'lucide-react';
 
 export function Features() {
