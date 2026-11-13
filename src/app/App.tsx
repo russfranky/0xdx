@@ -15,7 +15,6 @@ import { DashboardPreview } from './components/DashboardPreview';
 import { Comparison } from './components/Comparison';
 import { BuiltInPublic } from './components/BuiltInPublic';
 import { Resources } from './components/Resources';
-import { Testimonials } from './components/Testimonials';
 import { CTA } from './components/CTA';
 import { Footer } from './components/Footer';
 
@@ -130,7 +129,7 @@ export default function App() {
       <main id="main">
         {/* Narrative arc:
               Hero → 01 Problem → 02 Versus Alternatives → 03 How It Works →
-              04 In Practice → 05 Built to Last → 06 Preview → 07 Built in Public →
+              04 Who It Serves → 05 Built to Last → 06 Preview → 07 Built in Public →
               Resources → CTA */}
         <Hero phase={phase} onLitepaperClick={() => setView('litepaper')} />
         {isAdmin && <ActivityFeed phase={phase} />}
@@ -145,7 +144,6 @@ export default function App() {
         {isAdmin && <SolutionSection />}
         {isAdmin && <Features />}
         <Resources onLitepaperClick={() => setView('litepaper')} onRoadmapClick={() => setView('roadmap')} />
-        {isAdmin && <Testimonials phase={phase} />}
         <CTA phase={phase} onLitepaperClick={() => setView('litepaper')} />
       </main>
       <Footer phase={phase} onLitepaperClick={() => setView('litepaper')} onRoadmapClick={() => setView('roadmap')} />

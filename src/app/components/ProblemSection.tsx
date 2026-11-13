@@ -39,7 +39,7 @@ export function ProblemSection() {
           </div>
           <div className="flex items-end">
             <p className="text-2xl font-bold text-black dark:text-white border-l-4 border-black dark:border-neutral-400 pl-6 uppercase tracking-tight leading-tight">
-              <span className="normal-case">0xdx</span> eliminates <br/> those choices.
+              <span className="normal-case">0xdx</span> refuses <br/> those choices.
             </p>
           </div>
         </div>

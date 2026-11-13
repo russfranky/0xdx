@@ -10,7 +10,7 @@ export function DashboardPreview({ phase, onViewReport }: { phase: Phase; onView
       <div className="max-w-7xl mx-auto px-6">
         <div className="text-center mb-12">
           <h2 className="text-4xl md:text-5xl font-bold text-black dark:text-white mb-4 uppercase tracking-tighter leading-[0.9]">Transparency First</h2>
-          <p className="text-neutral-500 dark:text-neutral-400 font-mono text-sm uppercase tracking-widest">Real-time governance dashboard</p>
+          <p className="text-neutral-500 dark:text-neutral-400 font-mono text-sm uppercase tracking-widest">Sample governance dashboard · Preview</p>
         </div>
 
         <div className="bg-white dark:bg-neutral-900 border-2 border-black dark:border-neutral-700 overflow-hidden max-w-5xl mx-auto shadow-[8px_8px_0px_0px_rgba(0,0,0,0.1)] dark:shadow-[8px_8px_0px_0px_rgba(255,255,255,0.05)]">

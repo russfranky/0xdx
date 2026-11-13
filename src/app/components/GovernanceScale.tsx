@@ -50,23 +50,23 @@ export function GovernanceScale({ phase }: { phase: Phase }) {
 
             <div className="mt-10 grid grid-cols-2 gap-px bg-neutral-800 border border-neutral-800">
               <div className="bg-black p-6">
-                <div className="text-5xl font-mono font-bold mb-2 tracking-tighter">100%</div>
+                <div className="text-2xl font-mono font-bold mb-2 tracking-tight">100%</div>
                 <div className="text-xs text-neutral-500 uppercase tracking-widest font-bold">
                   Initial Liquidity Locked
                 </div>
               </div>
               <div className="bg-black p-6">
-                <div className="text-5xl font-mono font-bold mb-2 tracking-tighter">0.3%</div>
+                <div className="text-2xl font-mono font-bold mb-2 tracking-tight">0.3%</div>
                 <div className="text-xs text-neutral-500 uppercase tracking-widest font-bold">Protocol Fee to Treasury</div>
               </div>
               <div className="bg-black p-6">
-                <div className="text-5xl font-mono font-bold mb-2 tracking-tighter">{isPrelaunch ? '1p1v' : isTestnet ? '5k+' : '∞'}</div>
+                <div className="text-2xl font-mono font-bold mb-2 tracking-tight">{isPrelaunch ? '1p1v' : isTestnet ? '5k+' : '∞'}</div>
                 <div className="text-xs text-neutral-500 uppercase tracking-widest font-bold">
                   {isPrelaunch ? 'Committee Voting' : isTestnet ? 'Testnet Trades' : 'Sustainable Runrate'}
                 </div>
               </div>
               <div className="bg-black p-6">
-                <div className="text-5xl font-mono font-bold mb-2 tracking-tighter">{isTestnet ? '24h' : '48h'}</div>
+                <div className="text-2xl font-mono font-bold mb-2 tracking-tight">{isTestnet ? '24h' : '48h'}</div>
                 <div className="text-xs text-neutral-500 uppercase tracking-widest font-bold">
                   Security Timelock
                 </div>
@@ -83,8 +83,8 @@ export function GovernanceScale({ phase }: { phase: Phase }) {
                  </h3>
                  <p className="text-neutral-500 text-sm leading-relaxed">
                    {isPrelaunch
-                     ? "Specified loop: users trade on the integrated DEX → fees route to the treasury → governance funds new growth → growth drives more trades. Closed by construction, not by promise."
-                     : "Users trade on the integrated DEX. Fees are captured. The Treasury grows. Governance funds new growth. A closed loop of value."}
+                     ? "The engine is the fee: every trade on the integrated DEX pays 0.3% to the treasury, so usage funds the next round of grants without new fundraising."
+                     : "Every trade on the integrated DEX pays its fee to the treasury. Usage funds the next round of grants."}
                  </p>
                </div>
              </div>
@@ -97,8 +97,8 @@ export function GovernanceScale({ phase }: { phase: Phase }) {
                  </h3>
                  <p className="text-neutral-500 text-sm leading-relaxed">
                    {isPrelaunch
-                     ? "By spec, founding committee members must lock initial liquidity permanently — the LP tokens are held by the treasury contract with no withdraw path. No rug pulls, no sudden withdrawals."
-                     : "Committee members must lock initial liquidity permanently. No rug pulls. No sudden withdrawals. Just deep, reliable markets."}
+                     ? "By spec, founding committee members must lock initial liquidity permanently — the LP tokens are held by the treasury contract with no withdraw path."
+                     : "Committee members must lock initial liquidity permanently; the LP tokens sit in the treasury contract with no withdraw path. Deep, reliable markets by construction."}
                  </p>
                </div>
              </div>

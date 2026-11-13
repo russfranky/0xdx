@@ -169,7 +169,7 @@ export function Hero({ phase, onLitepaperClick }: HeroProps) {
               <div className="px-6 pt-5 pb-3">
                 <div className="text-xs font-mono text-neutral-500 dark:text-neutral-400 uppercase tracking-wide mb-1">Proposal #124</div>
                 <div className="text-lg font-bold text-black dark:text-white mb-1">Award Q3 Contributor Grants</div>
-                <div className="text-xs text-neutral-500 dark:text-neutral-400">Disbursing $50,000 to 8 approved contributors from the treasury.</div>
+                <div className="text-xs text-neutral-500 dark:text-neutral-400">Disbursing treasury funds to approved contributors.</div>
               </div>
 
               {/* Stage Content */}
@@ -189,12 +189,12 @@ export function Hero({ phase, onLitepaperClick }: HeroProps) {
                       <div>
                         <div className="flex justify-between text-xs font-bold uppercase tracking-wider mb-2">
                           <span className="text-black dark:text-white flex items-center gap-1.5"><Activity className="w-3 h-3" /> Community Signal</span>
-                          <span className="text-neutral-500 dark:text-neutral-400">78% Support</span>
+                          <span className="text-neutral-500 dark:text-neutral-400">In progress</span>
                         </div>
                         <div className="h-2 w-full bg-neutral-100 dark:bg-neutral-700">
                           <div className={`${accentBg} h-full w-[78%]`} />
                         </div>
-                        <div className="mt-1.5 text-[10px] font-mono text-neutral-500 dark:text-neutral-400 uppercase">$182k in tokens signaling YES · Non-binding</div>
+                        <div className="mt-1.5 text-[10px] font-mono text-neutral-500 dark:text-neutral-400 uppercase">Token holders signal support · Non-binding</div>
                       </div>
                       <div className="bg-neutral-50 dark:bg-neutral-800 border border-neutral-100 dark:border-neutral-700 p-3 rounded text-xs text-neutral-600 dark:text-neutral-300">
                         Signal period open · <span className="font-bold">3 days remaining</span> before committee review
@@ -293,7 +293,7 @@ export function Hero({ phase, onLitepaperClick }: HeroProps) {
                         <div className={`w-2 h-2 rounded-full ${accentBg}`} />
                       </div>
                       <div className="bg-neutral-50 dark:bg-neutral-800 border border-neutral-100 dark:border-neutral-700 p-3 rounded text-xs text-neutral-600 dark:text-neutral-300">
-                        <span className="font-bold">$50,000</span> disbursed to 8 contributors · Treasury balance updated on-chain
+                        <span className="font-bold">Executed.</span> Grant funds disbursed to contributors · Treasury balance updated
                       </div>
                     </motion.div>
                   )}
