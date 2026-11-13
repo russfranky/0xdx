@@ -4,6 +4,7 @@ import { Button } from './ui/Button';
 import { EmailCapture } from './EmailCapture';
 import { ArrowRight, Beaker, Globe, Zap, ShieldCheck, Activity, Users } from 'lucide-react';
 import { Phase } from '../App';
+import { EASE_OUT } from '../motion';
 
 interface HeroProps {
   phase: Phase;
@@ -44,6 +45,7 @@ export function Hero({ phase, onLitepaperClick }: HeroProps) {
               key={phase}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.25, ease: EASE_OUT }}
               className="mb-6 flex items-center gap-3"
             >
               <span className="flex h-2 w-2 relative">
@@ -58,7 +60,7 @@ export function Hero({ phase, onLitepaperClick }: HeroProps) {
               key={`h1-${phase}`}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 }}
+              transition={{ delay: 0.1, duration: 0.25, ease: EASE_OUT }}
               className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-black dark:text-white tracking-tighter mb-6 leading-[0.95] uppercase"
             >
               Decentralized <br />
@@ -70,7 +72,7 @@ export function Hero({ phase, onLitepaperClick }: HeroProps) {
               key={`p-${phase}`}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
+              transition={{ delay: 0.2, duration: 0.25, ease: EASE_OUT }}
               className="text-xl md:text-2xl text-neutral-600 dark:text-neutral-300 max-w-xl mb-8 leading-normal font-light"
             >
               {isPrelaunch
@@ -84,7 +86,7 @@ export function Hero({ phase, onLitepaperClick }: HeroProps) {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
+              transition={{ delay: 0.3, duration: 0.25, ease: EASE_OUT }}
               className="flex flex-col sm:flex-row items-start sm:items-center gap-6"
             >
               {isPrelaunch ? (
@@ -99,7 +101,7 @@ export function Hero({ phase, onLitepaperClick }: HeroProps) {
                     className="group self-start flex items-center gap-2 text-sm font-bold uppercase tracking-wider text-black dark:text-white hover:text-neutral-500 dark:hover:text-neutral-400 transition-colors"
                   >
                     Read the Litepaper
-                    <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
+                    <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform duration-200 ease-[cubic-bezier(0.23,1,0.32,1)]" aria-hidden="true" />
                   </button>
                 </div>
               ) : (
@@ -113,7 +115,7 @@ export function Hero({ phase, onLitepaperClick }: HeroProps) {
                     className="group flex items-center gap-2 text-black dark:text-white font-medium hover:text-neutral-600 dark:hover:text-neutral-400 transition-colors"
                   >
                     Read Litepaper
-                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
+                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200 ease-[cubic-bezier(0.23,1,0.32,1)]" aria-hidden="true" />
                   </button>
                 </>
               )}
@@ -124,7 +126,7 @@ export function Hero({ phase, onLitepaperClick }: HeroProps) {
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.4, duration: 0.8 }}
+            transition={{ delay: 0.35, duration: 0.45, ease: EASE_OUT }}
             className="lg:col-span-5 min-w-0 relative"
           >
             <div className="relative z-10 bg-white dark:bg-neutral-900 rounded-lg border-2 border-black dark:border-neutral-700 shadow-[8px_8px_0px_0px_rgba(0,0,0,0.1)] dark:shadow-[8px_8px_0px_0px_rgba(255,255,255,0.05)] overflow-hidden">
@@ -172,7 +174,7 @@ export function Hero({ phase, onLitepaperClick }: HeroProps) {
                       initial={{ opacity: 0, x: 10 }}
                       animate={{ opacity: 1, x: 0 }}
                       exit={{ opacity: 0, x: -10 }}
-                      transition={{ duration: 0.15 }}
+                      transition={{ duration: 0.15, ease: EASE_OUT }}
                       className="space-y-4"
                     >
                       <div>
@@ -197,7 +199,7 @@ export function Hero({ phase, onLitepaperClick }: HeroProps) {
                       initial={{ opacity: 0, x: 10 }}
                       animate={{ opacity: 1, x: 0 }}
                       exit={{ opacity: 0, x: -10 }}
-                      transition={{ duration: 0.15 }}
+                      transition={{ duration: 0.15, ease: EASE_OUT }}
                       className="space-y-4"
                     >
                       <div>
@@ -227,7 +229,7 @@ export function Hero({ phase, onLitepaperClick }: HeroProps) {
                       initial={{ opacity: 0, x: 10 }}
                       animate={{ opacity: 1, x: 0 }}
                       exit={{ opacity: 0, x: -10 }}
-                      transition={{ duration: 0.15 }}
+                      transition={{ duration: 0.15, ease: EASE_OUT }}
                       className="space-y-4"
                     >
                       <div className="flex items-center gap-4">
@@ -252,7 +254,7 @@ export function Hero({ phase, onLitepaperClick }: HeroProps) {
                       initial={{ opacity: 0, x: 10 }}
                       animate={{ opacity: 1, x: 0 }}
                       exit={{ opacity: 0, x: -10 }}
-                      transition={{ duration: 0.15 }}
+                      transition={{ duration: 0.15, ease: EASE_OUT }}
                       className="space-y-3"
                     >
                       <div className="flex items-center gap-4 text-sm">

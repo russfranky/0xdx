@@ -2,4 +2,14 @@
 @source '../**/*.{js,ts,jsx,tsx}';
 
 @plugin '@tailwindcss/typography';
+
+/* Emil: gate hover to devices that can actually hover. Touch taps no longer
+   trigger sticky hover states. Redefines the built-in hover variant. */
+@custom-variant hover {
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      @slot;
+    }
+  }
+}
 @import 'tw-animate-css';

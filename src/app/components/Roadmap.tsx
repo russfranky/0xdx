@@ -141,7 +141,7 @@ export function Roadmap({ onBack, theme, onThemeToggle }: RoadmapProps) {
               key={cat}
               onClick={() => setSelectedCategory(cat)}
               aria-pressed={selectedCategory === cat}
-              className={`px-4 py-2 text-xs font-bold uppercase tracking-widest transition-all ${
+              className={`px-4 py-2 text-xs font-bold uppercase tracking-widest transition-colors duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] ${
                 selectedCategory === cat
                   ? 'bg-black dark:bg-white text-white dark:text-black'
                   : 'bg-transparent text-neutral-500 dark:text-neutral-400 hover:text-black dark:hover:text-white'
@@ -159,7 +159,7 @@ export function Roadmap({ onBack, theme, onThemeToggle }: RoadmapProps) {
               key={milestone.id}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: idx * 0.1 }}
+              transition={{ delay: idx * 0.06, duration: 0.25, ease: [0.23, 1, 0.32, 1] }}
               className={`relative p-8 border-t-2 ${
                 milestone.status === 'done'
                   ? 'border-emerald-500 bg-emerald-50/10 dark:bg-emerald-950/10'

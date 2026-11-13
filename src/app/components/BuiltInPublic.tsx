@@ -70,7 +70,7 @@ export function BuiltInPublic() {
                 initial={{ opacity: 0, y: 10 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: idx * 0.05 }}
+                transition={{ delay: idx * 0.05, duration: 0.25, ease: [0.23, 1, 0.32, 1] }}
                 className="bg-white dark:bg-neutral-950 p-6 flex flex-col gap-3 h-full"
               >
                 {body}

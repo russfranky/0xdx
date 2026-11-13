@@ -2,6 +2,9 @@
 
 :root {
   --font-size: 16px;
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
   --background: #ffffff;
   --foreground: oklch(0.145 0 0);
   --card: #ffffff;
@@ -179,6 +182,18 @@
     line-height: 1.5;
   }
 
+  /* Press feedback (Emil): every button must feel responsive to press.
+     Utilities layer overrides this where a component sets its own transition. */
+  button {
+    transition-property: transform, color, background-color, border-color, opacity;
+    transition-duration: 160ms;
+    transition-timing-function: var(--ease-out);
+  }
+
+  button:active {
+    transform: scale(0.97);
+  }
+
   /* Visible focus indicator for keyboard users (A4). */
   :focus-visible {
     outline: 2px solid #000;
@@ -199,7 +214,7 @@
     text-transform: uppercase;
     letter-spacing: 0.05em;
     font-size: 0.875rem;
-    transition: top 0.15s ease-in;
+    transition: top 150ms var(--ease-out);
   }
   .skip-to-content:focus,
   .skip-to-content:focus-visible {
@@ -214,7 +229,9 @@
   *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+    /* Keep opacity and color transitions that aid comprehension; drop movement. */
+    transition-property: opacity, color, background-color, border-color, fill, stroke !important;
+    transition-duration: 200ms !important;
   }
 }

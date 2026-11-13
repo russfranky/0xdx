@@ -52,7 +52,7 @@ export function ProblemSection() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: idx * 0.1 }}
+              transition={{ delay: idx * 0.06, duration: 0.25, ease: [0.23, 1, 0.32, 1] }}
               className="py-10 md:px-10 first:pl-0 last:pr-0"
             >
               <div className="mb-6">

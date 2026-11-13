@@ -170,7 +170,7 @@ export function GovernanceDashboard({ phase, onBack, theme, onThemeToggle }: Gov
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
+            transition={{ delay: 0.1, duration: 0.25, ease: [0.23, 1, 0.32, 1] }}
             className="bg-white dark:bg-neutral-900 p-6 border border-neutral-200 dark:border-neutral-700"
           >
             <div className="flex items-center gap-3 mb-2 text-neutral-500 dark:text-neutral-400">
@@ -184,7 +184,7 @@ export function GovernanceDashboard({ phase, onBack, theme, onThemeToggle }: Gov
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
+            transition={{ delay: 0.2, duration: 0.25, ease: [0.23, 1, 0.32, 1] }}
             className="bg-white dark:bg-neutral-900 p-6 border border-neutral-200 dark:border-neutral-700"
           >
             <div className="flex items-center gap-3 mb-2 text-neutral-500 dark:text-neutral-400">
@@ -242,7 +242,7 @@ export function GovernanceDashboard({ phase, onBack, theme, onThemeToggle }: Gov
               key={proposal.id}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: idx * 0.05 }}
+              transition={{ delay: idx * 0.05, duration: 0.25, ease: [0.23, 1, 0.32, 1] }}
               className="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-700 p-6"
             >
               <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">

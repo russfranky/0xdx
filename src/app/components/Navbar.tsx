@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Menu, X, Sun, Moon } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Phase } from '../App';
+import { EASE_OUT } from '../motion';
 
 interface NavbarProps {
   phase: Phase;
@@ -52,7 +53,7 @@ export function Navbar({ phase, onLitepaperClick, onDiscoverClick, onRoadmapClic
             <button
               key={link.name}
               onClick={link.onClick}
-              className="text-xs font-bold text-neutral-600 dark:text-neutral-400 hover:text-black dark:hover:text-white transition-colors uppercase tracking-widest"
+              className="py-2 text-xs font-bold text-neutral-600 dark:text-neutral-400 hover:text-black dark:hover:text-white transition-colors uppercase tracking-widest"
             >
               {link.name}
             </button>
@@ -61,7 +62,7 @@ export function Navbar({ phase, onLitepaperClick, onDiscoverClick, onRoadmapClic
             <button
               onClick={onThemeToggle}
               aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
-              className="p-2 rounded-full text-neutral-500 hover:text-black dark:hover:text-white transition-colors"
+              className="w-11 h-11 flex items-center justify-center rounded-full text-neutral-500 hover:text-black dark:hover:text-white transition-colors"
             >
               {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
             </button>
@@ -73,7 +74,7 @@ export function Navbar({ phase, onLitepaperClick, onDiscoverClick, onRoadmapClic
             <button
               onClick={onThemeToggle}
               aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
-              className="p-2 rounded-full text-neutral-500 hover:text-black dark:hover:text-white transition-colors"
+              className="w-11 h-11 flex items-center justify-center rounded-full text-neutral-500 hover:text-black dark:hover:text-white transition-colors"
             >
               {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
             </button>
@@ -82,7 +83,7 @@ export function Navbar({ phase, onLitepaperClick, onDiscoverClick, onRoadmapClic
             aria-label={isOpen ? 'Close menu' : 'Open menu'}
             aria-expanded={isOpen}
             aria-controls="mobile-menu"
-            className="text-black dark:text-white"
+            className="w-11 h-11 flex items-center justify-center text-black dark:text-white"
             onClick={() => setIsOpen(!isOpen)}
           >
             {isOpen ? <X /> : <Menu />}
@@ -94,9 +95,10 @@ export function Navbar({ phase, onLitepaperClick, onDiscoverClick, onRoadmapClic
         {isOpen && (
           <motion.div
             id="mobile-menu"
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8, transition: { duration: 0.15, ease: EASE_OUT } }}
+            transition={{ duration: 0.2, ease: EASE_OUT }}
             className="md:hidden bg-white dark:bg-neutral-950 border-b border-neutral-100 dark:border-neutral-800 overflow-hidden"
           >
             <div className="px-6 py-8 flex flex-col gap-6">

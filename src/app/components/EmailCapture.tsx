@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { ArrowRight, Check, Loader2 } from 'lucide-react';
+import { EASE_OUT } from '../motion';
 
 type Status = 'idle' | 'submitting' | 'success' | 'error' | 'rate_limited';
 
@@ -112,8 +113,8 @@ export function EmailCapture({
             key="success"
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.2 }}
+            exit={{ opacity: 0, y: -8, filter: 'blur(2px)', transition: { duration: 0.15, ease: EASE_OUT } }}
+            transition={{ duration: 0.2, ease: EASE_OUT }}
             className={`flex items-center gap-3 text-sm font-medium ${isLight ? 'text-white' : 'text-black dark:text-white'}`}
           >
             <span className={`w-6 h-6 rounded-full flex items-center justify-center ${isLight ? 'bg-white text-black' : 'bg-black text-white dark:bg-white dark:text-black'}`}>
@@ -126,8 +127,8 @@ export function EmailCapture({
             key="form"
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.2 }}
+            exit={{ opacity: 0, y: -8, filter: 'blur(2px)', transition: { duration: 0.15, ease: EASE_OUT } }}
+            transition={{ duration: 0.2, ease: EASE_OUT }}
           >
             <div className="flex flex-col sm:flex-row gap-2 max-w-md">
               <input
@@ -151,7 +152,7 @@ export function EmailCapture({
               <button
                 type="submit"
                 disabled={status === 'submitting'}
-                className={`flex items-center justify-center gap-2 px-5 py-3 text-xs font-bold uppercase tracking-wider transition-colors disabled:opacity-60 shrink-0 ${buttonClasses}`}
+                className={`flex items-center justify-center gap-2 px-5 py-3 text-xs font-bold uppercase tracking-wider transition-[transform,background-color,color] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] active:scale-[0.97] disabled:opacity-60 shrink-0 ${buttonClasses}`}
               >
                 {status === 'submitting' ? (
                   <>

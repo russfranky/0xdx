@@ -73,7 +73,7 @@ function UseCaseModal({ useCase, onClose }: ModalProps) {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      transition={{ duration: 0.2 }}
+      transition={{ duration: 0.2, ease: [0.23, 1, 0.32, 1] }}
       className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70"
       onClick={onClose}
     >
@@ -81,7 +81,7 @@ function UseCaseModal({ useCase, onClose }: ModalProps) {
         initial={{ opacity: 0, scale: 0.96, y: 12 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.96, y: 12 }}
-        transition={{ duration: 0.2 }}
+        transition={{ duration: 0.2, ease: [0.23, 1, 0.32, 1] }}
         className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto bg-white dark:bg-neutral-950 border-2 border-black dark:border-neutral-600 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] dark:shadow-[8px_8px_0px_0px_rgba(255,255,255,0.08)]"
         onClick={e => e.stopPropagation()}
       >
@@ -98,7 +98,7 @@ function UseCaseModal({ useCase, onClose }: ModalProps) {
           </div>
           <button
             onClick={onClose}
-            className="w-9 h-9 flex items-center justify-center border border-neutral-200 dark:border-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors"
+            className="w-11 h-11 flex items-center justify-center border border-neutral-200 dark:border-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors"
             aria-label="Close"
           >
             <X className="w-4 h-4 text-black dark:text-white" />
@@ -166,9 +166,9 @@ export function UseCases({ phase }: { phase: Phase }) {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: idx * 0.1 }}
+              transition={{ delay: idx * 0.06, duration: 0.25, ease: [0.23, 1, 0.32, 1] }}
               onClick={() => setSelected(idx)}
-              className="group text-left bg-white dark:bg-neutral-950 p-6 border-2 border-transparent hover:border-black dark:hover:border-neutral-400 transition-all duration-300 cursor-pointer"
+              className="group text-left bg-white dark:bg-neutral-950 p-6 border-2 border-transparent hover:border-black dark:hover:border-neutral-400 transition-colors duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] cursor-pointer"
             >
               <div className="w-10 h-10 bg-black dark:bg-white text-white dark:text-black flex items-center justify-center font-bold text-sm mb-6">
                 {useCase.logo}
@@ -179,9 +179,9 @@ export function UseCases({ phase }: { phase: Phase }) {
                 {useCase.desc}
               </p>
 
-              <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-black dark:text-white group-hover:gap-3 transition-all">
+              <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-black dark:text-white">
                 Explore use case
-                <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
+                <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform duration-200 ease-[cubic-bezier(0.23,1,0.32,1)]" aria-hidden="true" />
               </div>
             </motion.button>
           ))}

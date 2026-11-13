@@ -103,7 +103,7 @@ export function ActivityFeed({ phase }: { phase: Phase }) {
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -12 }}
-                transition={{ duration: 0.35 }}
+                transition={{ duration: 0.25, ease: [0.23, 1, 0.32, 1] }}
                 className="absolute inset-0 flex items-center gap-3 text-sm font-mono text-neutral-300 whitespace-nowrap"
               >
                 <span className="text-neutral-500 shrink-0" aria-hidden="true">{getIcon(current.type)}</span>

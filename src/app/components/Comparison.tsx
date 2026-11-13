@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
+import { EASE_OUT } from '../motion';
 
 interface FailureMode {
   model: string;
@@ -79,8 +80,8 @@ export function Comparison() {
                 key={active}
                 initial={{ opacity: 0, x: 16 }}
                 animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -16 }}
-                transition={{ duration: 0.2 }}
+                exit={{ opacity: 0, x: -16, transition: { duration: 0.15, ease: EASE_OUT } }}
+                transition={{ duration: 0.2, ease: EASE_OUT }}
                 className="grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-neutral-200 dark:divide-neutral-800 flex-1"
               >
                 {/* Failure */}
@@ -132,12 +133,10 @@ export function Comparison() {
                   key={idx}
                   onClick={() => setActive(idx)}
                   aria-label={`Show model ${idx + 1}`}
-                  className={`h-1.5 rounded-full transition-all ${
-                    idx === active
-                      ? 'w-6 bg-black dark:bg-white'
-                      : 'w-1.5 bg-neutral-300 dark:bg-neutral-700 hover:bg-neutral-400 dark:hover:bg-neutral-500'
-                  }`}
-                />
+                  className="h-11 flex items-center bg-transparent"
+                >
+                  <span className={`h-1.5 rounded-full transition-[width,background-color] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] ${idx === active ? 'w-6 bg-black dark:bg-white' : 'w-1.5 bg-neutral-300 dark:bg-neutral-700'}`} />
+                </button>
               ))}
             </div>
 
@@ -145,14 +144,14 @@ export function Comparison() {
               <button
                 onClick={() => go(active - 1)}
                 aria-label="Previous model"
-                className="w-9 h-9 flex items-center justify-center border border-neutral-200 dark:border-neutral-700 text-neutral-700 dark:text-neutral-300 hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-colors"
+                className="w-11 h-11 flex items-center justify-center border border-neutral-200 dark:border-neutral-700 text-neutral-700 dark:text-neutral-300 hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-colors"
               >
                 <ChevronLeft className="w-4 h-4" />
               </button>
               <button
                 onClick={() => go(active + 1)}
                 aria-label="Next model"
-                className="w-9 h-9 flex items-center justify-center border border-neutral-200 dark:border-neutral-700 text-neutral-700 dark:text-neutral-300 hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-colors"
+                className="w-11 h-11 flex items-center justify-center border border-neutral-200 dark:border-neutral-700 text-neutral-700 dark:text-neutral-300 hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-colors"
               >
                 <ChevronRight className="w-4 h-4" />
               </button>

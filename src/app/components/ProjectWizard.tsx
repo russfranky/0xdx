@@ -113,6 +113,7 @@ export function ProjectWizard({ phase, onLitepaperClick }: ProjectWizardProps) {
                       key="step1"
                       initial={{ opacity: 0, x: 20 }}
                       animate={{ opacity: 1, x: 0 }}
+                      transition={{ duration: 0.25, ease: [0.23, 1, 0.32, 1] }}
                       exit={{ opacity: 0, x: -20 }}
                       className="space-y-6"
                     >
@@ -131,7 +132,7 @@ export function ProjectWizard({ phase, onLitepaperClick }: ProjectWizardProps) {
                           <label className="block text-sm font-medium text-black dark:text-white mb-1">Organization Name</label>
                           <input
                             type="text"
-                            className="w-full px-4 py-3 border border-neutral-200 dark:border-neutral-600 bg-white dark:bg-neutral-800 text-black dark:text-white placeholder:text-neutral-400 dark:placeholder:text-neutral-500 focus:outline-none focus:ring-2 focus:ring-black dark:focus:ring-white focus:border-transparent transition-all"
+                            className="w-full px-4 py-3 border border-neutral-200 dark:border-neutral-600 bg-white dark:bg-neutral-800 text-black dark:text-white placeholder:text-neutral-400 dark:placeholder:text-neutral-500 focus:outline-none focus:ring-2 focus:ring-black dark:focus:ring-white focus:border-transparent transition-[border-color,box-shadow] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)]"
                             placeholder={isTestnet ? "e.g. My Test DAO" : "e.g. Ocean Cleanup DAO"}
                             defaultValue={formData.name}
                             onChange={(e) => setFormData({...formData, name: e.target.value})}
@@ -141,7 +142,7 @@ export function ProjectWizard({ phase, onLitepaperClick }: ProjectWizardProps) {
                           <label className="block text-sm font-medium text-black dark:text-white mb-1">Ticker Symbol</label>
                           <input
                             type="text"
-                            className="w-full px-4 py-3 border border-neutral-200 dark:border-neutral-600 bg-white dark:bg-neutral-800 text-black dark:text-white placeholder:text-neutral-400 dark:placeholder:text-neutral-500 focus:outline-none focus:ring-2 focus:ring-black dark:focus:ring-white focus:border-transparent transition-all uppercase"
+                            className="w-full px-4 py-3 border border-neutral-200 dark:border-neutral-600 bg-white dark:bg-neutral-800 text-black dark:text-white placeholder:text-neutral-400 dark:placeholder:text-neutral-500 focus:outline-none focus:ring-2 focus:ring-black dark:focus:ring-white focus:border-transparent transition-[border-color,box-shadow] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] uppercase"
                             placeholder={isTestnet ? "e.g. TEST" : "e.g. OCEAN"}
                             defaultValue={formData.ticker}
                             onChange={(e) => setFormData({...formData, ticker: e.target.value})}
@@ -156,6 +157,7 @@ export function ProjectWizard({ phase, onLitepaperClick }: ProjectWizardProps) {
                       key="step2"
                       initial={{ opacity: 0, x: 20 }}
                       animate={{ opacity: 1, x: 0 }}
+                      transition={{ duration: 0.25, ease: [0.23, 1, 0.32, 1] }}
                       exit={{ opacity: 0, x: -20 }}
                       className="space-y-5"
                     >
@@ -216,6 +218,7 @@ export function ProjectWizard({ phase, onLitepaperClick }: ProjectWizardProps) {
                       key="step3"
                       initial={{ opacity: 0, x: 20 }}
                       animate={{ opacity: 1, x: 0 }}
+                      transition={{ duration: 0.25, ease: [0.23, 1, 0.32, 1] }}
                       exit={{ opacity: 0, x: -20 }}
                       className="space-y-6"
                     >
@@ -274,6 +277,7 @@ export function ProjectWizard({ phase, onLitepaperClick }: ProjectWizardProps) {
                       key="step4"
                       initial={{ opacity: 0, x: 20 }}
                       animate={{ opacity: 1, x: 0 }}
+                      transition={{ duration: 0.25, ease: [0.23, 1, 0.32, 1] }}
                       exit={{ opacity: 0, x: -20 }}
                       className="space-y-3"
                     >
