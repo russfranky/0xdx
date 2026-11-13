@@ -1,5 +1,4 @@
 import React from 'react';
-import { motion } from 'motion/react';
 import { Check, X, Minus } from 'lucide-react';
 
 export function SolutionSection() {
