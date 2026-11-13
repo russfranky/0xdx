@@ -79,17 +79,13 @@ export function ActivityFeed({ phase }: { phase: Phase }) {
   };
 
   const accentColor = isTestnet ? 'text-orange-400' : 'text-emerald-400';
-  const pingColor = isTestnet ? 'bg-orange-400' : 'bg-emerald-400';
   const dotColor = isTestnet ? 'bg-orange-500' : 'bg-emerald-500';
 
   return (
     <div className="w-full bg-black text-white py-3 overflow-hidden border-b border-neutral-800">
       <div className="max-w-7xl mx-auto px-6 flex items-center gap-4">
         <div className={`flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest ${accentColor} shrink-0`}>
-          <span className="relative flex h-2 w-2">
-            <span className={`animate-ping absolute inline-flex h-full w-full rounded-sm ${pingColor} opacity-75`}></span>
-            <span className={`relative inline-flex rounded-sm h-2 w-2 ${dotColor}`}></span>
-          </span>
+          <span className={`inline-flex rounded-sm h-2 w-2 ${dotColor}`}></span>
           {isTestnet ? 'Testnet Live' : 'Live Network'}
         </div>
         
