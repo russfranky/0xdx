@@ -11,10 +11,17 @@ interface ProjectWizardProps {
   onLitepaperClick?: () => void;
 }
 
+const stepVariants = {
+  enter: (d: number) => ({ opacity: 0, x: 20 * d }),
+  center: { opacity: 1, x: 0 },
+  exit: (d: number) => ({ opacity: 0, x: -20 * d }),
+};
+
 export function ProjectWizard({ phase, onLitepaperClick }: ProjectWizardProps) {
   const isTestnet = phase === 'testnet';
   const isPrelaunch = phase === 'prelaunch';
   const [step, setStep] = useState(1);
+  const [direction, setDirection] = useState(1);
   const [formData, setFormData] = useState({
     name: '',
     ticker: '',
@@ -24,8 +31,8 @@ export function ProjectWizard({ phase, onLitepaperClick }: ProjectWizardProps) {
     votingPeriod: 3
   });
 
-  const handleNext = () => setStep(s => Math.min(s + 1, TOTAL_STEPS));
-  const handleBack = () => setStep(s => Math.max(s - 1, 1));
+  const handleNext = () => { setDirection(1); setStep(s => Math.min(s + 1, TOTAL_STEPS)); };
+  const handleBack = () => { setDirection(-1); setStep(s => Math.max(s - 1, 1)); };
 
   return (
     <section id="start" className="py-16 bg-white dark:bg-neutral-950 border-b border-neutral-100 dark:border-neutral-800">
@@ -107,14 +114,16 @@ export function ProjectWizard({ phase, onLitepaperClick }: ProjectWizardProps) {
 
               {/* Steps */}
               <div className="h-[340px]">
-                <AnimatePresence mode="wait">
+                <AnimatePresence mode="wait" custom={direction}>
                   {step === 1 && (
                     <motion.div
                       key="step1"
-                      initial={{ opacity: 0, x: 20 }}
-                      animate={{ opacity: 1, x: 0 }}
+                      variants={stepVariants}
+                      custom={direction}
+                      initial="enter"
+                      animate="center"
+                      exit="exit"
                       transition={{ duration: 0.25, ease: [0.23, 1, 0.32, 1] }}
-                      exit={{ opacity: 0, x: -20 }}
                       className="space-y-6"
                     >
                       <div className="flex items-center gap-3 mb-2">
@@ -155,10 +164,12 @@ export function ProjectWizard({ phase, onLitepaperClick }: ProjectWizardProps) {
                   {step === 2 && (
                     <motion.div
                       key="step2"
-                      initial={{ opacity: 0, x: 20 }}
-                      animate={{ opacity: 1, x: 0 }}
+                      variants={stepVariants}
+                      custom={direction}
+                      initial="enter"
+                      animate="center"
+                      exit="exit"
                       transition={{ duration: 0.25, ease: [0.23, 1, 0.32, 1] }}
-                      exit={{ opacity: 0, x: -20 }}
                       className="space-y-5"
                     >
                       <div className="flex items-center gap-3 mb-2">
@@ -216,10 +227,12 @@ export function ProjectWizard({ phase, onLitepaperClick }: ProjectWizardProps) {
                   {step === 3 && (
                     <motion.div
                       key="step3"
-                      initial={{ opacity: 0, x: 20 }}
-                      animate={{ opacity: 1, x: 0 }}
+                      variants={stepVariants}
+                      custom={direction}
+                      initial="enter"
+                      animate="center"
+                      exit="exit"
                       transition={{ duration: 0.25, ease: [0.23, 1, 0.32, 1] }}
-                      exit={{ opacity: 0, x: -20 }}
                       className="space-y-6"
                     >
                       <div className="flex items-center gap-3 mb-2">
@@ -275,10 +288,12 @@ export function ProjectWizard({ phase, onLitepaperClick }: ProjectWizardProps) {
                   {step === 4 && (
                     <motion.div
                       key="step4"
-                      initial={{ opacity: 0, x: 20 }}
-                      animate={{ opacity: 1, x: 0 }}
+                      variants={stepVariants}
+                      custom={direction}
+                      initial="enter"
+                      animate="center"
+                      exit="exit"
                       transition={{ duration: 0.25, ease: [0.23, 1, 0.32, 1] }}
-                      exit={{ opacity: 0, x: -20 }}
                       className="space-y-3"
                     >
                       <div className="flex items-center gap-3">
@@ -289,7 +304,7 @@ export function ProjectWizard({ phase, onLitepaperClick }: ProjectWizardProps) {
                           <h3 className="text-lg font-bold text-black dark:text-white leading-tight">
                             {isPrelaunch ? 'End of Preview' : isTestnet ? 'Ready to Deploy' : 'Ready to Launch'}
                           </h3>
-                          <p className="text-xs text-neutral-500 dark:text-neutral-400">
+                          <p className="text-xs text-neutral-500 dark:text-neutral-400 break-words min-w-0">
                             <strong className="text-black dark:text-white">{formData.name || 'Your Organization'}</strong>
                             {' '}{isPrelaunch ? '· preview' : isTestnet ? '· testnet' : '· mainnet'}
                           </p>
@@ -299,7 +314,7 @@ export function ProjectWizard({ phase, onLitepaperClick }: ProjectWizardProps) {
                       <div className="bg-neutral-50 dark:bg-neutral-800 text-xs border border-neutral-100 dark:border-neutral-700 divide-y divide-neutral-100 dark:divide-neutral-700">
                         <div className="flex justify-between px-3 py-2">
                           <span className="text-neutral-500 dark:text-neutral-400">Ticker</span>
-                          <span className="font-bold dark:text-white">{formData.ticker || '—'}</span>
+                          <span className="font-bold dark:text-white break-all text-right">{formData.ticker || '—'}</span>
                         </div>
                         <div className="flex justify-between px-3 py-2">
                           <span className="text-neutral-500 dark:text-neutral-400">Founding Chairs</span>
