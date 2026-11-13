@@ -36,7 +36,7 @@ export function Footer({ onLitepaperClick, onRoadmapClick, phase = 'testnet' }: 
               <li>
                 <button
                   onClick={onLitepaperClick}
-                  className="text-neutral-600 dark:text-neutral-400 hover:text-black dark:hover:text-white text-sm uppercase tracking-wide font-medium"
+                  className="inline-block py-2 -my-1 text-neutral-600 dark:text-neutral-400 hover:text-black dark:hover:text-white text-sm uppercase tracking-wide font-medium"
                 >
                   Litepaper
                 </button>
@@ -44,7 +44,7 @@ export function Footer({ onLitepaperClick, onRoadmapClick, phase = 'testnet' }: 
               <li>
                 <button
                   onClick={onRoadmapClick}
-                  className="text-neutral-600 dark:text-neutral-400 hover:text-black dark:hover:text-white text-sm uppercase tracking-wide font-medium"
+                  className="inline-block py-2 -my-1 text-neutral-600 dark:text-neutral-400 hover:text-black dark:hover:text-white text-sm uppercase tracking-wide font-medium"
                 >
                   Roadmap
                 </button>
@@ -69,7 +69,7 @@ export function Footer({ onLitepaperClick, onRoadmapClick, phase = 'testnet' }: 
             target="_blank"
             rel="noopener noreferrer"
             aria-label="0xdx on GitHub"
-            className="flex items-center gap-2 text-neutral-400 hover:text-black dark:hover:text-white transition-colors"
+            className="flex items-center gap-2 p-2 -m-2 text-neutral-400 hover:text-black dark:hover:text-white transition-colors"
           >
             <Github className="w-5 h-5" aria-hidden="true" />
           </a>

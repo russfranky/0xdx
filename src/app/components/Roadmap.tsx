@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'motion/react';
-import { CheckCircle2, Circle, Clock, Loader2, Calendar } from 'lucide-react';
-import { Button } from './ui/Button';
+import { CheckCircle2, Circle, Clock } from 'lucide-react';
 import { PageHeader } from './ui/PageHeader';
 
 interface RoadmapProps {
@@ -101,7 +100,7 @@ export function Roadmap({ onBack, theme, onThemeToggle }: RoadmapProps) {
   const getStatusIcon = (status: Status) => {
     switch (status) {
       case 'done': return <CheckCircle2 className="w-5 h-5 text-emerald-500" />;
-      case 'in-progress': return <Loader2 className="w-5 h-5 text-orange-500 animate-spin" />;
+      case 'in-progress': return <Clock className="w-5 h-5 text-orange-500" />;
       case 'planned': return <Circle className="w-5 h-5 text-neutral-300 dark:text-neutral-600" />;
     }
   };
@@ -142,7 +141,7 @@ export function Roadmap({ onBack, theme, onThemeToggle }: RoadmapProps) {
               key={cat}
               onClick={() => setSelectedCategory(cat)}
               aria-pressed={selectedCategory === cat}
-              className={`px-4 py-2 text-xs font-bold uppercase tracking-widest transition-colors duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] ${
+              className={`px-4 py-2 min-h-11 inline-flex items-center text-xs font-bold uppercase tracking-widest transition-colors duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] ${
                 selectedCategory === cat
                   ? 'bg-black dark:bg-white text-white dark:text-black'
                   : 'bg-transparent text-neutral-500 dark:text-neutral-400 hover:text-black dark:hover:text-white'

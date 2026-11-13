@@ -1,5 +1,5 @@
 import React from 'react';
-import { Users, FileText, Activity, Vote, Zap } from 'lucide-react';
+import { Users, FileText, Activity, Zap } from 'lucide-react';
 
 export function HowItWorks() {
   const steps = [

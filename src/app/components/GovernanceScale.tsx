@@ -1,5 +1,5 @@
 import React from 'react';
-import { Globe, Server, Zap, Lock, Activity, Coins, BarChart3, Repeat } from 'lucide-react';
+import { Lock, Activity, BarChart3, Repeat } from 'lucide-react';
 import { Phase } from '../App';
 
 export function GovernanceScale({ phase }: { phase: Phase }) {

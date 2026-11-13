@@ -39,7 +39,7 @@ export function CTA({ phase, onLitepaperClick }: CTAProps) {
             <Button size="lg" onClick={onLitepaperClick} className="bg-white text-black hover:bg-neutral-200 text-sm font-bold uppercase tracking-widest px-10 h-14 rounded-full border-2 border-transparent">
               {isTestnet ? 'Join Incentivized Testnet' : 'Launch Organization'}
             </Button>
-            <button type="button" className="text-white hover:text-neutral-300 text-sm font-bold uppercase tracking-widest flex items-center gap-2 group">
+            <button type="button" onClick={onLitepaperClick} className="text-white hover:text-neutral-300 text-sm font-bold uppercase tracking-widest flex items-center gap-2 group">
               {isTestnet ? 'Read the Documentation' : 'View Developer Docs'} <ArrowRight aria-hidden="true" className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200 ease-[cubic-bezier(0.23,1,0.32,1)]" />
             </button>
           </div>

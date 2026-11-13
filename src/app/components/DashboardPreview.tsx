@@ -1,9 +1,9 @@
 import React from 'react';
 import { Button } from './ui/Button';
-import { Check, Clock, TrendingUp, PieChart } from 'lucide-react';
+import { PieChart } from 'lucide-react';
 import { Phase } from '../App';
 
-export function DashboardPreview({ phase }: { phase: Phase }) {
+export function DashboardPreview({ phase, onViewReport }: { phase: Phase; onViewReport?: () => void }) {
   if (phase === 'prelaunch') return null;
   return (
     <section className="py-16 bg-neutral-50 dark:bg-neutral-900 border-b border-neutral-200 dark:border-neutral-700">
@@ -102,7 +102,7 @@ export function DashboardPreview({ phase }: { phase: Phase }) {
                 </div>
               </div>
 
-              <Button className="w-full text-xs font-bold uppercase tracking-widest" variant="outline">View Full Report</Button>
+              <Button className="w-full text-xs font-bold uppercase tracking-widest" variant="outline" onClick={onViewReport}>View Full Report</Button>
             </div>
           </div>
         </div>

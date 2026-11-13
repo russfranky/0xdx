@@ -57,7 +57,7 @@ export function Testimonials({ phase }: { phase: Phase }) {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {testimonials.map((item, idx) => (
             <div key={idx} className="bg-white dark:bg-neutral-950 p-8 border-2 border-black dark:border-neutral-600 shadow-[8px_8px_0px_0px_rgba(0,0,0,0.1)] dark:shadow-[8px_8px_0px_0px_rgba(255,255,255,0.05)] relative">
-              <Quote className="w-12 h-12 text-neutral-100 dark:text-neutral-800 absolute top-6 right-6" />
+              <Quote className="w-12 h-12 text-neutral-100 dark:text-neutral-800 absolute top-6 right-6" aria-hidden="true" />
 
               <p className="text-neutral-600 dark:text-neutral-300 leading-relaxed mb-8 relative z-10 font-light text-lg">
                 "{item.quote}"

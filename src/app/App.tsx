@@ -145,7 +145,7 @@ export default function App() {
         <GovernanceScale phase={phase} />
         <ProjectWizard phase={phase} onLitepaperClick={() => setView('litepaper')} />
         <BuiltInPublic />
-        {isAdmin && <DashboardPreview phase={phase} />}
+        {isAdmin && <DashboardPreview phase={phase} onViewReport={() => setView('governance')} />}
         {isAdmin && <SolutionSection />}
         {isAdmin && <Features />}
         <Resources onLitepaperClick={() => setView('litepaper')} onRoadmapClick={() => setView('roadmap')} />

@@ -75,7 +75,8 @@ export function Litepaper({ onBack, theme, onThemeToggle }: LitepaperProps) {
     const el = document.getElementById(id);
     if (!el) return;
     const y = el.getBoundingClientRect().top + window.scrollY - 96;
-    window.scrollTo({ top: y, behavior: 'smooth' });
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    window.scrollTo({ top: y, behavior: reduceMotion ? 'auto' : 'smooth' });
   };
 
   // Inject ids onto h2 elements so the ToC anchors line up.
@@ -131,7 +132,7 @@ export function Litepaper({ onBack, theme, onThemeToggle }: LitepaperProps) {
                       <li key={c.id}>
                         <button
                           onClick={() => handleJump(c.id)}
-                          className={`group w-full text-left pl-4 pr-2 py-1.5 -ml-px border-l-2 transition-colors ${
+                          className={`group w-full text-left pl-4 pr-2 py-2 -ml-px border-l-2 transition-colors ${
                             isActive
                               ? 'border-black dark:border-white text-black dark:text-white'
                               : 'border-transparent text-neutral-500 dark:text-neutral-400 hover:text-black dark:hover:text-white'

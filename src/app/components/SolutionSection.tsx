@@ -1,5 +1,5 @@
 import React from 'react';
-import { Check, X, Minus } from 'lucide-react';
+import { Check } from 'lucide-react';
 
 export function SolutionSection() {
   const rows = [
@@ -55,9 +55,11 @@ export function SolutionSection() {
                   <td className="py-4 px-4 font-bold text-black dark:text-white uppercase tracking-wide text-sm">{row.feature}</td>
                   <td className="py-4 px-4 text-neutral-500 dark:text-neutral-400 font-mono text-sm">{row.token}</td>
                   <td className="py-4 px-4 text-neutral-500 dark:text-neutral-400 font-mono text-sm">{row.oneVote}</td>
-                  <td className="py-4 px-4 font-bold text-black dark:text-white bg-neutral-50 dark:bg-neutral-800 flex items-center gap-2 uppercase tracking-wide text-sm">
-                    <Check className="w-4 h-4" aria-hidden="true" />
-                    {row.dx}
+                  <td className="py-4 px-4 font-bold text-black dark:text-white bg-neutral-50 dark:bg-neutral-800 uppercase tracking-wide text-sm">
+                    <span className="flex items-center gap-2">
+                      <Check className="w-4 h-4 shrink-0" aria-hidden="true" />
+                      {row.dx}
+                    </span>
                   </td>
                 </tr>
               ))}

@@ -23,7 +23,7 @@ export function PageHeader({
       <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between gap-4">
         <button
           onClick={onBack}
-          className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-neutral-600 dark:text-neutral-400 hover:text-black dark:hover:text-white transition-colors shrink-0"
+          className="flex items-center gap-2 min-h-11 px-2 -ml-2 text-xs font-bold uppercase tracking-wider text-neutral-600 dark:text-neutral-400 hover:text-black dark:hover:text-white transition-colors shrink-0"
         >
           <ArrowLeft className="w-4 h-4" />
           {backLabel}
@@ -41,7 +41,7 @@ export function PageHeader({
             <button
               onClick={onThemeToggle}
               aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
-              className="p-2 rounded-full text-neutral-500 hover:text-black dark:hover:text-white transition-colors"
+              className="min-w-11 min-h-11 flex items-center justify-center rounded-full text-neutral-500 hover:text-black dark:hover:text-white transition-colors"
             >
               {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
             </button>
