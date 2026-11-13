@@ -1,5 +1,4 @@
 import React from 'react';
-import { motion } from 'motion/react';
 import { Users, FileText, Activity, Vote, Zap } from 'lucide-react';
 
 export function HowItWorks() {
