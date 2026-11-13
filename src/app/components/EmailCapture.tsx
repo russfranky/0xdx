@@ -147,7 +147,7 @@ export function EmailCapture({
                 placeholder="you@example.com"
                 aria-label="Email address"
                 disabled={status === 'submitting'}
-                className={`flex-1 px-4 py-3 text-sm border focus:outline-none transition-colors disabled:opacity-60 ${inputClasses}`}
+                className={`flex-1 px-4 py-3 text-base sm:text-sm border focus:outline-none transition-colors disabled:opacity-60 ${inputClasses}`}
               />
               <button
                 type="submit"
